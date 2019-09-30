@@ -1,3 +1,4 @@
+#include <array> // std::array
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
@@ -6,37 +7,80 @@
 #include <utility>
 #include <vector>
 
-struct Position {
+class Position
+{
     int row;
     int col;
+
+    public:
+
+    Position(int row = 0, int col = 0) : row(row), col(col)
+    {
+    }
+
+    int get_row()
+    {
+        return row;
+    }
+
+    int get_col()
+    {
+        return col;
+    }
 
     void print()
     {
         std::cout << "(" << row << ", " << col << ")" << std::endl;
     }
-};
 
-// moves
-// change in row, change in col
-std::pair<int, int> moves[]{
-    std::pair(-2,  1), // Move Type 0
-    std::pair(-1,  2), // Move Type 1
-    std::pair( 1,  2), // Move Type 2
-    std::pair( 2,  1), // Move Type 3
-    std::pair( 2, -1), // Move Type 4
-    std::pair( 1, -2), // Move Type 5
-    std::pair(-1, -2), // Move Type 6
-    std::pair(-2, -1)  // Move Type 7
-};
-
-const int MOVES_MAX = 8;
-
-void assert_move_bounds(int move_type)
-{
-    if (move_type < 0 || move_type > MOVES_MAX) {
-        throw std::invalid_argument(std::string("Invalid move type: ") + std::to_string(move_type));
+    Position operator+(Position &rhs) const
+    {
+        return Position(row + rhs.get_row(), col + rhs.get_col());
     }
-}
+};
+
+class Move : public Position
+{
+    public:
+    using Position::Position;
+};
+
+namespace KnightMoves
+{
+    namespace
+    {
+        // moves
+        // change in row, change in col
+        const std::array moves {
+            Move(-2,  1), // Move Type 0
+            Move(-1,  2), // Move Type 1
+            Move( 1,  2), // Move Type 2
+            Move( 2,  1), // Move Type 3
+            Move( 2, -1), // Move Type 4
+            Move( 1, -2), // Move Type 5
+            Move(-1, -2), // Move Type 6
+            Move(-2, -1)  // Move Type 7
+        };
+
+        void assert_move_bounds(int move_type)
+        {
+            if (move_type < 0 || move_type >= moves.size()) {
+                throw std::invalid_argument(std::string("Invalid move type: ") + std::to_string(move_type));
+            }
+        }
+    }
+
+    auto get_all_moves()
+    {
+        return moves;
+    }
+
+    auto get_move(int move_type)
+    {
+        assert_move_bounds(move_type);
+        return moves[move_type];
+    }
+};
 
 
 class Board {
@@ -58,7 +102,7 @@ class Board {
         return sstream.str();
     }
 
-    bool move_knight(Position pos, int move_type)
+    bool move_knight(Position pos, Move move)
     {
         if (this->move_num > this->move_max)
         {
@@ -68,7 +112,7 @@ class Board {
         Position new_pos;
         try
         { 
-            new_pos = calc_move(pos, move_type);
+            new_pos = calc_move(pos, move);
         } catch (...) {
             return false;
         }
@@ -87,16 +131,18 @@ class Board {
 
         set_square(new_pos);
 
-        int new_move{0};
-        for (; new_move < MOVES_MAX; new_move++)
+        bool success;
+        auto all_moves = KnightMoves::get_all_moves();
+        for (auto& new_move : all_moves)
         {
             if (move_knight(new_pos, new_move))
             {
+                success = true;
                 return true;
             }
         }
 
-        if (new_move == MOVES_MAX) {
+        if (!success) {
             move_num--;
             reset_square(new_pos);
         }
@@ -104,12 +150,9 @@ class Board {
         return false;
     }
 
-    Position calc_move(Position pos, int move_type)
+    Position calc_move(Position pos, Move move)
     {
-        assert_move_bounds(move_type);
-        auto move = moves[move_type];
-
-        Position new_pos = Position{pos.row + move.first, pos.col + move.second};
+        Position new_pos = pos + move;
 
         assert_valid_position(new_pos);
         return new_pos;
@@ -117,20 +160,25 @@ class Board {
 
     void assert_valid_position(Position pos)
     {
-        if (pos.row < 0 || pos.row >= this->num_rows ||
-            pos.col < 0 || pos.col >= this->num_cols)
+        if (pos.get_row() < 0 || pos.get_row() >= this->num_rows ||
+            pos.get_col() < 0 || pos.get_col() >= this->num_cols)
         {
             throw std::out_of_range(
                 std::string("Invalid position: (Row: ") +
-                std::to_string(pos.row) +
-                " Col: " + std::to_string(pos.col) + ")");
+                std::to_string(pos.get_row()) +
+                " Col: " + std::to_string(pos.get_col()) + ")");
         }
+    }
+
+    auto get_square(Position pos)
+    {
+        assert_valid_position(pos);
+        return &this->board[pos.get_row()][pos.get_col()];
     }
 
     bool is_occupied(Position pos)
     {
-        auto row = this->board.at(pos.row);
-        return 0 != row.at(pos.col);
+        return 0 != *get_square(pos);
     }
 
     void set_square(Position pos, int value = -1)
@@ -142,7 +190,8 @@ class Board {
             value = move_num;
             move_num++;
         }
-        board[pos.row][pos.col] = value;
+
+        *get_square(pos) = value;
     }
 
     void reset_square(Position pos)
@@ -167,7 +216,8 @@ class Board {
     {
         set_square(pos);
 
-        for (int move = 0; move < MOVES_MAX; move++)
+        auto all_moves = KnightMoves::get_all_moves();
+        for (auto& move : all_moves)
         {
            move_knight(pos, move);
 
