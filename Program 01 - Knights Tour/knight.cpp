@@ -14,6 +14,7 @@
 #include <array>     // std::array
 #include <iomanip>   // std::setfill, std::setwidth
 #include <iostream>  // std::cout, std::endl
+#include <optional>  // std::nullopt, std::optional
 #include <sstream>   // std::ostringstream
 #include <stdexcept> // std::invalid_argument, std::out_of_range
 #include <string>    // std::string
@@ -177,6 +178,8 @@ class Board
     int move_max{0};   // number of moves needed to complete the game
 
     unsigned long long try_num{1}; // current try number
+    unsigned long long try_update{100'000}; // how often to print an update
+
 
     /***
      * Format a number for display
@@ -201,7 +204,7 @@ class Board
     void update_status()
     {
         try_num++;
-        if (try_num % 100'000 == 0)
+        if (try_num % try_update == 0)
         {
             std::cout << "Try Number: " << try_num
                       << ", Move: " << this->move_num << " of "
@@ -227,17 +230,14 @@ class Board
 
         // Calculate new position after move
         // Return false if new position is invalid
-        Position new_pos;
-        try
-        {
-            new_pos = calc_move(pos, move);
-        }
-        catch (...)
+        std::optional<Position> new_pos_opt = calc_move(pos, move);
+        if (!new_pos_opt.has_value())
         {
             return false;
         }
+        Position new_pos = new_pos_opt.value();
 
-        // Retun false if new position is occupied
+        // Return false if new position is occupied
         if (is_occupied(new_pos))
         {
             return false;
@@ -274,12 +274,23 @@ class Board
      * @param move move type
      * @returns new position
      */
-    Position calc_move(Position pos, Move move)
+    std::optional<Position> calc_move(Position pos, Move move)
     {
         Position new_pos = pos + move;
 
-        assert_valid_position(new_pos);
-        return new_pos;
+        return is_valid_position(new_pos) ? std::optional<Position>{new_pos} : std::nullopt;
+    }
+
+
+    /***
+     * Is position valid
+     *
+     * @param pos position
+     */
+    bool is_valid_position(Position pos)
+    {
+        return (pos.get_row() >= 0 && pos.get_row() < this->num_rows &&
+                pos.get_col() >= 0 && pos.get_col() < this->num_cols);
     }
 
 
@@ -291,8 +302,7 @@ class Board
      */
     void assert_valid_position(Position pos)
     {
-        if (pos.get_row() < 0 || pos.get_row() >= this->num_rows ||
-            pos.get_col() < 0 || pos.get_col() >= this->num_cols)
+        if (!is_valid_position(pos))
         {
             throw std::out_of_range(
                 std::string("Invalid position: (Row: ") +
@@ -392,11 +402,15 @@ class Board
      * Solve the problem
      *
      * @param pos starting position (default: (0, 0))
+     * @param try_update how often to print an update (default: 100 000)
      */
-    void solve(Position pos = Position{0, 0})
+    void solve(Position pos = Position{0, 0}, unsigned long long try_update = 100'000)
     {
         // assign the starting square
         set_square(pos);
+
+        // set how often to update
+        this->try_update = try_update;
 
         // walk through all possible moves
         for (auto &move : KnightMoves::get_all_moves())
@@ -440,7 +454,7 @@ int main()
     Board board(8, 8);
 
     // Solve the board
-    board.solve();
+    board.solve(Position{0,0}, 100'000);
 
     // Return success
     return 0;
