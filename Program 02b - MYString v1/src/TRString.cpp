@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-#include "TRString.h"
+#include <TRString.h>
 
 TRString::TRString()
 {
