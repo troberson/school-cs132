@@ -14,9 +14,25 @@
 class TRString
 {
   private:
-    char* str; // pointer to dynamic memory for storing the string
-    int cap{20}; // size of the memory available to use (default: 20)
-    int end{0}; // index of the end of the string (null-terminator)
+
+    /** Size to increase the capacity of the string by each time */
+    static const int CAPACITY_STEP = 20;
+
+    /** pointer to dynamic memory for storing the string */
+    // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+    char* str = new char[CAPACITY_STEP];
+
+    /** size of the memory available to use */
+    int cap{CAPACITY_STEP};
+
+    /** index of the end of the string (null-terminator) */
+    int end{0};
+
+
+    /**
+     * Update the saved length of the string.
+     */
+    void update_length();
 
   public:
     /**
@@ -29,14 +45,14 @@ class TRString
      *
      * @param str A string
      */
-    TRString(const char* str);
+    explicit TRString(const char* str);
 
     /**
      * Return the length of the string
      *
      * @returns The length of the string
      */
-    int length() const;
+    [[nodiscard]] int length() const;
 
     /**
      * Return the capacity of the string
@@ -45,19 +61,19 @@ class TRString
      *
      * @returns The capacity of the string.
      */
-    int capacity() const;
+    [[nodiscard]] int capacity() const;
 
     /**
      * Returns the character at the given position.
      *
-     * @param index Position of an element in the container.
+     * @param index Position of a character in the string.
      * @throw std::out_of_range If index is invalid.
      * @returns The character at the given position.
      */
-    char at(int index) const;
+    [[nodiscard]] char at(int index) const;
 
     /**
-     * Read one string from a stream.
+     * Read one word from a stream.
      *
      * @param istrm An input stream.
      * @returns True if read was successful, False otherwise.
@@ -83,14 +99,14 @@ class TRString
      * >0: The first character that does not match has a greater
      *   value in this string than in@ @p argStr.
      */
-    int compareTo(const TRString& argStr) const;
+    [[nodiscard]] int compareTo(const TRString& argStr) const;
 
     /**
      * Returns a pointer to a C string representation
      *
      * @returns A C string.
      */
-    const char* c_str() const;
+    [[nodiscard]] const char* c_str() const;
 
     /**
      * Set the string.
@@ -98,6 +114,13 @@ class TRString
      * @param argStr The string to set equal to.
      */
     void setEqualTo(const TRString& argStr);
+
+    /**
+     * Set the string
+     *
+     * @param argStr The string to set equal to.
+     */
+     void setEqualTo(const char* argStr);
 };
 
 #endif

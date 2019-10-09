@@ -8,6 +8,8 @@ FetchContent_MakeAvailable(catch2)
 
 add_executable(trstring_test
     test_main.cpp
+    TRString_test.cpp
+    string_utils_test.cpp
 )
 
 # I'm using C++17 in the test

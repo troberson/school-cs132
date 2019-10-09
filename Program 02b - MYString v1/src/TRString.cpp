@@ -8,15 +8,50 @@
 
 
 #include <iostream>
+#include <stdexcept>
 
 #include <TRString.h>
+#include <string_utils.h>
+
 
 TRString::TRString()
 {
-    std::cout << "\tinside default constructor" << std::endl;
+    setEqualTo("");
 }
 
-TRString::TRString(const char* ptr)
+TRString::TRString(const char* str)
 {
-    std::cout << "\tconstructing from cstring: " << ptr << std::endl;
+    setEqualTo(str);
 }
+
+int TRString::length() const
+{
+    return this->end;
+}
+
+int TRString::capacity() const
+{
+    return this->cap;
+}
+
+const char* TRString::c_str() const
+{
+    return this->str;
+}
+
+char TRString::at(const int index) const
+{
+    return utils::string::get_char_at(str, index);
+}
+
+void TRString::setEqualTo(const char* argStr)
+{
+    this->str = utils::string::string_copy(argStr);
+    update_length();
+}
+
+void TRString::update_length()
+{
+    this->end = utils::string::string_length(this->str);
+}
+

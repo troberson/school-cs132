@@ -1,5 +1,6 @@
 # Compile the main euler library
 add_library(trstring
+    string_utils.cpp
     TRString.cpp
 )
 
