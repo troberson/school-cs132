@@ -14,36 +14,38 @@
 #include <string_utils.h>
 
 
+// Public methods
+// Default Constructor
 TRString::TRString()
 {
     setEqualTo("");
 }
 
+// Construct from string
 TRString::TRString(const char* str)
 {
     setEqualTo(str);
 }
 
+// Return length
 int TRString::length() const
 {
     return this->end;
 }
 
+// Return capacity
 int TRString::capacity() const
 {
     return this->cap;
 }
 
-const char* TRString::c_str() const
-{
-    return this->str;
-}
-
+// Return character at a given index
 char TRString::at(const int index) const
 {
-    return utils::string::get_char_at(str, index);
+    return utils::string::get_char_at(this->str, index);
 }
 
+// Read from a stream
 bool TRString::read(std::istream& istrm)
 {
     char buffer[100];
@@ -59,30 +61,41 @@ bool TRString::read(std::istream& istrm)
     return true;
 }
 
-
+// Write to a stream
 void TRString::write(std::ostream& ostrm) const
 {
     ostrm << this->str;
 }
 
+// Return the sort order compared to another TRString
+int TRString::compareTo(const TRString& argStr) const
+{
+    return utils::string::string_compare(c_str(), argStr.c_str());
+}
+
+// Return C string representation
+const char* TRString::c_str() const
+{
+    return this->str;
+}
+
+// Set the string equal to another TRString
 void TRString::setEqualTo(const TRString& argStr)
 {
     setEqualTo(argStr.c_str());
 }
 
+// Set the string equal to a C string
 void TRString::setEqualTo(const char* argStr)
 {
     this->str = utils::string::string_copy(argStr);
     update_length();
 }
 
-int TRString::compareTo(const TRString& argStr) const
-{
-    return utils::string::string_compare(c_str(), argStr.c_str());
-}
 
+// Private methods
+// Updated the stored length of the string
 void TRString::update_length()
 {
     this->end = utils::string::string_length(this->str);
 }
-
