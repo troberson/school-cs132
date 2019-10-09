@@ -55,6 +55,11 @@ void TRString::setEqualTo(const char* argStr)
     update_length();
 }
 
+int TRString::compareTo(const TRString& argStr) const
+{
+    return utils::string::string_compare(c_str(), argStr.c_str());
+}
+
 void TRString::update_length()
 {
     this->end = utils::string::string_length(this->str);

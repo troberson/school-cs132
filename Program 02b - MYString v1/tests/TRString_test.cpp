@@ -71,3 +71,55 @@ SCENARIO("TRString: Copy a string", "[TRString]")
         }
     }
 }
+
+SCENARIO("TRString: Sorting", "[TRString]")
+{
+    GIVEN("'batman', 'cast', 'cat', 'category', and 'ZIP'")
+    {
+        TRString batman("batman");
+        TRString cast("cast");
+        TRString cat("cat");
+        TRString category("category");
+        TRString zip("ZIP");
+
+        THEN("'batman' sorts before 'cat'")
+        {
+            REQUIRE(0 > batman.compareTo(cat));
+        }
+
+        THEN("'cat' sorts after 'batman'")
+        {
+            REQUIRE(0 < cat.compareTo(batman));
+        }
+
+        THEN("'cast' sorts before 'cat'")
+        {
+            REQUIRE(0 > cast.compareTo(cat));
+        }
+
+        THEN("'cat' sorts after 'cast'")
+        {
+            REQUIRE(0 < cat.compareTo(cast));
+        }
+
+        THEN("'category' sorts after 'cat'")
+        {
+            REQUIRE(0 < category.compareTo(cat));
+        }
+
+        THEN("'cat' sorts after 'category'")
+        {
+            REQUIRE(0 > cat.compareTo(category));
+        }
+
+        THEN("'cat' is the same as 'cat'")
+        {
+            REQUIRE(0 == cat.compareTo(cat));
+        }
+
+        THEN("'cat' sorts after 'ZIP'")
+        {
+            REQUIRE(0 < cat.compareTo(zip));
+        }
+    }
+}
