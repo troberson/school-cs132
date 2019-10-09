@@ -2,6 +2,8 @@ add_executable(trstring_app
     test.cpp
 )
 
+configure_file(infile2.txt infile2.txt COPYONLY)
+
 # Use C++17
 target_compile_features(trstring_app PRIVATE cxx_std_17)
 
