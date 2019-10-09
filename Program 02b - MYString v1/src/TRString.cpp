@@ -44,6 +44,21 @@ char TRString::at(const int index) const
     return utils::string::get_char_at(str, index);
 }
 
+bool TRString::read(std::istream& istrm)
+{
+    char buffer[100];
+    istrm >> buffer;
+
+    if (istrm.fail() || istrm.bad())
+    {
+        return false;
+    }
+
+    setEqualTo(buffer);
+
+    return true;
+}
+
 void TRString::setEqualTo(const TRString& argStr)
 {
     setEqualTo(argStr.c_str());

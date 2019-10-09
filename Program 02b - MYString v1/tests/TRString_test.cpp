@@ -10,6 +10,8 @@
 #include <TRString.h>
 #include <string_utils.h>
 
+#include <sstream>
+
 #include <catch2/catch.hpp>
 
 SCENARIO("TRString: Empty string", "[TRString]")
@@ -123,3 +125,60 @@ SCENARIO("TRString: Sorting", "[TRString]")
         }
     }
 }
+
+SCENARIO("TRString: Read the words from a stream", "[TRString]")
+{
+    GIVEN("A string object and a string stream with three words")
+    {
+        TRString str;
+        std::stringstream stream("foo bar baz");
+
+        WHEN("Read the string stream into the string object")
+        {
+            str.read(stream);
+
+            THEN("The string holds the first word")
+            {
+                int result =
+                    utils::string::string_compare(str.c_str(), "foo");
+
+                REQUIRE(0 == result);
+
+                THEN("After reading again, the string holds the "
+                     "second word")
+                {
+                    str.read(stream);
+                    int result = utils::string::string_compare(
+                        str.c_str(), "bar");
+
+                    REQUIRE(0 == result);
+
+                    THEN("After reading again, the string holds the "
+                         "third word")
+                    {
+                        str.read(stream);
+                        int result = utils::string::string_compare(
+                            str.c_str(), "baz");
+
+                        REQUIRE(0 == result);
+
+                        THEN("Attempting to read a fourth time "
+                             "returns false")
+                        {
+                            REQUIRE(!str.read(stream));
+
+                            THEN("String remains unchanged")
+                            {
+                                int result =
+                                    utils::string::string_compare(
+                                        str.c_str(), "baz");
+
+                                REQUIRE(0 == result);
+                            } // end THEN
+                        } // end THEN
+                    } // end THEN
+                } // end THEN
+            } // end THEN
+        } // end WHEN
+    } // end GIVEN
+} // end SCENARIO
