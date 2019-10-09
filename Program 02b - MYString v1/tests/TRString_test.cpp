@@ -32,5 +32,42 @@ SCENARIO("TRString: Empty string", "[TRString]")
         {
             REQUIRE(20 == str.capacity());
         }
+    }
 }
+
+SCENARIO("TRString: Copy a string", "[TRString]")
+{
+    GIVEN("Two strings")
+    {
+        TRString str1("foo");
+        TRString str2("barbaz");
+
+        WHEN("The second string is copied into the first")
+        {
+            str1.setEqualTo(str2);
+
+            THEN("The objects are different")
+            {
+                REQUIRE(&str1 != &str2);
+            }
+
+            THEN("The two strings have different C string pointers")
+            {
+                REQUIRE(str1.c_str() != str2.c_str());
+            }
+
+            THEN("The two strings have equivalent C strings")
+            {
+                const int result = utils::string::string_compare(
+                    str1.c_str(), str2.c_str());
+
+                REQUIRE(0 == result);
+            }
+
+            THEN("The two strings have the same length")
+            {
+                REQUIRE(str1.length() == str2.length());
+            }
+        }
+    }
 }

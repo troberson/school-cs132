@@ -44,6 +44,11 @@ char TRString::at(const int index) const
     return utils::string::get_char_at(str, index);
 }
 
+void TRString::setEqualTo(const TRString& argStr)
+{
+    setEqualTo(argStr.c_str());
+}
+
 void TRString::setEqualTo(const char* argStr)
 {
     this->str = utils::string::string_copy(argStr);
