@@ -6,6 +6,7 @@
 // Description: A dynamically-sized string class.
 ////
 
+
 #include <TRString.h>
 
 #include <fstream>
@@ -20,11 +21,12 @@ using wordlist = std::vector<TRString>;
 /**
  * Sort string list in place.
  *
- * @note Uses bubble sort on the character values.
+ * @note Uses bubble sort according to the comparison
+ *   returned by TRString.compareTo().
  *
- * @param strings A pointer to a list of strings.
+ * @param strings A pointer to a list of TRtrings.
  */
-void sort_word_list(std::vector<TRString>* words)
+void sort_word_list(wordlist* words)
 {
     auto num_words = words->size();
 
@@ -44,38 +46,29 @@ void sort_word_list(std::vector<TRString>* words)
 
 
 /**
- * Read word list from input file
+ * Read word list from input stream
  *
- * @param filename The name of the file to read from.
- * @throw std::runtime_error If the file cannot be read.
+ * @param input_stream The input stream to read from.
  * @returns A list of words.
  */
-std::vector<TRString> read_file(const char* filename, const int max_size = 100)
+wordlist read_words(std::istream& input_stream,
+                    const int max_size = 100)
 {
-    // open the input file
-    std::ifstream input_file;
-    input_file.open(filename);
-
-    // fatal error if file could not be opened
-    if (!input_file.is_open())
-    {
-        throw std::runtime_error("Error opening input file.");
-    }
-
     // create a list of words
-    std::vector<TRString> words(max_size);
+    wordlist words(max_size);
+
+    // NOTE: we must assign to the vector index directly
+    // rather than utilizing vector.push_back() because
+    // the TRString class does not have a copy constructor
 
     // count the number of words read
     int word_count{0};
 
     // read in file
-    while (words.at(word_count).read(input_file))
+    while (words.at(word_count).read(input_stream))
     {
         word_count++;
     };
-
-    // close the input file
-    input_file.close();
 
     // resize word list to number of words actually read
     words.resize(word_count);
@@ -83,60 +76,90 @@ std::vector<TRString> read_file(const char* filename, const int max_size = 100)
     return words;
 }
 
-void write_file(const wordlist& words, const char* filename,
-    const int words_per_line = 6, const int chars_per_word = 13)
+/**
+ * Write word list to an output stream
+ *
+ * @param output_stream The output stream to write to.
+ * @param words A list of words.
+ * @param words_per_line Words to write before a newline.
+ * @param chars_per_word Words will be space-padded and right-aligned
+ * in this size.
+ */
+void write_words(std::ostream& output_stream, const wordlist& words,
+                 const int words_per_line = 6,
+                 const int chars_per_word = 13)
 {
-    // open the output file
-    std::ofstream output_file;
-    output_file.open(filename);
-
-    // fatal error if file could not be opened
-    if (!output_file.is_open())
-    {
-        throw std::runtime_error("Error opening output file.");
-    }
-
     const auto word_count = words.size();
 
     for (auto i = 0; i < word_count; i++)
     {
         TRString w = words.at(i);
-        output_file << std::setw(chars_per_word);
-        w.write(output_file);
+        output_stream << std::setw(chars_per_word);
+        w.write(output_stream);
 
         if (i % words_per_line == words_per_line - 1)
         {
-            output_file << "\n";
+            output_stream << "\n";
         }
     }
 
-    output_file << std::endl;
-
-    output_file.close();
+    output_stream << std::endl;
 }
 
+
+// MAIN
 int main()
 {
-    std::vector<TRString> words;
+    // INPUT - read in a list of words from a text file
+    std::ifstream input_file;
+    input_file.open("infile2.txt");
 
-    try
+    // fatal error if file could not be opened
+    if (!input_file.is_open())
     {
-        words = read_file("infile2.txt");
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
+        std::cerr << "Error opening input file." << std::endl;
         return 1;
     }
 
+    // read words into a list of words
+    wordlist words = read_words(input_file);
+
+
+    // SORT - sort the list of words
     sort_word_list(&words);
 
-    try
+
+    // OUPUT - write the list of words to the output file
+    std::ofstream output_file;
+    output_file.open("outfile.txt");
+
+    // fatal error if file could not be opened
+    if (!output_file.is_open())
     {
-        write_file(words, "outfile.txt");
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
+        std::cerr << "Error opening output file." << std::endl;
         return 1;
     }
 
+    // format words and write to the file
+    write_words(output_file, words, 6, 13);
 
+    // SUCCESS
     return 0;
 }
+
+
+// Sample Output
+// (written to outfile.txt)
+//             I            I            I      Martian           Or         Such
+//          They         Were            a            a            a            a
+//     amazingly           an           an          and      animal.           as
+//           ask          ask          be.        began        began        body?
+//         brain        busy.      compare        could          did   directing,
+//         each,       engine         felt        first          for          his
+//           how        human  impossible.           in           in  intelligent
+//   intelligent     ironclad         life        lower    machines,        man's
+//   mechanisms?         much           my       myself       myself           or
+//         rules      ruling,         seem       seemed          sit         sits
+//         steam          the          the         they         they        thing
+//        things         time           to           to           to           to
+//            to       using,          was         what       within        would
