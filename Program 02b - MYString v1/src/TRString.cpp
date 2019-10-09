@@ -15,7 +15,7 @@
 
 
 // Public methods
-// Default Constructor
+// Default constructor
 TRString::TRString()
 {
     setEqualTo("");

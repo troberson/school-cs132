@@ -61,6 +61,6 @@ namespace utils::string
  *   0 if the two strings are the same.
  *   >0 if @p rstr sorts before @p lstr,
  */
-int string_compare(const char *lstr, const char *rstr);
+[[nodiscard]] int string_compare(const char* lstr, const char* rstr);
 
 } // end namespace utils::string

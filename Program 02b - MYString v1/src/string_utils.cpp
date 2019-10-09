@@ -32,7 +32,9 @@ int string_length(const char* str)
     // step through the string until we hit a null
     // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
     // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-    for (; str[len] != '\0'; len++) {};
+    for (; str[len] != '\0'; len++)
+    {
+    };
 
     // return the calculated length
     return len;
@@ -88,14 +90,16 @@ int string_compare(const char* lstr, const char* rstr)
         rchar = *rstr++;
 
         // if we reach the end of lstr
-        // return the difference
+        // return the difference between lchar and null (0)
         if (lchar == '\0')
         {
             return lchar - rchar;
         }
+
+    // continue while characters are the same
     } while (lchar == rchar);
 
-    // return the difference
+    // return the difference between the last characters
     return lchar - rchar;
 }
 

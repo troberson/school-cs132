@@ -122,7 +122,7 @@ class TRString
      *
      * @param argStr The string to set equal to.
      */
-     void setEqualTo(const char* argStr);
+    void setEqualTo(const char* argStr);
 };
 
 #endif
