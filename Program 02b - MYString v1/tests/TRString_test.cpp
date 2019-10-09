@@ -182,3 +182,26 @@ SCENARIO("TRString: Read the words from a stream", "[TRString]")
         } // end WHEN
     } // end GIVEN
 } // end SCENARIO
+
+
+SCENARIO("TRString: Write string to a stream", "[TRString]")
+{
+    GIVEN("A string object and an output stream")
+    {
+        TRString str("foo");
+        std::stringstream stream;
+
+        WHEN("String object is written to the stream")
+        {
+            str.write(stream);
+
+            THEN("Stream contains the contents of string")
+            {
+                int result = utils::string::string_compare(
+                    stream.str().c_str(), str.c_str());
+
+                REQUIRE(0 == result);
+            }
+        }
+    }
+}

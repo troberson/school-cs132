@@ -59,6 +59,12 @@ bool TRString::read(std::istream& istrm)
     return true;
 }
 
+
+void TRString::write(std::ostream& ostrm) const
+{
+    ostrm << this->str;
+}
+
 void TRString::setEqualTo(const TRString& argStr)
 {
     setEqualTo(argStr.c_str());
