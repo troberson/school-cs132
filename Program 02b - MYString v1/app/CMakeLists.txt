@@ -1,5 +1,5 @@
 add_executable(trstring_app
-    test.cpp
+    format_words.cpp
 )
 
 configure_file(infile2.txt infile2.txt COPYONLY)
