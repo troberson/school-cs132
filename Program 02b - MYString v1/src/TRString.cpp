@@ -48,16 +48,26 @@ char TRString::at(const int index) const
 // Read from a stream
 bool TRString::read(std::istream& istrm)
 {
-    char buffer[100];
-    istrm >> buffer;
+    // create a temporary buffer to read into
+    // NOLINTNEXTLINE
+    char buffer[READ_BUFFER_SIZE];
 
+    // explicitly cast to a pointer instead of decaying
+    char* buffer_ptr = static_cast<char*>(buffer);
+
+    // read from the stream into the buffer
+    istrm >> buffer_ptr;
+
+    // return false if read failed
     if (istrm.fail() || istrm.bad())
     {
         return false;
     }
 
-    setEqualTo(buffer);
+    // set the string to the buffer
+    setEqualTo(buffer_ptr);
 
+    // return: true for read successful
     return true;
 }
 

@@ -14,6 +14,8 @@
 class TRString
 {
   private:
+    /** Read buffer size */
+    static const int READ_BUFFER_SIZE = 100;
 
     /** Size to increase the capacity of the string by each time */
     static const int CAPACITY_STEP = 20;
