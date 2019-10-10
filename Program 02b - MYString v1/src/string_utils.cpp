@@ -40,25 +40,21 @@ int string_length(const char* str)
 
 char* string_copy(const char* str)
 {
-    // Get the length of the string
+    // get the length of the string
     int len = string_length(str);
 
-    // Create a new string
+    // create a new string
     // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
     char* new_str = new char[len + 1];
 
-    // Copy all elements of the given string into the new one
-    for (int i = 0; i < len; i++)
+    // copy all elements of the given string into the new one
+    for (int i = 0; i <= len; i++)
     {
         // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
         new_str[i] = str[i];
     }
 
-    // Add null-terminator
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-    new_str[len] = '\0';
-
-    // Return new string
+    // return new string
     return new_str;
 }
 
@@ -81,20 +77,22 @@ int string_compare(const char* lstr, const char* rstr)
 
     do
     {
+        // get the character under the lstr pointer and advance
         // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
         lchar = *lstr++;
 
+        // get the character under the rstr pointer and advance
         // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
         rchar = *rstr++;
 
-        // if we reach the end of lstr
-        // return the difference between lchar and null (0)
+        // if we reach the end of lstr,
+        // return the difference between lchar and null (usually 0)
         if (lchar == '\0')
         {
             return lchar - rchar;
         }
 
-        // continue while characters are the same
+    // continue while characters are the same
     } while (lchar == rchar);
 
     // return the difference between the last characters

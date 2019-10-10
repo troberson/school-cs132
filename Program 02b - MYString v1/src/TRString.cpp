@@ -8,7 +8,6 @@
 
 
 #include <iostream>
-#include <stdexcept>
 
 #include <TRString.h>
 #include <string_utils.h>
@@ -104,7 +103,7 @@ void TRString::setEqualTo(const char* argStr)
 
 
 // Private methods
-// Updated the stored length of the string
+// Update the stored length of the string
 void TRString::update_length()
 {
     this->end = utils::string::string_length(this->str);

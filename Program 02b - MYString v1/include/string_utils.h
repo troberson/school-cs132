@@ -6,6 +6,9 @@
 // Description: A dynamically-sized string class.
 ////
 
+#ifndef STRING_UTILS_H
+#define STRING_UTILS_H
+
 namespace utils::string
 {
 
@@ -64,3 +67,5 @@ namespace utils::string
 [[nodiscard]] int string_compare(const char* lstr, const char* rstr);
 
 } // end namespace utils::string
+
+#endif

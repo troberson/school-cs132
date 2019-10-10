@@ -12,10 +12,9 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <stdexcept>
 #include <vector>
 
-
+// alias the vector of TRStrings as 'wordlist' for clarity and ergonomics
 using wordlist = std::vector<TRString>;
 
 /**
@@ -28,18 +27,37 @@ using wordlist = std::vector<TRString>;
  */
 void sort_word_list(wordlist* words)
 {
-    auto num_words = words->size();
+    // get the number of words in the list
+    const auto num_words = words->size();
 
+    // keep track of whether a swap was performed
+    // so we can break early
+    bool swapped;
+
+    // outer loop
     for (auto i = 0UL; i < num_words - 1; i++)
     {
+        // reset swap marker
+        swapped = false;
+
+        // inner loop
         for (auto j = 0UL; j < num_words - i - 1; j++)
         {
+            // if word j should come after word j+1, swap them
             if (words->at(j).compareTo(words->at(j + 1)) > 0)
             {
                 TRString temp = words->at(j);
                 words->at(j) = words->at(j + 1);
                 words->at(j + 1) = temp;
+
+                swapped = true;
             }
+        }
+
+        // if no swap was performed, break early
+        if (!swapped)
+        {
+            break;
         }
     }
 }
@@ -81,28 +99,38 @@ wordlist read_words(std::istream& input_stream,
  *
  * @param output_stream The output stream to write to.
  * @param words A list of words.
- * @param words_per_line Words to write before a newline.
+ * @param words_per_line Words to write before a newline. (Default: 6)
  * @param chars_per_word Words will be space-padded and right-aligned
- * in this size.
+ *   in this size. (Default: 13)
  */
 void write_words(std::ostream& output_stream, const wordlist& words,
                  const int words_per_line = 6,
                  const int chars_per_word = 13)
 {
+    // get the number of words in the list
     const auto word_count = words.size();
 
     for (auto i = 0; i < word_count; i++)
     {
+        // get the current word
         TRString w = words.at(i);
+
+        // zero-pad words up to chars_per_word
         output_stream << std::setw(chars_per_word);
+
+        // write the string to the output_stream
         w.write(output_stream);
 
-        if (i % words_per_line == words_per_line - 1)
+        // after every words_per_line, add a newline
+        // don't add a newline if this is the last word
+        if (i % words_per_line == words_per_line - 1 &&
+            i != word_count - 1)
         {
             output_stream << "\n";
         }
     }
 
+    // add a newline at the end of the file and flush
     output_stream << std::endl;
 }
 
@@ -141,7 +169,7 @@ int main()
     }
 
     // format words and write to the file
-    write_words(output_file, words, 6, 13);
+    write_words(output_file, words);
 
     // SUCCESS
     return 0;
