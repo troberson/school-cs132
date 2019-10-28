@@ -11,6 +11,7 @@
 
 #include <iostream>
 
+// NOLINTNEXTLINE(hicpp-special-member-functions, cppcoreguidelines-special-member-functions)
 class TRString
 {
   private:
@@ -47,7 +48,7 @@ class TRString
      *
      * @param mstr String to duplicate
      */
-    TRString(const TRString& mstr);
+    //TRString(const TRString& mstr);
 
     /**
      * Create a TRString
@@ -59,7 +60,7 @@ class TRString
     /**
      * Destroy string
      */
-    ~TRString();
+    //~TRString();
 
     /**
      * Return the length of the string
@@ -102,20 +103,6 @@ class TRString
     void write(std::ostream& ostrm) const;
 
     /**
-     * Compare the sort order of the object string to another string.
-     *
-     * @note The sort order depends on the encoding, such as ASCII.
-     *
-     * @param argStr The string to compare to.
-     * @returns <0: The first character that does not match has a
-     *   lower value in this string than in @p argStr. <br />
-     * 0: The contents of both strings are equal.<br />
-     * >0: The first character that does not match has a greater
-     *   value in this string than in@ @p argStr.
-     */
-    [[nodiscard]] int compareTo(const TRString& argStr) const;
-
-    /**
      * Returns a pointer to a C string representation
      *
      * @returns A C string.
@@ -141,7 +128,7 @@ class TRString
      *
      * @param lvalue The string to set equal to.
      */
-    void operator=(const TRString& lvalue);
+    //TRString& operator=(const TRString& lvalue);
 
     /**
      * Returns the character at the given position.
@@ -174,7 +161,7 @@ class TRString
 * @param istrm An input stream.
 * @returns The input stream.
 */
-std::istream& operator<<(std::istream& istrm);
+std::istream& operator<<(const TRString& lvalue, std::istream& istrm);
 
 /**
 * Write the string to a stream.
@@ -182,7 +169,7 @@ std::istream& operator<<(std::istream& istrm);
 * @param ostrm An output stream.
 * @returns The output stream.
 */
-std::ostream& operator>>(std::ostream& ostrm);
+std::ostream& operator>>(std::ostream& ostrm, const TRString& rvalue);
 
 
 #endif
