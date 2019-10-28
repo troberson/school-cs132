@@ -97,7 +97,7 @@ class TRString
     /**
      * Write the string to a stream.
      *
-     * @para ostrm An output stream.
+     * @param ostrm An output stream.
      */
     void write(std::ostream& ostrm) const;
 
@@ -108,7 +108,7 @@ class TRString
      *
      * @param argStr The string to compare to.
      * @returns <0: The first character that does not match has a
-     *   lower value in this string than in @p argStr.<br />
+     *   lower value in this string than in @p argStr. <br />
      * 0: The contents of both strings are equal.<br />
      * >0: The first character that does not match has a greater
      *   value in this string than in@ @p argStr.
@@ -160,7 +160,7 @@ class TRString
      *
      * @param argStr The string to compare to.
      * @returns <0: The first character that does not match has a
-     *   lower value in this string than in @p argStr.<br />
+     *   lower value in this string than in @p argStr. <br />
      * 0: The contents of both strings are equal.<br />
      * >0: The first character that does not match has a greater
      *   value in this string than in@ @p argStr.
@@ -179,7 +179,7 @@ std::istream& operator<<(std::istream& istrm);
 /**
 * Write the string to a stream.
 *
-* @para ostrm An output stream.
+* @param ostrm An output stream.
 * @returns The output stream.
 */
 std::ostream& operator>>(std::ostream& ostrm);
