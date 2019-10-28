@@ -97,7 +97,13 @@ void TRString::setEqualTo(const TRString& argStr)
 // Set the string equal to a C string
 void TRString::setEqualTo(const char* argStr)
 {
+    // delete old string
+    delete [] this->str;
+
+    // set the string to a copy of the new string
     this->str = utils::string::string_copy(argStr);
+
+    // update the saved string length
     update_length();
 }
 
