@@ -43,11 +43,23 @@ class TRString
     TRString();
 
     /**
+     * Copy an existing TRString
+     *
+     * @param mstr String to duplicate
+     */
+    TRString(const TRString& mstr);
+
+    /**
      * Create a TRString
      *
      * @param str A string
      */
     explicit TRString(const char* str);
+
+    /**
+     * Destroy string
+     */
+    ~TRString();
 
     /**
      * Return the length of the string
@@ -123,6 +135,54 @@ class TRString
      * @param argStr The string to set equal to.
      */
     void setEqualTo(const char* argStr);
+
+    /**
+     * Set the string
+     *
+     * @param lvalue The string to set equal to.
+     */
+    void operator=(const TRString& lvalue);
+
+    /**
+     * Returns the character at the given position.
+     *
+     * @warning Results in undefined behavior if position outside the bounds of the string.
+     *
+     * @param index Position of a character in the string.
+     * @returns The character at the given position.
+     */
+    [[nodiscard]] char operator[](int index) const;
+
+    /**
+     * Compare the sort order of the object string to another string.
+     *
+     * @note The sort order depends on the encoding, such as ASCII.
+     *
+     * @param argStr The string to compare to.
+     * @returns <0: The first character that does not match has a
+     *   lower value in this string than in @p argStr.<br />
+     * 0: The contents of both strings are equal.<br />
+     * >0: The first character that does not match has a greater
+     *   value in this string than in@ @p argStr.
+     */
+    [[nodiscard]] int compareTo(const TRString& argStr) const;
 };
+
+/**
+* Set the string to the first word from a stream.
+*
+* @param istrm An input stream.
+* @returns The input stream.
+*/
+std::istream& operator<<(std::istream& istrm);
+
+/**
+* Write the string to a stream.
+*
+* @para ostrm An output stream.
+* @returns The output stream.
+*/
+std::ostream& operator>>(std::ostream& ostrm);
+
 
 #endif
