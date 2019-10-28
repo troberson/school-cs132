@@ -33,9 +33,19 @@ class TRString
 
 
     /**
-     * Update the saved length of the string.
+     * Set the string.
+     *
+     * @param argStr The string to set equal to.
      */
-    void update_length();
+    void setEqualTo(const TRString& argStr);
+
+    /**
+     * Set the string
+     *
+     * @param argStr The string to set equal to.
+     */
+    void setEqualTo(const char* argStr);
+
 
   public:
     /**
@@ -110,25 +120,11 @@ class TRString
     [[nodiscard]] const char* c_str() const;
 
     /**
-     * Set the string.
-     *
-     * @param argStr The string to set equal to.
-     */
-    void setEqualTo(const TRString& argStr);
-
-    /**
      * Set the string
      *
-     * @param argStr The string to set equal to.
+     * @param rvalue The string to set equal to.
      */
-    void setEqualTo(const char* argStr);
-
-    /**
-     * Set the string
-     *
-     * @param lvalue The string to set equal to.
-     */
-    //TRString& operator=(const TRString& lvalue);
+    TRString& operator=(const TRString& rvalue);
 
     /**
      * Returns the character at the given position.

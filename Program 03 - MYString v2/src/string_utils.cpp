@@ -43,19 +43,36 @@ char* string_copy(const char* str)
     // get the length of the string
     int len = string_length(str);
 
+    // call the overloaded function,
+    // add 1 to the length to account for the null-terminator.
+    return string_copy(str, len + 1);
+}
+
+char* string_copy(const char* str, const int len)
+{
     // create a new string
     // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
-    char* new_str = new char[len + 1];
+    char* new_str = new char[len];
 
-    // copy all elements of the given string into the new one
-    for (int i = 0; i <= len; i++)
-    {
-        // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-        new_str[i] = str[i];
-    }
+    string_copy(str, len, new_str);
 
     // return new string
     return new_str;
+}
+
+void string_copy(const char* str, const int len, char* out_str)
+{
+    // copy all elements of the given string into the new one
+    int i{0};
+
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    for (; i < len && str[i] != '\0'; i++)
+    {
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+        out_str[i] = str[i];
+    }
+
+    out_str[i] = '\0';
 }
 
 char get_char_at(const char* str, const int index)

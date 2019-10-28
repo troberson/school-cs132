@@ -6,7 +6,8 @@
 // Description: A dynamically-sized string class.
 ////
 
-
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 
 #include <TRString.h>
@@ -17,7 +18,8 @@
 // Default constructor
 TRString::TRString()
 {
-    setEqualTo("");
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    this->str[0] = '\0';
 }
 
 // Construct from string
@@ -88,6 +90,17 @@ const char* TRString::c_str() const
     return this->str;
 }
 
+
+// Operator overloads
+// Set the string equal to another TRString
+TRString& TRString::operator=(const TRString& rvalue)
+{
+    setEqualTo(rvalue);
+    return *this;
+}
+
+
+// Private methods
 // Set the string equal to another TRString
 void TRString::setEqualTo(const TRString& argStr)
 {
@@ -97,20 +110,39 @@ void TRString::setEqualTo(const TRString& argStr)
 // Set the string equal to a C string
 void TRString::setEqualTo(const char* argStr)
 {
-    // delete old string
-    delete [] this->str;
+    // calculate the new length and required capacity
+    int new_len = utils::string::string_length(argStr);
+    auto new_len_dbl = static_cast<double>(new_len);
 
-    // set the string to a copy of the new string
-    this->str = utils::string::string_copy(argStr);
+    int capacity_steps = ceil(new_len_dbl / CAPACITY_STEP);
+    capacity_steps = std::min(1, capacity_steps);
+
+    int capacity = capacity_steps * CAPACITY_STEP;
+
+    // If we need additional capacity, delete the old string
+    // and allocate a larger size. Otherwise, just copy the new
+    // string into the existing one.
+    if (capacity > this->cap)
+    {
+        // create a temporary string
+        //   if we delete the old string and set the new
+        //   without a temporary, we risk a use-after-free
+        //   if the copying fails.
+        char* tmp = utils::string::string_copy(argStr, capacity);
+
+        // delete old string
+        delete [] this->str;
+
+        // set the string
+        this->str = tmp;
+
+        // update the saved capacity
+        this->cap = capacity;
+    } else {
+        // copy the new string into the existing string
+        utils::string::string_copy(argStr, new_len, this->str);
+    }
 
     // update the saved string length
-    update_length();
-}
-
-
-// Private methods
-// Update the stored length of the string
-void TRString::update_length()
-{
-    this->end = utils::string::string_length(this->str);
+    this->end = new_len;
 }

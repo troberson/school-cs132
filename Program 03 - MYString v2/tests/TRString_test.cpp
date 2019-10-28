@@ -37,7 +37,7 @@ SCENARIO("TRString: Empty string", "[TRString]")
     }
 }
 
-SCENARIO("TRString: Copy a string", "[TRString]")
+SCENARIO("TRString: Set a string equal to another string", "[TRString]")
 {
     GIVEN("Two strings")
     {
@@ -46,7 +46,7 @@ SCENARIO("TRString: Copy a string", "[TRString]")
 
         WHEN("The second string is copied into the first")
         {
-            str1.setEqualTo(str2);
+            str1 = str2;
 
             THEN("The objects are different")
             {
@@ -73,6 +73,7 @@ SCENARIO("TRString: Copy a string", "[TRString]")
         }
     }
 }
+
 
 SCENARIO("TRString: Sorting", "[TRString]")
 {
@@ -205,3 +206,4 @@ SCENARIO("TRString: Write string to a stream", "[TRString]")
         }
     }
 }
+

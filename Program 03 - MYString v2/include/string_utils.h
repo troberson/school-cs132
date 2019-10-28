@@ -43,6 +43,28 @@ namespace utils::string
 
 
 /**
+ * Copy a C string with a fixed size output.
+ *
+ * @note New copy is dynamically-allocated,
+ *   don't forget to delete it.
+ *
+ * @param str Pointer to a C string.
+ * @param len Length of the output string.
+ * @returns Pointer to a new copy of the string.
+ */
+[[nodiscard]] char* string_copy(const char* str, int len);
+
+
+/**
+ * Copy a C string to an existing string.
+ *
+ * @param str Pointer to a C string.
+ * @param len Length of the output string.
+ * @param[out] out_str An existing string to copy into.
+ */
+void string_copy(const char* str, int len, char* out_str);
+
+/**
  * Returns the character at the given index.
  *
  * @param index Index of a character in the string.
