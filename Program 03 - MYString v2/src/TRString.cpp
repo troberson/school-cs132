@@ -22,6 +22,12 @@ TRString::TRString()
     this->str[0] = '\0';
 }
 
+// Copy constructor
+TRString::TRString(const TRString& mstr)
+{
+    setEqualTo(mstr);
+}
+
 // Construct from string
 TRString::TRString(const char* str)
 {

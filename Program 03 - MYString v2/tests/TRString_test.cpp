@@ -74,6 +74,43 @@ SCENARIO("TRString: Set a string equal to another string", "[TRString]")
     }
 }
 
+SCENARIO("TRString: Copy another string", "[TRString]")
+{
+    GIVEN("A string")
+    {
+        TRString str1("foo");
+
+        WHEN("A second string is created from the first")
+        {
+            TRString str2 = str1;
+
+            THEN("The objects are different")
+            {
+                REQUIRE(&str1 != &str2);
+            }
+
+            THEN("The two strings have different C string pointers")
+            {
+                REQUIRE(str1.c_str() != str2.c_str());
+            }
+
+            THEN("The two strings have equivalent C strings")
+            {
+                const int result = utils::string::string_compare(
+                    str1.c_str(), str2.c_str());
+
+                REQUIRE(0 == result);
+            }
+
+            THEN("The two strings have the same length")
+            {
+                REQUIRE(str1.length() == str2.length());
+            }
+        }
+    }
+}
+
+
 
 SCENARIO("TRString: Sorting", "[TRString]")
 {

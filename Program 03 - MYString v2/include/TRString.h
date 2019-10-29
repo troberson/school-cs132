@@ -58,7 +58,7 @@ class TRString
      *
      * @param mstr String to duplicate
      */
-    //TRString(const TRString& mstr);
+    TRString(const TRString& mstr);
 
     /**
      * Create a TRString
