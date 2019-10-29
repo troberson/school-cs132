@@ -1,8 +1,13 @@
 ////
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 2B - MYString v1
+// Program Name: Program 3 - MYString v2
 //
+// Description: A dynamically-sized string class.
+// This class holds a C-style string with an initial capacity
+// of 20 characters. If it is changed to a string which requires and
+// larger capacity, it is increased in steps of 20. The number of
+// instances created since execusion and currently in memory are also tracked.
 // Description: A dynamically-sized string class.
 ////
 

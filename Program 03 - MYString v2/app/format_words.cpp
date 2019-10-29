@@ -1,9 +1,17 @@
 ////
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 2B - MYString v1
+// Program Name: Program 3 - MYString v2
 //
-// Description: A dynamically-sized string class.
+// Description: Test program for TRString.
+// Reads in a textfile named 'infile3.txt' containing a list of words
+// utilizing the custom TRString class. These words are then joined together
+// into strings of five concatenated words and sorted. Each resulting string
+// is output to the file 'outfile.txt' in this format:
+// <string>  <string length>:<string capacity>.
+// At the end of the file is recorded how many TRString objects were
+// instantiated during the execution of the program and how many are still in memory
+// (which should only be the same ones in the list of strings).
 ////
 
 

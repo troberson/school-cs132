@@ -1,9 +1,13 @@
 ///
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 2B - MYString v1
+// Program Name: Program 3 - MYString v2
 //
-// Description: A dynamically-sized string class.
+// Description: String utilities.
+// These are a collection of functions for working with C-style string
+// (null-terminated char arrays). Primarily, these are educational
+// re-implementations of standard C string functions such as strcmp() and
+// strlen().
 ////
 
 // NOTE: The requirements of this program require the use of raw
