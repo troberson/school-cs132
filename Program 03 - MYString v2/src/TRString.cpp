@@ -90,7 +90,11 @@ const char* TRString::c_str() const
 // Set the string equal to another TRString
 TRString& TRString::operator=(const TRString& rvalue)
 {
-    setEqualTo(rvalue);
+    if (this != &rvalue)
+    {
+        setEqualTo(rvalue);
+    }
+
     return *this;
 }
 
