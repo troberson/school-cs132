@@ -194,7 +194,8 @@ SCENARIO("TRString: Set the character at position", "[TRString]")
 
             THEN("A new word is formed")
             {
-                int result = utils::string::string_compare(word.c_str(), "text");
+                int result =
+                    utils::string::string_compare(word.c_str(), "text");
                 REQUIRE(0 == result);
             }
         }
@@ -208,13 +209,13 @@ SCENARIO("TRString: Set the character at position", "[TRString]")
 
             THEN("All the characters are the same")
             {
-                int result = utils::string::string_compare(word.c_str(), "tttt");
+                int result =
+                    utils::string::string_compare(word.c_str(), "tttt");
                 REQUIRE(0 == result);
             }
         }
-   }
+    }
 }
-
 
 
 SCENARIO("TRString: Sorting", "[TRString]")
@@ -292,8 +293,8 @@ SCENARIO("TRString: Read the words from a stream", "[TRString]")
                 {
                     stream >> str;
 
-                    int result = utils::string::string_compare(
-                        str.c_str(), "bar");
+                    int result =
+                        utils::string::string_compare(str.c_str(), "bar");
 
                     REQUIRE(0 == result);
 
@@ -316,9 +317,8 @@ SCENARIO("TRString: Read the words from a stream", "[TRString]")
 
                             THEN("String remains unchanged")
                             {
-                                int result =
-                                    utils::string::string_compare(
-                                        str.c_str(), "baz");
+                                int result = utils::string::string_compare(
+                                    str.c_str(), "baz");
 
                                 REQUIRE(0 == result);
                             } // end THEN
@@ -408,7 +408,8 @@ SCENARIO("TRString: Objects are counted", "[TRString]")
 
             THEN("The created count increases by 5")
             {
-                REQUIRE(old_created_count + 5 == TRString::getCreatedCount());
+                REQUIRE(old_created_count + 5 ==
+                        TRString::getCreatedCount());
             }
 
             THEN("The current count is 5")
@@ -422,8 +423,10 @@ SCENARIO("TRString: Objects are counted", "[TRString]")
         {
             THEN("The created count is unchanged")
             {
-                // std::cout << "Number created: " << TRString::getCreatedCount() << "\n";
-                REQUIRE(old_created_count + 5 == TRString::getCreatedCount());
+                // std::cout << "Number created: " <<
+                // TRString::getCreatedCount() << "\n";
+                REQUIRE(old_created_count + 5 ==
+                        TRString::getCreatedCount());
             }
 
             THEN("The current count is 0")

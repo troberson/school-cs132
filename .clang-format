@@ -22,7 +22,7 @@ BinPackArguments: true
 BinPackParameters: true
 BraceWrapping:
   AfterClass:      true
-  AfterControlStatement: true
+  AfterControlStatement: false
   AfterEnum:       true
   AfterFunction:   true
   AfterNamespace:  true
@@ -30,8 +30,8 @@ BraceWrapping:
   AfterStruct:     true
   AfterUnion:      true
   AfterExternBlock: true
-  BeforeCatch:     true
-  BeforeElse:      true
+  BeforeCatch:     false
+  BeforeElse:      false
   IndentBraces:    true
   SplitEmptyFunction: true
   SplitEmptyRecord: true
@@ -45,8 +45,8 @@ BreakConstructorInitializersBeforeComma: false
 BreakConstructorInitializers: BeforeColon
 BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: true
-ColumnLimit:    70
-CommentPragmas:  '^ IWYU pragma:'
+ColumnLimit:    75
+CommentPragmas:  '^ (IWYU pragma:|NOLINT|NOLINTNEXTLINE)'
 CompactNamespaces: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ConstructorInitializerIndentWidth: 4

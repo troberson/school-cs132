@@ -5,13 +5,13 @@
 //
 // Description: Test program for TRString.
 // Reads in a textfile named 'infile3.txt' containing a list of words
-// utilizing the custom TRString class. These words are then joined together
-// into strings of five concatenated words and sorted. Each resulting string
-// is output to the file 'outfile.txt' in this format:
-// <string>  <string length>:<string capacity>.
-// At the end of the file is recorded how many TRString objects were
-// instantiated during the execution of the program and how many are still in memory
-// (which should only be the same ones in the list of strings).
+// utilizing the custom TRString class. These words are then joined
+// together into strings of five concatenated words and sorted. Each
+// resulting string is output to the file 'outfile.txt' in this
+// format: <string>  <string length>:<string capacity>. At the end of
+// the file is recorded how many TRString objects were instantiated
+// during the execution of the program and how many are still in
+// memory (which should only be the same ones in the list of strings).
 ////
 
 
@@ -41,11 +41,12 @@ void sort_word_list(wordlist* words);
  * Read word list from input stream
  *
  * @param input_stream The input stream to read from.
- * @param words_per_long_word How many words to combine into a single string.
- *   (Default: 5)
+ * @param words_per_long_word How many words to combine into a single
+ *   string. (Default: 5)
  * @returns A list of words.
  */
-wordlist read_words(std::istream& input_stream, int words_per_long_word = 5);
+wordlist read_words(std::istream& input_stream,
+                    int words_per_long_word = 5);
 
 /**
  * Write word list to an output stream
@@ -143,7 +144,8 @@ void sort_word_list(wordlist* words)
 
 
 // Read
-wordlist read_words(std::istream& input_stream, const int words_per_long_word)
+wordlist read_words(std::istream& input_stream,
+                    const int words_per_long_word)
 {
     // create a list of words
     wordlist words;
@@ -151,7 +153,8 @@ wordlist read_words(std::istream& input_stream, const int words_per_long_word)
     // keep reading until the input_stream is exhausted
     while (input_stream)
     {
-        // multiple words in a row will be combined to create a long word
+        // multiple words in a row will be combined to create a long
+        // word
         TRString long_word;
 
         for (int i{0}; i < words_per_long_word; i++)
@@ -160,7 +163,9 @@ wordlist read_words(std::istream& input_stream, const int words_per_long_word)
             if (input_stream >> tmp)
             {
                 long_word += tmp;
-            } else {
+            }
+            else
+            {
                 break;
             }
         }
@@ -199,16 +204,18 @@ void write_words(std::ostream& output_stream, const wordlist& words)
         {
             output_stream << std::setw(max_length_snd);
         }
-        output_stream << std::left << w << "  "
-            << w.length() << ":" << w.capacity() << "\n";
+        output_stream << std::left << w << "  " << w.length() << ":"
+                      << w.capacity() << "\n";
     }
 
-    output_stream << "\n" << "TRStrings Created: " << TRString::getCreatedCount() << "\n"
-        << "TRStrings Currently: " << TRString::getCurrentCount()
-        << " (" << words.size() << " in wordlist)" << std::endl;
+    output_stream << "\n"
+                  << "TRStrings Created: " << TRString::getCreatedCount()
+                  << "\n"
+                  << "TRStrings Currently: " << TRString::getCurrentCount()
+                  << " (" << words.size() << " in wordlist)" << std::endl;
 }
 
-
+// clang-format off
 /*
 Sample Output
 (written to outfile.txt)
@@ -233,3 +240,4 @@ timeinmylifehow                   15:20
 TRStrings Created: 179
 TRStrings Currently: 16 (16 in wordlist)
 */
+// clang-format off

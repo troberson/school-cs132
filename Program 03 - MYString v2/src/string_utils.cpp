@@ -6,8 +6,8 @@
 // Description: String utilities.
 // These are a collection of functions for working with C-style string
 // (null-terminated char arrays). Primarily, these are educational
-// re-implementations of standard C string functions such as strcmp() and
-// strlen().
+// re-implementations of standard C string functions such as strcmp()
+// and strlen().
 ////
 
 // NOTE: The requirements of this program require the use of raw
@@ -133,7 +133,7 @@ int string_compare(const char* lstr, const char* rstr)
             return lchar - rchar;
         }
 
-    // continue while characters are the same
+        // continue while characters are the same
     } while (lchar == rchar);
 
     // return the difference between the last characters

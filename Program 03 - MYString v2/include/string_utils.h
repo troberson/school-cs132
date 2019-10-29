@@ -6,8 +6,8 @@
 // Description: String utilities.
 // These are a collection of functions for working with C-style string
 // (null-terminated char arrays). Primarily, these are educational
-// re-implementations of standard C string functions such as strcmp() and
-// strlen().
+// re-implementations of standard C string functions such as strcmp()
+// and strlen().
 ////
 
 #ifndef STRING_UTILS_H

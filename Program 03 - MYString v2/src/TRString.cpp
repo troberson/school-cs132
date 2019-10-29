@@ -7,7 +7,8 @@
 // This class holds a C-style string with an initial capacity
 // of 20 characters. If it is changed to a string which requires and
 // larger capacity, it is increased in steps of 20. The number of
-// instances created since execusion and currently in memory are also tracked.
+// instances created since execusion and currently in memory are also
+// tracked.
 ////
 
 #include <algorithm>
@@ -62,7 +63,7 @@ TRString::~TRString()
     TRString::currentCount--;
 
     // delete string data
-    delete [] this->str;
+    delete[] this->str;
 }
 
 // Return length
@@ -162,13 +163,17 @@ bool operator==(const TRString& lhs, const TRString& rhs)
 // Concatenation
 TRString operator+(const TRString& lhs, const TRString& rhs)
 {
-    const char* new_str = utils::string::string_concat(lhs.c_str(), rhs.c_str());
+    const char* new_str =
+        utils::string::string_concat(lhs.c_str(), rhs.c_str());
+
     return TRString(new_str);
 }
 
 TRString& TRString::operator+=(const TRString& rvalue)
 {
-    const char* new_str = utils::string::string_concat(this->str, rvalue.c_str());
+    const char* new_str =
+        utils::string::string_concat(this->str, rvalue.c_str());
+
     setEqualTo(new_str);
     return *this;
 }
@@ -203,11 +208,13 @@ void TRString::setEqualTo(const char* argStr)
         char* tmp = utils::string::string_copy(argStr, capacity);
 
         // delete old string
-        delete [] this->str;
+        delete[] this->str;
 
         // set the string
         this->str = tmp;
-    } else {
+    }
+    else
+    {
         // copy the new string into the existing string
         utils::string::string_copy(argStr, new_len, this->str);
     }

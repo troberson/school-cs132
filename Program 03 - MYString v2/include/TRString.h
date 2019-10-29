@@ -7,8 +7,8 @@
 // This class holds a C-style string with an initial capacity
 // of 20 characters. If it is changed to a string which requires and
 // larger capacity, it is increased in steps of 20. The number of
-// instances created since execusion and currently in memory are also tracked.
-// Description: A dynamically-sized string class.
+// instances created since execusion and currently in memory are also
+// tracked. Description: A dynamically-sized string class.
 ////
 
 #ifndef TRSTRING_H
@@ -39,7 +39,7 @@ class TRString
     /** index of the end of the string (null-terminator) */
     int end{0};
 
- public:
+  public:
     // STATIC
     /** Read buffer size */
     static const int READ_BUFFER_SIZE = 100;
@@ -115,7 +115,7 @@ class TRString
     void setEqualTo(const char* argStr);
 
 
-     /**
+    /**
      * Returns the character at the given position.
      *
      * @param index Position of a character in the string.
@@ -150,7 +150,8 @@ class TRString
     /**
      * Returns the character at the given position.
      *
-     * @warning Results in undefined behavior if position outside the bounds of the string.
+     * @warning Results in undefined behavior if position outside the
+     *   bounds of the string.
      *
      * @param index Position of a character in the string.
      * @returns The character at the given position.
@@ -160,7 +161,8 @@ class TRString
     /**
      * Returns the character at the given position.
      *
-     * @warning Results in undefined behavior if position outside the bounds of the string.
+     * @warning Results in undefined behavior if position outside the
+     *   bounds of the string.
      *
      * @param index Position of a character in the string.
      * @returns The character at the given position.
@@ -169,19 +171,19 @@ class TRString
 };
 
 /**
-* Set the string to the first word from a stream.
-*
-* @param istrm An input stream.
-* @returns The input stream.
-*/
+ * Set the string to the first word from a stream.
+ *
+ * @param istrm An input stream.
+ * @returns The input stream.
+ */
 std::istream& operator>>(std::istream& istrm, TRString& argStr);
 
 /**
-* Write the string to a stream.
-*
-* @param ostrm An output stream.
-* @returns The output stream.
-*/
+ * Write the string to a stream.
+ *
+ * @param ostrm An output stream.
+ * @returns The output stream.
+ */
 std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
 
 /**
@@ -191,16 +193,18 @@ std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
  * @param rhs A string.
  * @returns True if @p lhs sorts before @p rhs, false otherwise.
  */
-[[nodiscard]] bool operator<(const TRString& lhs, const TRString& rhs);
+[[nodiscard]] bool operator<(const TRString& lhs,
+                             const TRString& rhs);
 
- /**
+/**
  * Returns if one string sorts after another.
  *
  * @param lhs A string.
  * @param rhs A string.
  * @returns True if @p lhs sorts after @p rhs, false otherwise.
  */
-[[nodiscard]] bool operator>(const TRString& lhs, const TRString& rhs);
+[[nodiscard]] bool operator>(const TRString& lhs,
+                             const TRString& rhs);
 
 /**
  * Returns if two string are equivalent.
@@ -209,7 +213,8 @@ std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
  * @param rhs A string.
  * @returns True if the two strings are equivalent, false otherwise.
  */
-[[nodiscard]] bool operator==(const TRString& lhs, const TRString& rhs);
+[[nodiscard]] bool operator==(const TRString& lhs,
+                              const TRString& rhs);
 
 /**
  * Returns a string containing characters from @p lhs
@@ -220,6 +225,7 @@ std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
  * @returns A string containing characters from @p lhs
  *   followed by the characters from @p rhs.
  */
-[[nodiscard]] TRString operator+(const TRString& lhs, const TRString& rhs);
+[[nodiscard]] TRString operator+(const TRString& lhs,
+                                 const TRString& rhs);
 
 #endif
