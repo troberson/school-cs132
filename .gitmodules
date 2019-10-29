@@ -1,0 +1,3 @@
+[submodule "Program 03 - MYString v2/cmake/clangformat-cmake"]
+	path = Program 03 - MYString v2/cmake/clangformat-cmake
+	url = https://github.com/zemasoft/clangformat-cmake
