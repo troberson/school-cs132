@@ -69,27 +69,30 @@ void sort_word_list(wordlist* words)
  * @param input_stream The input stream to read from.
  * @returns A list of words.
  */
-wordlist read_words(std::istream& input_stream,
-                    const int max_size = 100)
+wordlist read_words(std::istream& input_stream, const int words_per_long_word = 5)
 {
     // create a list of words
-    wordlist words(max_size);
+    wordlist words;
 
-    // NOTE: we must assign to the vector index directly
-    // rather than utilizing vector.push_back() because
-    // the TRString class does not have a copy constructor
-
-    // count the number of words read
-    int word_count{0};
-
-    // read in file
-    while (input_stream >> words.at(word_count))
+    // keep reading until the input_stream is exhausted
+    while (input_stream)
     {
-        word_count++;
-    };
+        // multiple words in a row will be combined to create a long word
+        TRString long_word;
 
-    // resize word list to number of words actually read
-    words.resize(word_count);
+        for (int i{0}; i < words_per_long_word; i++)
+        {
+            TRString tmp;
+            if (input_stream >> tmp)
+            {
+                long_word += tmp;
+            } else {
+                break;
+            }
+        }
+
+        words.push_back(long_word);
+    }
 
     return words;
 }
@@ -99,39 +102,40 @@ wordlist read_words(std::istream& input_stream,
  *
  * @param output_stream The output stream to write to.
  * @param words A list of words.
- * @param words_per_line Words to write before a newline. (Default: 6)
- * @param chars_per_word Words will be space-padded and right-aligned
- *   in this size. (Default: 13)
  */
-void write_words(std::ostream& output_stream, const wordlist& words,
-                 const int words_per_line = 6,
-                 const int chars_per_word = 13)
+void write_words(std::ostream& output_stream, const wordlist& words)
 {
-    // get the number of words in the list
-    const auto word_count = words.size();
-
-    for (auto i = 0; i < word_count; i++)
+    // Find the length needed for formatting
+    // There is one extremely long word, so we actually want
+    // the length of the *second* longest word.
+    int max_length{0};
+    int max_length_snd{0};
+    for (const auto& w : words)
     {
-        // get the current word
-        TRString w = words.at(i);
-
-        // zero-pad words up to chars_per_word
-        output_stream << std::setw(chars_per_word);
-
-        // write the string to the output_stream
-        output_stream << w;
-
-        // after every words_per_line, add a newline
-        // don't add a newline if this is the last word
-        if (i % words_per_line == words_per_line - 1 &&
-            i != word_count - 1)
+        if (w.length() > max_length)
         {
-            output_stream << "\n";
+            max_length_snd = max_length;
+            max_length = w.length();
         }
     }
 
-    // add a newline at the end of the file and flush
-    output_stream << std::endl;
+    // Output words in the following format:
+    // <word>  <length>:<capacity>
+    // The numbers should be aligned with the exception
+    // of the extremely long word.
+    for (const auto& w : words)
+    {
+        if (w.length() != max_length)
+        {
+            output_stream << std::setw(max_length_snd);
+        }
+        output_stream << std::left << w << "  "
+            << w.length() << ":" << w.capacity() << "\n";
+    }
+
+    output_stream << "\n" << "TRStrings Created: " << TRString::getCreatedCount() << "\n"
+        << "TRStrings Currently: " << TRString::getCurrentCount()
+        << " (" << words.size() << " in wordlist)" << std::endl;
 }
 
 
@@ -140,7 +144,7 @@ int main()
 {
     // INPUT - read in a list of words from a text file
     std::ifstream input_file;
-    input_file.open("infile2.txt");
+    input_file.open("infile3.txt");
 
     // fatal error if file could not be opened
     if (!input_file.is_open())
@@ -151,6 +155,9 @@ int main()
 
     // read words into a list of words
     wordlist words = read_words(input_file);
+
+    // explicitly close input file
+    input_file.close();
 
 
     // SORT - sort the list of words
@@ -171,23 +178,34 @@ int main()
     // format words and write to the file
     write_words(output_file, words);
 
+    // explicitly close output file
+    output_file.close();
+
     // SUCCESS
     return 0;
 }
 
+/*
+Sample Output
+(written to outfile.txt)
 
-// Sample Output
-// (written to outfile.txt)
-//             I            I            I      Martian           Or         Such
-//          They         Were            a            a            a            a
-//     amazingly           an           an          and      animal.           as
-//           ask          ask          be.        began        began        body?
-//         brain        busy.      compare        could          did   directing,
-//         each,       engine         felt        first          for          his
-//           how        human  impossible.           in           in  intelligent
-//   intelligent     ironclad         life        lower    machines,        man's
-//   mechanisms?         much           my       myself       myself           or
-//         rules      ruling,         seem       seemed          sit         sits
-//         steam          the          the         they         they        thing
-//        things         time           to           to           to           to
-//            to       using,          was         what       within        would
+Ibegantocomparethe                18:20
+Ifeltwasimpossible.Or             21:40
+Theyseemedamazinglybusy.I         25:40
+andrulesinhisbody?                18:20
+anironcladorasteam                18:20
+asaman'sbrainsits                 17:20
+askmyselfforthefirst              20:20
+begantoaskmyselfwhat              20:20
+didaMartiansitwithin              20:20
+each,ruling,directing,using,much  32:40
+enginewouldseemtoan               19:20
+intelligentloweranimal.ThisIsMyAmazinglyLongStringToMakeYourExtractionOperatorWorkCorrectly.  92:100
+intelligentmechanisms?Suchathing  32:40
+theycouldbe.Werethey              20:20
+thingstohumanmachines,to          24:40
+timeinmylifehow                   15:20
+
+TRStrings Created: 179
+TRStrings Currently: 16 (16 in wordlist)
+*/
