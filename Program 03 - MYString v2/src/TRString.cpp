@@ -57,12 +57,6 @@ char TRString::at(const int index) const
     return utils::string::get_char_at(this->str, index);
 }
 
-// Return the sort order compared to another TRString
-int TRString::compareTo(const TRString& argStr) const
-{
-    return utils::string::string_compare(c_str(), argStr.c_str());
-}
-
 // Return C string representation
 const char* TRString::c_str() const
 {
@@ -119,6 +113,22 @@ std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr)
     return ostrm;
 }
 
+// Sort order comparison
+bool operator<(const TRString& lhs, const TRString& rhs)
+{
+    return 0 > utils::string::string_compare(lhs.c_str(), rhs.c_str());
+}
+
+bool operator>(const TRString& lhs, const TRString& rhs)
+{
+    return rhs < lhs;
+}
+
+bool operator==(const TRString& lhs, const TRString& rhs)
+{
+    return 0 == utils::string::string_compare(lhs.c_str(), rhs.c_str());
+}
+
 
 // Private methods
 // Set the string equal to another TRString
@@ -166,3 +176,4 @@ void TRString::setEqualTo(const char* argStr)
     // update the saved string length
     this->end = new_len;
 }
+

@@ -129,20 +129,6 @@ class TRString
      * @returns The character at the given position.
      */
     [[nodiscard]] char& operator[](int index);
-
-    /**
-     * Compare the sort order of the object string to another string.
-     *
-     * @note The sort order depends on the encoding, such as ASCII.
-     *
-     * @param argStr The string to compare to.
-     * @returns <0: The first character that does not match has a
-     *   lower value in this string than in @p argStr. <br />
-     * 0: The contents of both strings are equal.<br />
-     * >0: The first character that does not match has a greater
-     *   value in this string than in@ @p argStr.
-     */
-    [[nodiscard]] int compareTo(const TRString& argStr) const;
 };
 
 /**
@@ -160,5 +146,32 @@ std::istream& operator>>(std::istream& istrm, TRString& argStr);
 * @returns The output stream.
 */
 std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
+
+/**
+ * Returns if one string sorts before another.
+ *
+ * @param lhs A string.
+ * @param rhs A string.
+ * @returns True if @p lhs sorts before @p rhs, false otherwise.
+ */
+[[nodiscard]] bool operator<(const TRString& lhs, const TRString& rhs);
+
+ /**
+ * Returns if one string sorts after another.
+ *
+ * @param lhs A string.
+ * @param rhs A string.
+ * @returns True if @p lhs sorts after @p rhs, false otherwise.
+ */
+[[nodiscard]] bool operator>(const TRString& lhs, const TRString& rhs);
+
+/**
+ * Returns if two string are equivalent.
+ *
+ * @param lhs A string.
+ * @param rhs A string.
+ * @returns True if the two strings are equivalent, false otherwise.
+ */
+[[nodiscard]] bool operator==(const TRString& lhs, const TRString& rhs);
 
 #endif

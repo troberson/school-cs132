@@ -44,7 +44,7 @@ void sort_word_list(wordlist* words)
         for (auto j = 0UL; j < num_words - i - 1; j++)
         {
             // if word j should come after word j+1, swap them
-            if (words->at(j).compareTo(words->at(j + 1)) > 0)
+            if (words->at(j) > words->at(j + 1))
             {
                 TRString temp = words->at(j);
                 words->at(j) = words->at(j + 1);

@@ -72,6 +72,7 @@ void string_copy(const char* str, const int len, char* out_str)
         out_str[i] = str[i];
     }
 
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
     out_str[i] = '\0';
 }
 

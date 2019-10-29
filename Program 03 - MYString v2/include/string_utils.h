@@ -79,8 +79,8 @@ void string_copy(const char* str, int len, char* out_str);
  *
  * @note The sort order depends on the encoding, such as ASCII.
  *
- * @param lstr a string
- * @param rstr a string
+ * @param lstr A string
+ * @param rstr A string
  * @returns
  *   <0 if @p lstr sorts before @p rstr,
  *   0 if the two strings are the same.

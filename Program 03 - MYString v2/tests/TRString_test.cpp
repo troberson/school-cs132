@@ -229,42 +229,42 @@ SCENARIO("TRString: Sorting", "[TRString]")
 
         THEN("'batman' sorts before 'cat'")
         {
-            REQUIRE(0 > batman.compareTo(cat));
+            REQUIRE(batman < cat);
         }
 
         THEN("'cat' sorts after 'batman'")
         {
-            REQUIRE(0 < cat.compareTo(batman));
+            REQUIRE(cat > batman);
         }
 
         THEN("'cast' sorts before 'cat'")
         {
-            REQUIRE(0 > cast.compareTo(cat));
+            REQUIRE(cast < cat);
         }
 
         THEN("'cat' sorts after 'cast'")
         {
-            REQUIRE(0 < cat.compareTo(cast));
+            REQUIRE(cat > cast);
         }
 
         THEN("'category' sorts after 'cat'")
         {
-            REQUIRE(0 < category.compareTo(cat));
+            REQUIRE(category > cat);
         }
 
-        THEN("'cat' sorts after 'category'")
+        THEN("'cat' sorts before 'category'")
         {
-            REQUIRE(0 > cat.compareTo(category));
+            REQUIRE(cat < category);
         }
 
         THEN("'cat' is the same as 'cat'")
         {
-            REQUIRE(0 == cat.compareTo(cat));
+            REQUIRE(cat == cat);
         }
 
         THEN("'cat' sorts after 'ZIP'")
         {
-            REQUIRE(0 < cat.compareTo(zip));
+            REQUIRE(cat > zip);
         }
     }
 }
