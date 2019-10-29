@@ -162,6 +162,13 @@ TRString operator+(const TRString& lhs, const TRString& rhs)
     return TRString(new_str);
 }
 
+TRString& TRString::operator+=(const TRString& rvalue)
+{
+    const char* new_str = utils::string::string_concat(this->str, rvalue.c_str());
+    setEqualTo(new_str);
+    return *this;
+}
+
 // Set the string equal to another TRString
 void TRString::setEqualTo(const TRString& argStr)
 {

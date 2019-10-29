@@ -372,6 +372,24 @@ SCENARIO("TRString: Concatenate two strings", "[TRString]")
     }
 }
 
+SCENARIO("TRString: Append a string to an existing string", "[TRString]")
+{
+    GIVEN("The word 'cat'")
+    {
+        TRString cat("cat");
+
+        WHEN("'woman' is appended")
+        {
+            cat += TRString("woman");
+
+            THEN("The word is now 'catwoman'")
+            {
+                REQUIRE(cat == TRString("catwoman"));
+            }
+        }
+    }
+}
+
 
 SCENARIO("TRString: Objects are counted", "[TRString]")
 {

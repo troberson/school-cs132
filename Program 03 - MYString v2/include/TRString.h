@@ -130,8 +130,17 @@ class TRString
      * Set the string
      *
      * @param rvalue The string to set equal to.
+     * @returns A pointer to the current string.
      */
     TRString& operator=(const TRString& rvalue);
+
+    /**
+     * Append another string to the current string.
+     *
+     * @param rvalue The string to append.
+     * @returns A pointer to the current string.
+     */
+    TRString& operator+=(const TRString& rvalue);
 
     /**
      * Returns the character at the given position.
