@@ -18,8 +18,7 @@
 // Default constructor
 TRString::TRString()
 {
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-    this->str[0] = '\0';
+    setEqualTo("");
 }
 
 // Copy constructor
