@@ -278,7 +278,7 @@ SCENARIO("TRString: Read the words from a stream", "[TRString]")
 
         WHEN("Read the string stream into the string object")
         {
-            str.read(stream);
+            stream >> str;
 
             THEN("The string holds the first word")
             {
@@ -290,7 +290,8 @@ SCENARIO("TRString: Read the words from a stream", "[TRString]")
                 THEN("After reading again, the string holds the "
                      "second word")
                 {
-                    str.read(stream);
+                    stream >> str;
+
                     int result = utils::string::string_compare(
                         str.c_str(), "bar");
 
@@ -299,16 +300,19 @@ SCENARIO("TRString: Read the words from a stream", "[TRString]")
                     THEN("After reading again, the string holds the "
                          "third word")
                     {
-                        str.read(stream);
+                        stream >> str;
+
                         int result = utils::string::string_compare(
                             str.c_str(), "baz");
 
                         REQUIRE(0 == result);
 
                         THEN("Attempting to read a fourth time "
-                             "returns false")
+                             "stream is no longer good")
                         {
-                            REQUIRE(!str.read(stream));
+                            stream >> str;
+
+                            REQUIRE(!stream);
 
                             THEN("String remains unchanged")
                             {
@@ -336,7 +340,7 @@ SCENARIO("TRString: Write string to a stream", "[TRString]")
 
         WHEN("String object is written to the stream")
         {
-            str.write(stream);
+            stream << str;
 
             THEN("Stream contains the contents of string")
             {

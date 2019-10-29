@@ -83,7 +83,7 @@ wordlist read_words(std::istream& input_stream,
     int word_count{0};
 
     // read in file
-    while (words.at(word_count).read(input_stream))
+    while (input_stream >> words.at(word_count))
     {
         word_count++;
     };
@@ -119,7 +119,7 @@ void write_words(std::ostream& output_stream, const wordlist& words,
         output_stream << std::setw(chars_per_word);
 
         // write the string to the output_stream
-        w.write(output_stream);
+        output_stream << w;
 
         // after every words_per_line, add a newline
         // don't add a newline if this is the last word

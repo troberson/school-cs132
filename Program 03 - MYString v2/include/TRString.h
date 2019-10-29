@@ -15,9 +15,6 @@
 class TRString
 {
   private:
-    /** Read buffer size */
-    static const int READ_BUFFER_SIZE = 100;
-
     /** Size to increase the capacity of the string by each time */
     static const int CAPACITY_STEP = 20;
 
@@ -31,23 +28,10 @@ class TRString
     /** index of the end of the string (null-terminator) */
     int end{0};
 
+ public:
+    /** Read buffer size */
+    static const int READ_BUFFER_SIZE = 100;
 
-    /**
-     * Set the string.
-     *
-     * @param argStr The string to set equal to.
-     */
-    void setEqualTo(const TRString& argStr);
-
-    /**
-     * Set the string
-     *
-     * @param argStr The string to set equal to.
-     */
-    void setEqualTo(const char* argStr);
-
-
-  public:
     /**
      * Create an empty TRString
      */
@@ -89,6 +73,21 @@ class TRString
     [[nodiscard]] int capacity() const;
 
     /**
+     * Set the string.
+     *
+     * @param argStr The string to set equal to.
+     */
+    void setEqualTo(const TRString& argStr);
+
+    /**
+     * Set the string
+     *
+     * @param argStr The string to set equal to.
+     */
+    void setEqualTo(const char* argStr);
+
+
+     /**
      * Returns the character at the given position.
      *
      * @param index Position of a character in the string.
@@ -96,21 +95,6 @@ class TRString
      * @returns The character at the given position.
      */
     [[nodiscard]] char at(int index) const;
-
-    /**
-     * Read one word from a stream.
-     *
-     * @param istrm An input stream.
-     * @returns True if read was successful, False otherwise.
-     */
-    bool read(std::istream& istrm);
-
-    /**
-     * Write the string to a stream.
-     *
-     * @param ostrm An output stream.
-     */
-    void write(std::ostream& ostrm) const;
 
     /**
      * Returns a pointer to a C string representation
@@ -167,7 +151,7 @@ class TRString
 * @param istrm An input stream.
 * @returns The input stream.
 */
-std::istream& operator<<(const TRString& lvalue, std::istream& istrm);
+std::istream& operator>>(std::istream& istrm, TRString& argStr);
 
 /**
 * Write the string to a stream.
@@ -175,7 +159,6 @@ std::istream& operator<<(const TRString& lvalue, std::istream& istrm);
 * @param ostrm An output stream.
 * @returns The output stream.
 */
-std::ostream& operator>>(std::ostream& ostrm, const TRString& rvalue);
-
+std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
 
 #endif

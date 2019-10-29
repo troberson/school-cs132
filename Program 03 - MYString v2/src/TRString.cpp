@@ -57,38 +57,6 @@ char TRString::at(const int index) const
     return utils::string::get_char_at(this->str, index);
 }
 
-// Read from a stream
-bool TRString::read(std::istream& istrm)
-{
-    // create a temporary buffer to read into
-    // NOLINTNEXTLINE
-    char buffer[READ_BUFFER_SIZE];
-
-    // explicitly cast to a pointer instead of decaying
-    char* buffer_ptr = static_cast<char*>(buffer);
-
-    // read from the stream into the buffer
-    istrm >> buffer_ptr;
-
-    // return false if read failed
-    if (istrm.fail() || istrm.bad())
-    {
-        return false;
-    }
-
-    // set the string to the buffer
-    setEqualTo(buffer_ptr);
-
-    // return: true for read successful
-    return true;
-}
-
-// Write to a stream
-void TRString::write(std::ostream& ostrm) const
-{
-    ostrm << this->str;
-}
-
 // Return the sort order compared to another TRString
 int TRString::compareTo(const TRString& argStr) const
 {
@@ -124,6 +92,32 @@ char& TRString::operator[](const int index)
     return this->str[index];
 }
 
+// Attempt to read a word from a stream
+std::istream& operator>>(std::istream& istrm, TRString& argStr)
+{
+    // create a temporary buffer to read into
+    // NOLINTNEXTLINE
+    char buffer[TRString::READ_BUFFER_SIZE];
+
+    // explicitly cast to a pointer instead of decaying
+    char* buffer_ptr = static_cast<char*>(buffer);
+
+    // read from the stream into the buffer
+    // if successful, set the string to the buffer
+    if (istrm >> buffer_ptr)
+    {
+        argStr.setEqualTo(buffer_ptr);
+    }
+
+    return istrm;
+}
+
+// Write to a stream
+std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr)
+{
+    ostrm << argStr.c_str();
+    return ostrm;
+}
 
 
 // Private methods
