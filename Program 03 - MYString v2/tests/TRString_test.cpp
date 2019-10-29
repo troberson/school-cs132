@@ -353,3 +353,22 @@ SCENARIO("TRString: Write string to a stream", "[TRString]")
     }
 }
 
+SCENARIO("TRString: Concatenate two strings", "[TRString]")
+{
+    GIVEN("'bat' and 'man'")
+    {
+        TRString bat("bat");
+        TRString man("man");
+
+        WHEN("They are concatenated")
+        {
+            TRString batman = bat + man;
+
+            THEN("They form 'batman'")
+            {
+                REQUIRE(batman == TRString("batman"));
+            }
+        }
+    }
+}
+

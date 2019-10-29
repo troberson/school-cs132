@@ -79,6 +79,27 @@ SCENARIO("string_utils: Short string", "[string_utils]")
 }
 
 
+SCENARIO("string_utils: Concatenate two strings", "[string_utils]")
+{
+    GIVEN("'bat' and 'man'")
+    {
+        const char* bat = "bat";
+        const char* man = "man";
+
+        WHEN("They are concatenated")
+        {
+            const char* batman = string_concat(bat, man);
+
+            THEN("They form 'batman'")
+            {
+                int result = string_compare(batman, "batman");
+                REQUIRE(0 == result);
+            }
+        }
+    }
+}
+
+
 SCENARIO("string_utils: Sorting", "[string_utils]")
 {
     GIVEN("'batman', 'cast', 'cat', 'category', and 'ZIP'")

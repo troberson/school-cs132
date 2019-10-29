@@ -58,11 +58,26 @@ namespace utils::string
 /**
  * Copy a C string to an existing string.
  *
+ * @note New copy is dynamically-allocated,
+ *   don't forget to delete it.
+ *
  * @param str Pointer to a C string.
  * @param len Length of the output string.
  * @param[out] out_str An existing string to copy into.
  */
 void string_copy(const char* str, int len, char* out_str);
+
+
+/**
+ * Returns the concatenation of two strings.
+ *
+ * @param lstr A string.
+ * @param rstr A string.
+ * @returns Pointer to a new string which is the concatenation of
+ *   @p lstr and @p rstr.
+ */
+char* string_concat(const char* lstr, const char* rstr);
+
 
 /**
  * Returns the character at the given index.

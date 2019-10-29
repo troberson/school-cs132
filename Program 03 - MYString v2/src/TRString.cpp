@@ -129,8 +129,13 @@ bool operator==(const TRString& lhs, const TRString& rhs)
     return 0 == utils::string::string_compare(lhs.c_str(), rhs.c_str());
 }
 
+// Concatenation
+TRString operator+(const TRString& lhs, const TRString& rhs)
+{
+    const char* new_str = utils::string::string_concat(lhs.c_str(), rhs.c_str());
+    return TRString(new_str);
+}
 
-// Private methods
 // Set the string equal to another TRString
 void TRString::setEqualTo(const TRString& argStr)
 {
@@ -176,4 +181,3 @@ void TRString::setEqualTo(const char* argStr)
     // update the saved string length
     this->end = new_len;
 }
-

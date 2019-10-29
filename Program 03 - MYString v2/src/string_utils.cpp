@@ -76,6 +76,25 @@ void string_copy(const char* str, const int len, char* out_str)
     out_str[i] = '\0';
 }
 
+// Concatentate two strings
+char* string_concat(const char* lstr, const char* rstr)
+{
+    int lstr_len = string_length(lstr);
+    int rstr_len = string_length(rstr);
+    int new_len = lstr_len + rstr_len + 1;
+
+    // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
+    char* new_str = new char[new_len];
+
+    string_copy(lstr, lstr_len, new_str);
+
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    char* new_str_right = &new_str[lstr_len];
+    string_copy(rstr, rstr_len, new_str_right);
+
+    return new_str;
+}
+
 char get_char_at(const char* str, const int index)
 {
     if (index < 0 || index > string_length(str))

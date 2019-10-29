@@ -174,4 +174,15 @@ std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
  */
 [[nodiscard]] bool operator==(const TRString& lhs, const TRString& rhs);
 
+/**
+ * Returns a string containing characters from @p lhs
+ * followed by the characters from @p rhs.
+ *
+ * @param lhs A string.
+ * @param rhs A string.
+ * @returns A string containing characters from @p lhs
+ *   followed by the characters from @p rhs.
+ */
+[[nodiscard]] TRString operator+(const TRString& lhs, const TRString& rhs);
+
 #endif
