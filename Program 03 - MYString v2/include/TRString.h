@@ -15,9 +15,15 @@
 class TRString
 {
   private:
+    // STATIC
+    // Instance counters
+    static int createdCount;
+    static int currentCount;
+
     /** Size to increase the capacity of the string by each time */
     static const int CAPACITY_STEP = 20;
 
+    // INSTANCE
     /** pointer to dynamic memory for storing the string */
     // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
     char* str = new char[CAPACITY_STEP];
@@ -29,9 +35,26 @@ class TRString
     int end{0};
 
  public:
+    // STATIC
     /** Read buffer size */
     static const int READ_BUFFER_SIZE = 100;
 
+    /**
+     * Returns the number of TRStrings created since execution began.
+     *
+     * @returns The number of TRStrings created since execution began.
+     */
+    static int getCreatedCount();
+
+    /**
+     * Returns the number of TRStrings which currently are in memory.
+     *
+     * @returns The number of TRStrings which currently are in memory.
+     */
+    static int getCurrentCount();
+
+
+    // INSTANCE
     /**
      * Create an empty TRString
      */

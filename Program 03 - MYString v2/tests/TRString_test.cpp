@@ -372,3 +372,46 @@ SCENARIO("TRString: Concatenate two strings", "[TRString]")
     }
 }
 
+
+SCENARIO("TRString: Objects are counted", "[TRString]")
+{
+    GIVEN("Five strings")
+    {
+        const int old_created_count = TRString::getCreatedCount();
+
+        // block scope so strings will be deleted
+        // and we can check their counts again
+        {
+            TRString str1;
+            TRString str2;
+            TRString str3;
+            TRString str4;
+            TRString str5;
+
+            THEN("The created count increases by 5")
+            {
+                REQUIRE(old_created_count + 5 == TRString::getCreatedCount());
+            }
+
+            THEN("The current count is 5")
+            {
+
+                REQUIRE(5 == TRString::getCurrentCount());
+            }
+        }
+
+        WHEN("They are deleted")
+        {
+            THEN("The created count is unchanged")
+            {
+                // std::cout << "Number created: " << TRString::getCreatedCount() << "\n";
+                REQUIRE(old_created_count + 5 == TRString::getCreatedCount());
+            }
+
+            THEN("The current count is 0")
+            {
+                REQUIRE(0 == TRString::getCurrentCount());
+            }
+        }
+    }
+}

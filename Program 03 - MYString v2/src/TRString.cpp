@@ -14,28 +14,50 @@
 #include <string_utils.h>
 
 
+// Static
+// Instance counters
+int TRString::createdCount = 0;
+int TRString::currentCount = 0;
+
+int TRString::getCreatedCount()
+{
+    return createdCount;
+}
+
+int TRString::getCurrentCount()
+{
+    return currentCount;
+}
+
+
 // Public methods
 // Default constructor
-TRString::TRString()
+TRString::TRString() : TRString("")
 {
-    setEqualTo("");
 }
 
 // Copy constructor
-TRString::TRString(const TRString& mstr)
+TRString::TRString(const TRString& mstr) : TRString(mstr.c_str())
 {
-    setEqualTo(mstr);
 }
 
 // Construct from string
 TRString::TRString(const char* str)
 {
+    // increase instance counters
+    TRString::createdCount++;
+    TRString::currentCount++;
+
     setEqualTo(str);
 }
 
 // Destructor
 TRString::~TRString()
 {
+    // decrease current instance counter
+    TRString::currentCount--;
+
+    // delete string data
     delete [] this->str;
 }
 
