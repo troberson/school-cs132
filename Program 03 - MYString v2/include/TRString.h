@@ -70,7 +70,7 @@ class TRString
     /**
      * Destroy string
      */
-    //~TRString();
+    ~TRString();
 
     /**
      * Return the length of the string

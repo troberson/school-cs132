@@ -33,6 +33,12 @@ TRString::TRString(const char* str)
     setEqualTo(str);
 }
 
+// Destructor
+TRString::~TRString()
+{
+    delete [] this->str;
+}
+
 // Return length
 int TRString::length() const
 {
