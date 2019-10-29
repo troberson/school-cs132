@@ -203,9 +203,6 @@ void TRString::setEqualTo(const char* argStr)
 
         // set the string
         this->str = tmp;
-
-        // update the saved capacity
-        this->cap = capacity;
     } else {
         // copy the new string into the existing string
         utils::string::string_copy(argStr, new_len, this->str);
@@ -213,4 +210,7 @@ void TRString::setEqualTo(const char* argStr)
 
     // update the saved string length
     this->end = new_len;
+
+    // update the saved capacity
+    this->cap = capacity;
 }
