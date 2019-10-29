@@ -134,7 +134,17 @@ class TRString
      * @param index Position of a character in the string.
      * @returns The character at the given position.
      */
-    [[nodiscard]] char operator[](int index) const;
+    [[nodiscard]] char& operator[](int index) const;
+
+    /**
+     * Returns the character at the given position.
+     *
+     * @warning Results in undefined behavior if position outside the bounds of the string.
+     *
+     * @param index Position of a character in the string.
+     * @returns The character at the given position.
+     */
+    [[nodiscard]] char& operator[](int index);
 
     /**
      * Compare the sort order of the object string to another string.

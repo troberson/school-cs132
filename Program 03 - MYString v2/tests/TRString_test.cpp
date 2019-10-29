@@ -11,6 +11,7 @@
 #include <string_utils.h>
 
 #include <sstream>
+#include <stdexcept>
 
 #include <catch2/catch.hpp>
 
@@ -132,6 +133,89 @@ SCENARIO("TRString: Capacity needs to be increased", "[TRString]")
         }
     }
 }
+
+SCENARIO("TRString: Get the character at position (safe)", "[TRString]")
+{
+    GIVEN("A word")
+    {
+        TRString word("word");
+
+        WHEN("A character in bounds is requested")
+        {
+            THEN("The function returns the character")
+            {
+                REQUIRE(word.at(2) == 'r');
+            }
+        }
+
+        WHEN("A character out of bounds is requested")
+        {
+            THEN("The function throws an out-of-bounds exception")
+            {
+                REQUIRE_THROWS_AS(word.at(10), std::out_of_range);
+            }
+        }
+    }
+}
+
+SCENARIO("TRString: Get the character at position (unsafe)", "[TRString]")
+{
+    GIVEN("A word")
+    {
+        TRString word("word");
+
+        WHEN("A character in bounds is requested")
+        {
+            THEN("The function returns the character")
+            {
+                REQUIRE(word[2] == 'r');
+            }
+        }
+
+        WHEN("A character out of bounds is requested")
+        {
+            THEN("The function does not throw an exception")
+            {
+                REQUIRE_NOTHROW(word[10]);
+            }
+        }
+    }
+}
+
+SCENARIO("TRString: Set the character at position", "[TRString]")
+{
+    GIVEN("A word")
+    {
+        TRString word("test");
+
+        WHEN("A character in changed")
+        {
+            word[2] = 'x';
+
+            THEN("A new word is formed")
+            {
+                int result = utils::string::string_compare(word.c_str(), "text");
+                REQUIRE(0 == result);
+            }
+        }
+
+        WHEN("All characters are set to the first")
+        {
+            for (int i{1}; i < word.length(); i++)
+            {
+                word[i] = word[0];
+            }
+
+            THEN("All the characters are the same")
+            {
+                int result = utils::string::string_compare(word.c_str(), "tttt");
+                REQUIRE(0 == result);
+            }
+        }
+   }
+}
+
+
 
 SCENARIO("TRString: Sorting", "[TRString]")
 {

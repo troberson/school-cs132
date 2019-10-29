@@ -110,6 +110,21 @@ TRString& TRString::operator=(const TRString& rvalue)
     return *this;
 }
 
+// Return character at a given index (const)
+char& TRString::operator[](const int index) const
+{
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    return this->str[index];
+}
+
+// Return character at a given index (const)
+char& TRString::operator[](const int index)
+{
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    return this->str[index];
+}
+
+
 
 // Private methods
 // Set the string equal to another TRString
