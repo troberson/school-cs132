@@ -126,7 +126,7 @@ void TRString::setEqualTo(const char* argStr)
     auto new_len_dbl = static_cast<double>(new_len);
 
     int capacity_steps = ceil(new_len_dbl / CAPACITY_STEP);
-    capacity_steps = std::min(1, capacity_steps);
+    capacity_steps = std::max(1, capacity_steps);
 
     int capacity = capacity_steps * CAPACITY_STEP;
 

@@ -110,7 +110,28 @@ SCENARIO("TRString: Copy another string", "[TRString]")
     }
 }
 
+SCENARIO("TRString: Capacity needs to be increased", "[TRString]")
+{
+    GIVEN("A short string")
+    {
+        TRString word("hello");
 
+        THEN("The capacity is 20")
+        {
+            REQUIRE(word.capacity() == 20);
+        }
+    }
+
+    GIVEN("A long string")
+    {
+        TRString alpha("abcdefghijklmnopqrstuvwxyz");
+
+        THEN("The capacity is 40")
+        {
+            REQUIRE(alpha.capacity() == 40);
+        }
+    }
+}
 
 SCENARIO("TRString: Sorting", "[TRString]")
 {
