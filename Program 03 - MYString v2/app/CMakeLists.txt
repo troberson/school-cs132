@@ -2,7 +2,7 @@ add_executable(trstring_app
     format_words.cpp
 )
 
-configure_file(infile2.txt infile2.txt COPYONLY)
+configure_file(infile3.txt infile3.txt COPYONLY)
 
 # Use C++17
 target_compile_features(trstring_app PRIVATE cxx_std_17)
