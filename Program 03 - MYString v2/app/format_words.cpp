@@ -17,6 +17,7 @@
 // alias the vector of TRStrings as 'wordlist' for clarity and ergonomics
 using wordlist = std::vector<TRString>;
 
+
 /**
  * Sort string list in place.
  *
@@ -25,77 +26,18 @@ using wordlist = std::vector<TRString>;
  *
  * @param strings A pointer to a list of TRtrings.
  */
-void sort_word_list(wordlist* words)
-{
-    // get the number of words in the list
-    const auto num_words = words->size();
-
-    // keep track of whether a swap was performed
-    // so we can break early
-    bool swapped;
-
-    // outer loop
-    for (auto i = 0UL; i < num_words - 1; i++)
-    {
-        // reset swap marker
-        swapped = false;
-
-        // inner loop
-        for (auto j = 0UL; j < num_words - i - 1; j++)
-        {
-            // if word j should come after word j+1, swap them
-            if (words->at(j) > words->at(j + 1))
-            {
-                TRString temp = words->at(j);
-                words->at(j) = words->at(j + 1);
-                words->at(j + 1) = temp;
-
-                swapped = true;
-            }
-        }
-
-        // if no swap was performed, break early
-        if (!swapped)
-        {
-            break;
-        }
-    }
-}
+void sort_word_list(wordlist* words);
 
 
 /**
  * Read word list from input stream
  *
  * @param input_stream The input stream to read from.
+ * @param words_per_long_word How many words to combine into a single string.
+ *   (Default: 5)
  * @returns A list of words.
  */
-wordlist read_words(std::istream& input_stream, const int words_per_long_word = 5)
-{
-    // create a list of words
-    wordlist words;
-
-    // keep reading until the input_stream is exhausted
-    while (input_stream)
-    {
-        // multiple words in a row will be combined to create a long word
-        TRString long_word;
-
-        for (int i{0}; i < words_per_long_word; i++)
-        {
-            TRString tmp;
-            if (input_stream >> tmp)
-            {
-                long_word += tmp;
-            } else {
-                break;
-            }
-        }
-
-        words.push_back(long_word);
-    }
-
-    return words;
-}
+wordlist read_words(std::istream& input_stream, int words_per_long_word = 5);
 
 /**
  * Write word list to an output stream
@@ -103,40 +45,7 @@ wordlist read_words(std::istream& input_stream, const int words_per_long_word = 
  * @param output_stream The output stream to write to.
  * @param words A list of words.
  */
-void write_words(std::ostream& output_stream, const wordlist& words)
-{
-    // Find the length needed for formatting
-    // There is one extremely long word, so we actually want
-    // the length of the *second* longest word.
-    int max_length{0};
-    int max_length_snd{0};
-    for (const auto& w : words)
-    {
-        if (w.length() > max_length)
-        {
-            max_length_snd = max_length;
-            max_length = w.length();
-        }
-    }
-
-    // Output words in the following format:
-    // <word>  <length>:<capacity>
-    // The numbers should be aligned with the exception
-    // of the extremely long word.
-    for (const auto& w : words)
-    {
-        if (w.length() != max_length)
-        {
-            output_stream << std::setw(max_length_snd);
-        }
-        output_stream << std::left << w << "  "
-            << w.length() << ":" << w.capacity() << "\n";
-    }
-
-    output_stream << "\n" << "TRStrings Created: " << TRString::getCreatedCount() << "\n"
-        << "TRStrings Currently: " << TRString::getCurrentCount()
-        << " (" << words.size() << " in wordlist)" << std::endl;
-}
+void write_words(std::ostream& output_stream, const wordlist& words);
 
 
 // MAIN
@@ -184,6 +93,113 @@ int main()
     // SUCCESS
     return 0;
 }
+
+
+// Sort
+void sort_word_list(wordlist* words)
+{
+    // get the number of words in the list
+    const auto num_words = words->size();
+
+    // keep track of whether a swap was performed
+    // so we can break early
+    bool swapped;
+
+    // outer loop
+    for (auto i = 0UL; i < num_words - 1; i++)
+    {
+        // reset swap marker
+        swapped = false;
+
+        // inner loop
+        for (auto j = 0UL; j < num_words - i - 1; j++)
+        {
+            // if word j should come after word j+1, swap them
+            if (words->at(j) > words->at(j + 1))
+            {
+                TRString temp = words->at(j);
+                words->at(j) = words->at(j + 1);
+                words->at(j + 1) = temp;
+
+                swapped = true;
+            }
+        }
+
+        // if no swap was performed, break early
+        if (!swapped)
+        {
+            break;
+        }
+    }
+}
+
+
+// Read
+wordlist read_words(std::istream& input_stream, const int words_per_long_word)
+{
+    // create a list of words
+    wordlist words;
+
+    // keep reading until the input_stream is exhausted
+    while (input_stream)
+    {
+        // multiple words in a row will be combined to create a long word
+        TRString long_word;
+
+        for (int i{0}; i < words_per_long_word; i++)
+        {
+            TRString tmp;
+            if (input_stream >> tmp)
+            {
+                long_word += tmp;
+            } else {
+                break;
+            }
+        }
+
+        words.push_back(long_word);
+    }
+
+    return words;
+}
+
+
+// Write
+void write_words(std::ostream& output_stream, const wordlist& words)
+{
+    // Find the length needed for formatting
+    // There is one extremely long word, so we actually want
+    // the length of the *second* longest word.
+    int max_length{0};
+    int max_length_snd{0};
+    for (const auto& w : words)
+    {
+        if (w.length() > max_length)
+        {
+            max_length_snd = max_length;
+            max_length = w.length();
+        }
+    }
+
+    // Output words in the following format:
+    // <word>  <length>:<capacity>
+    // The numbers should be aligned with the exception
+    // of the extremely long word.
+    for (const auto& w : words)
+    {
+        if (w.length() != max_length)
+        {
+            output_stream << std::setw(max_length_snd);
+        }
+        output_stream << std::left << w << "  "
+            << w.length() << ":" << w.capacity() << "\n";
+    }
+
+    output_stream << "\n" << "TRStrings Created: " << TRString::getCreatedCount() << "\n"
+        << "TRStrings Currently: " << TRString::getCurrentCount()
+        << " (" << words.size() << " in wordlist)" << std::endl;
+}
+
 
 /*
 Sample Output
