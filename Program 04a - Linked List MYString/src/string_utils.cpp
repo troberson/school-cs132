@@ -1,7 +1,7 @@
 ///
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 3 - MYString v2
+// Program Name: Program 4A - LinkedList MYString
 //
 // Description: String utilities.
 // These are a collection of functions for working with C-style string
@@ -16,6 +16,7 @@
 
 #include <string_utils.h>
 
+#include <cstring>
 #include <stdexcept>
 
 
@@ -113,8 +114,8 @@ char get_char_at(const char* str, const int index)
 
 int string_compare(const char* lstr, const char* rstr)
 {
-    char lchar;
-    char rchar;
+    int lchar;
+    int rchar;
 
     do
     {
@@ -133,7 +134,10 @@ int string_compare(const char* lstr, const char* rstr)
             return lchar - rchar;
         }
 
-        // continue while characters are the same
+        lchar = std::tolower(lchar);
+        rchar = std::tolower(rchar);
+
+        // continue while characters are the same, case insensitive
     } while (lchar == rchar);
 
     // return the difference between the last characters

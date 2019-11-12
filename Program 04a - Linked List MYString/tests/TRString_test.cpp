@@ -1,7 +1,7 @@
 ////
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 2B - MYString v1
+// Program Name: Program 4A - Linked List MYString
 //
 // Description: A dynamically-sized string class.
 ////
@@ -268,9 +268,9 @@ SCENARIO("TRString: Sorting", "[TRString]")
             REQUIRE(cat == cat);
         }
 
-        THEN("'cat' sorts after 'ZIP'")
+        THEN("'cat' sorts before 'ZIP'")
         {
-            REQUIRE(cat > zip);
+            REQUIRE(cat < zip);
         }
     }
 }
