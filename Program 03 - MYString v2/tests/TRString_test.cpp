@@ -125,9 +125,14 @@ SCENARIO("TRString: Capacity needs to be increased", "[TRString]")
 
     GIVEN("A long string")
     {
-        TRString alpha("abcdefghijklmnopqrstuvwxyz");
+        TRString alpha("abcdefghijklmnopqrst");
 
-        THEN("The capacity is 40")
+        THEN("The length is 20")
+        {
+            REQUIRE(alpha.length() == 20);
+        }
+
+        AND_THEN("The capacity is 40")
         {
             REQUIRE(alpha.capacity() == 40);
         }
