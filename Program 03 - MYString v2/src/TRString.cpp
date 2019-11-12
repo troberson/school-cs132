@@ -95,11 +95,7 @@ const char* TRString::c_str() const
 // Set the string equal to another TRString
 TRString& TRString::operator=(const TRString& rvalue)
 {
-    if (this != &rvalue)
-    {
-        setEqualTo(rvalue);
-    }
-
+    setEqualTo(rvalue);
     return *this;
 }
 
@@ -181,12 +177,24 @@ TRString& TRString::operator+=(const TRString& rvalue)
 // Set the string equal to another TRString
 void TRString::setEqualTo(const TRString& argStr)
 {
+    // check for self-assignment
+    if (this == &argStr)
+    {
+        return;
+    }
+
     setEqualTo(argStr.c_str());
 }
 
 // Set the string equal to a C string
 void TRString::setEqualTo(const char* argStr)
 {
+    // don't change anything if the two strings are equivalent
+    if (0 == utils::string::string_compare(this->str, argStr))
+    {
+        return;
+    }
+
     // calculate the new length and required capacity
     int new_len = utils::string::string_length(argStr);
     auto new_len_dbl = static_cast<double>(new_len);
