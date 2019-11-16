@@ -7,7 +7,7 @@
 // This class holds a C-style string with an initial capacity
 // of 20 characters. If it is changed to a string which requires and
 // larger capacity, it is increased in steps of 20. The number of
-// instances created since execusion and currently in memory are also
+// instances created since execution and currently in memory are also
 // tracked. Description: A dynamically-sized string class.
 ////
 
