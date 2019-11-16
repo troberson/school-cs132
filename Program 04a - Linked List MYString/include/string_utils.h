@@ -1,7 +1,7 @@
 ///
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 3 - MYString v2
+// Program Name: Program 4A - LinkedList MYString
 //
 // Description: String utilities.
 // These are a collection of functions for working with C-style string
@@ -84,13 +84,26 @@ char* string_concat(const char* lstr, const char* rstr);
 
 
 /**
- * Returns the character at the given index.
+ * Returns the character at the given index of the string.
  *
+ * @param str A string.
  * @param index Index of a character in the string.
  * @throw std::out_of_range If index is invalid.
  * @returns The character at the given index.
  */
 [[nodiscard]] char get_char_at(const char* str, int index);
+
+
+/**
+ * Returns the last character in the string.
+ *
+ * @note Returns the null character if string is empty.
+ *
+ * @param str A string.
+ * @returns The last character in the string.
+ */
+
+[[nodiscard]] char get_last_char(const char* str);
 
 
 /**

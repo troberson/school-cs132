@@ -112,6 +112,18 @@ char get_char_at(const char* str, const int index)
 }
 
 
+char get_last_char(const char* str)
+{
+    if (string_is_empty(str))
+    {
+        return '\0';
+    }
+
+    int pos = string_length(str) - 1;
+    return get_char_at(str, pos);
+}
+
+
 int string_compare(const char* lstr, const char* rstr)
 {
     int lchar;

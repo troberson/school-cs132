@@ -170,4 +170,28 @@ SCENARIO("string_utils: Copy a string")
     }
 }
 
+
+SCENARIO("string_utils: Get the last character in a string")
+{
+    GIVEN("An empty string")
+    {
+        const char* empty = "";
+
+        THEN("The last character should be the null character")
+        {
+            REQUIRE('\0' == get_last_char(empty));
+        }
+    }
+
+    GIVEN("A the string 'hello'")
+    {
+        const char* hello = "hello";
+
+        THEN("The last character should be 'o'")
+        {
+            REQUIRE('o' == get_last_char(hello));
+        }
+    }
+}
+
 } // end namespace utils::string
