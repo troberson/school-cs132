@@ -195,8 +195,7 @@ std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
  * @param rhs A string.
  * @returns True if @p lhs sorts before @p rhs, false otherwise.
  */
-[[nodiscard]] bool operator<(const TRString& lhs,
-                             const TRString& rhs);
+[[nodiscard]] bool operator<(const TRString& lhs, const TRString& rhs);
 
 /**
  * Returns if one string sorts after another.
@@ -205,8 +204,7 @@ std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
  * @param rhs A string.
  * @returns True if @p lhs sorts after @p rhs, false otherwise.
  */
-[[nodiscard]] bool operator>(const TRString& lhs,
-                             const TRString& rhs);
+[[nodiscard]] bool operator>(const TRString& lhs, const TRString& rhs);
 
 /**
  * Returns if two string are equivalent.
@@ -215,8 +213,7 @@ std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
  * @param rhs A string.
  * @returns True if the two strings are equivalent, false otherwise.
  */
-[[nodiscard]] bool operator==(const TRString& lhs,
-                              const TRString& rhs);
+[[nodiscard]] bool operator==(const TRString& lhs, const TRString& rhs);
 
 /**
  * Returns a string containing characters from @p lhs
@@ -227,7 +224,6 @@ std::ostream& operator<<(std::ostream& ostrm, const TRString& argStr);
  * @returns A string containing characters from @p lhs
  *   followed by the characters from @p rhs.
  */
-[[nodiscard]] TRString operator+(const TRString& lhs,
-                                 const TRString& rhs);
+[[nodiscard]] TRString operator+(const TRString& lhs, const TRString& rhs);
 
 #endif
