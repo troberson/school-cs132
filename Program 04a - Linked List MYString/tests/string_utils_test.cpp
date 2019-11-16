@@ -183,13 +183,53 @@ SCENARIO("string_utils: Get the last character in a string")
         }
     }
 
-    GIVEN("A the string 'hello'")
+    GIVEN("The string 'hello'")
     {
         const char* hello = "hello";
 
         THEN("The last character should be 'o'")
         {
             REQUIRE('o' == get_last_char(hello));
+        }
+    }
+}
+
+
+SCENARIO("string_utils: Remove trailing punctuation")
+{
+    GIVEN("An empty string")
+    {
+        const char* empty = "";
+
+        THEN("Removing the last character returns an empty string")
+        {
+            const char* result = remove_punct(empty);
+            REQUIRE(string_is_empty(result));
+        }
+    }
+
+    GIVEN("The string 'testing'")
+    {
+        const char* testing = "testing";
+
+        THEN("Removing punctuation returns a new copy of the same string")
+        {
+            const char* testing2 = string_copy(testing);
+            const char* result = remove_punct(testing);
+            REQUIRE(0 == string_compare(result, testing2));
+        }
+    }
+
+    GIVEN("The string 'Hello, World!''")
+    {
+        const char* hello = "Hello, World!";
+
+        THEN("Removing the punctuation returns the string "
+             "'Hello, World'")
+        {
+            const char* hello2 = "Hello, World";
+            const char* result = remove_punct(hello);
+            REQUIRE(0 == string_compare(result, hello2));
         }
     }
 }

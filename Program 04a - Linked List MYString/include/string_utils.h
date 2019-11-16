@@ -107,6 +107,19 @@ char* string_concat(const char* lstr, const char* rstr);
 
 
 /**
+ * Returns the string without a trailing punctuation mark.
+ *
+ * @note Punctuation is defined by the ispunct() library function.
+ *
+ * @note Only removes a single trailing punctuation mark.
+ *
+ * @param str A string.
+ * @returns The string without a trailing punctuation mark.
+ */
+[[nodiscard]] char* remove_punct(const char* str);
+
+
+/**
  * Compare the sort order of two strings
  *
  * @note The sort order depends on the encoding, such as ASCII.

@@ -17,6 +17,7 @@
 #include <string_utils.h>
 
 #include <cstring>
+#include <locale>
 #include <stdexcept>
 
 
@@ -121,6 +122,26 @@ char get_last_char(const char* str)
 
     int pos = string_length(str) - 1;
     return get_char_at(str, pos);
+}
+
+
+char* remove_punct(const char* str)
+{
+    if (string_is_empty(str))
+    {
+        return string_copy(str);
+    }
+
+    int len = string_length(str);
+    const char last = get_char_at(str, len - 1);
+
+    std::locale loc;
+    if (std::ispunct(last, loc))
+    {
+        len--;
+    }
+
+    return string_copy(str, len);
 }
 
 
