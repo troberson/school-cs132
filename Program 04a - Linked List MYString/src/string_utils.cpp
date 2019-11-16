@@ -58,7 +58,7 @@ char* string_copy(const char* str, const int len)
 {
     // create a new string
     // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
-    char* new_str = new char[len];
+    char* new_str = new char[len + 1];
 
     string_copy(str, len, new_str);
 
