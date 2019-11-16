@@ -19,7 +19,7 @@ DblLinkedList::DblLinkedList()
 }
 
 
-bool DblLinkedList::push_back(const string& str)
+bool DblLinkedList::push_back(const std::string& str)
 { // write first
     // insert str at back of list
     return true;
@@ -27,7 +27,7 @@ bool DblLinkedList::push_back(const string& str)
 
 void DblLinkedList::resetIterator() const
 { // write second
-    // needs to be written:  set it to head
+  // needs to be written:  set it to head
 }
 
 bool DblLinkedList::hasMore() const
@@ -36,15 +36,15 @@ bool DblLinkedList::hasMore() const
     return false;
 }
 
-string DblLinkedList::next() const
+std::string DblLinkedList::next() const
 {
     // needs to be written: gets the string the it pointer is pointing to
     //   then moves the it pointer to next "node" (could be nullptr)
-    return string("stub");
+    return std::string("stub");
 }
 
 void DblLinkedList::testConnections()
 {
     // write test for connections:  loop through the list testing each node
-    cout << "TEST CONNECTIONS Passed\n";
+    std::cout << "TEST CONNECTIONS Passed\n";
 }
