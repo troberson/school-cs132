@@ -277,6 +277,25 @@ SCENARIO("TRString: Sorting", "[TRString]")
 
 SCENARIO("TRString: Read the words from a stream", "[TRString]")
 {
+    GIVEN("The word 'test!'")
+    {
+        TRString str;
+        std::stringstream stream("test!");
+
+        WHEN("The stream is read into the string object")
+        {
+            stream >> str;
+
+            THEN("The string object holds the string 'test'")
+            {
+                const int result =
+                    utils::string::string_compare(str.c_str(), "test");
+
+                REQUIRE(0 == result);
+            }
+        }
+    }
+
     GIVEN("A string object and a string stream with three words")
     {
         TRString str;

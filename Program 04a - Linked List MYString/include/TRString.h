@@ -173,6 +173,8 @@ class TRString
 /**
  * Set the string to the first word from a stream.
  *
+ * @note Also removes a single instance of trailing punctuation.
+ *
  * @param istrm An input stream.
  * @returns The input stream.
  */

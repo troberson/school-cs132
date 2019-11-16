@@ -127,7 +127,9 @@ std::istream& operator>>(std::istream& istrm, TRString& argStr)
     // if successful, set the string to the buffer
     if (istrm >> buffer_ptr)
     {
-        argStr.setEqualTo(buffer_ptr);
+        // remove a trailing punctuation mark if it exists
+        const char* new_str = utils::string::remove_punct(buffer_ptr);
+        argStr.setEqualTo(new_str);
     }
 
     return istrm;
