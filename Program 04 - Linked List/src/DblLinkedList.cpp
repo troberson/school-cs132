@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <optional>
+#include <utility>
 
 
 DblLinkedList::DblLinkedList()
@@ -45,6 +46,27 @@ DblLinkedList::~DblLinkedList()
         this->it = next_it;
         this->count--;
     }
+}
+
+DblLinkedList& DblLinkedList::operator=(DblLinkedList list)
+{
+    // copy-and-swap could be slow and memory-intensive for very large
+    // lists, as it requires the creation of a temporary copy, but ensures
+    // that our list remains in a valid state.
+
+    // copy-and-swap does not require a self-assignment check.
+
+    list.swap(*this);
+    return *this;
+}
+
+void DblLinkedList::swap(DblLinkedList& list) noexcept
+{
+    // unqualified "swap" allows for overloads to step in with ADL
+    using std::swap;
+    swap(list.head, this->head);
+    swap(list.tail, this->tail);
+    swap(list.count, this->count);
 }
 
 int DblLinkedList::getCount()

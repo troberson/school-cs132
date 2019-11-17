@@ -13,7 +13,7 @@
 
 #include <optional>
 
-
+// NOLINTNEXTLINE(hicpp-special-member-functions,cppcoreguidelines-special-member-functions)
 class DblLinkedList
 {
   public:
@@ -42,6 +42,23 @@ class DblLinkedList
      * Delete a DblLinkedList.
      */
     ~DblLinkedList();
+
+
+    /**
+     * Assign the DblLinkedList to have the same values as another.
+     *
+     * @param list The list to copy.
+     * @returns The current list.
+     */
+    DblLinkedList& operator=(DblLinkedList list);
+
+
+    /**
+     * Swap values with another list.
+     *
+     * @param list The list to swap with.
+     */
+    void swap(DblLinkedList& list) noexcept;
 
 
     /**

@@ -80,7 +80,7 @@ SCENARIO("Add strings to a list")
 }
 
 
-SCENARIO("Copy a list")
+SCENARIO("Copy a list (Copy Constructor)")
 {
     GIVEN("A list")
     {
@@ -91,6 +91,45 @@ SCENARIO("Copy a list")
         WHEN("A copy is made")
         {
             DblLinkedList list2(list1);
+
+            THEN("The counts are the same")
+            {
+                REQUIRE(list1.getCount() == list2.getCount());
+            }
+
+            THEN("The string representations are the same")
+            {
+                std::ostringstream stream1;
+                stream1 << list1;
+                const char* result1 = stream1.str().c_str();
+
+                std::ostringstream stream2;
+                stream2 << list2;
+                const char* result2 = stream2.str().c_str();
+
+                REQUIRE(0 ==
+                        utils::string::string_compare(result1, result2));
+            }
+        }
+    }
+}
+
+SCENARIO("Copy a list (Assignment Operator)")
+{
+    GIVEN("Two lists")
+    {
+        DblLinkedList list1(TRString("a"));
+        list1.push_back(TRString("b"));
+        list1.push_back(TRString("c"));
+
+        DblLinkedList list2(TRString("d"));
+        list2.push_back(TRString("e"));
+        list2.push_back(TRString("f"));
+        list2.push_back(TRString("g"));
+
+        WHEN("The second list is assigned to the first")
+        {
+            list2 = list1;
 
             THEN("The counts are the same")
             {
