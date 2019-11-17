@@ -7,7 +7,9 @@
 ///
 
 #include <DblLinkedList.h>
+#include <string_utils.h>
 
+#include <sstream>
 #include <string>
 
 #include <catch2/catch.hpp>
@@ -61,6 +63,16 @@ SCENARIO("Add strings to a list")
                 THEN("The count is 2")
                 {
                     REQUIRE(2 == list.getCount());
+                }
+
+                AND_THEN("The string representation is 'hello world'")
+                {
+                    std::ostringstream stream;
+                    stream << list;
+                    const char* result = stream.str().c_str();
+
+                    REQUIRE(0 == utils::string::string_compare(
+                                     result, "hello world"));
                 }
             }
         }
