@@ -9,8 +9,9 @@
 #ifndef DBLLINKEDLIST_H
 #define DBLLINKEDLIST_H
 
+#include <TRString.h>
+
 #include <optional>
-#include <string>
 
 
 class DblLinkedList
@@ -26,7 +27,7 @@ class DblLinkedList
      *
      * @param str An element for the list.
      */
-    explicit DblLinkedList(const std::string& str);
+    explicit DblLinkedList(const TRString& str);
 
     /**
      * Return the number of entries in the list.
@@ -41,7 +42,7 @@ class DblLinkedList
      *
      * @param str The string to add.
      */
-    void push_back(const std::string& str);
+    void push_back(const TRString& str);
 
 
     /**
@@ -67,7 +68,7 @@ class DblLinkedList
      *
      * @returns An optional class containing the node data.
      */
-    std::optional<std::string> next() const;
+    std::optional<TRString> next() const;
 
     void testConnections();
 
@@ -84,14 +85,14 @@ class DblLinkedList
         {
             next = prev = nullptr;
         }
-        explicit Node(const std::string& str)
+        explicit Node(const TRString& str)
         {
             data = str;
             next = prev = nullptr;
         }
 
         // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
-        std::string data;
+        TRString data;
 
         // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
         Node* next;

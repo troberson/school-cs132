@@ -7,10 +7,10 @@
 ///
 
 #include <DblLinkedList.h>
+#include <TRString.h>
 #include <string_utils.h>
 
 #include <sstream>
-#include <string>
 
 #include <catch2/catch.hpp>
 
@@ -28,7 +28,7 @@ SCENARIO("DblLinkedList: Create an empty list")
 
     GIVEN("A new list with a starting string")
     {
-        std::string str = "test";
+        const TRString str("test");
         DblLinkedList list(str);
 
         THEN("The count is 1")
@@ -47,7 +47,7 @@ SCENARIO("Add strings to a list")
 
         WHEN("A string 'hello' is added")
         {
-            std::string hello = "hello";
+            TRString hello("hello");
             list.push_back(hello);
 
             THEN("The count is 1")
@@ -57,7 +57,7 @@ SCENARIO("Add strings to a list")
 
             AND_WHEN("The string 'world' is added")
             {
-                std::string world = "world";
+                TRString world("world");
                 list.push_back(world);
 
                 THEN("The count is 2")

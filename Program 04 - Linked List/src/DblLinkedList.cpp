@@ -7,6 +7,7 @@
 ///
 
 #include <DblLinkedList.h>
+#include <TRString.h>
 
 #include <iostream>
 #include <optional>
@@ -20,7 +21,7 @@ DblLinkedList::DblLinkedList()
     count = 0;
 }
 
-DblLinkedList::DblLinkedList(const std::string& str) : DblLinkedList()
+DblLinkedList::DblLinkedList(const TRString& str) : DblLinkedList()
 {
     this->push_back(str);
     this->resetIterator();
@@ -32,7 +33,7 @@ int DblLinkedList::getCount()
     return this->count;
 }
 
-void DblLinkedList::push_back(const std::string& str)
+void DblLinkedList::push_back(const TRString& str)
 {
     // Create a new node
     // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
@@ -67,7 +68,7 @@ bool DblLinkedList::hasMore() const
     return (this->it != nullptr);
 }
 
-std::optional<std::string> DblLinkedList::next() const
+std::optional<TRString> DblLinkedList::next() const
 {
     if (!hasMore())
     {
@@ -98,7 +99,7 @@ std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list)
     // walk through list, writing elements to the ostream
     while (list.hasMore())
     {
-        std::string str = list.next().value();
+        const TRString str = list.next().value();
         ostrm << str;
 
         // add a space between words
