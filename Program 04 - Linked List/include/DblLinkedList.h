@@ -10,24 +10,6 @@
 #define DBLLINKEDLIST_H
 #include <string>
 
-class Node
-{ // fully defined here due to its simplicity
-  public:
-    Node()
-    {
-        next = prev = nullptr;
-    }
-    Node(std::string num)
-    {
-        data = num;
-        next = prev = nullptr;
-    }
-
-    std::string data;
-    Node* next;
-    Node* prev;
-};
-
 
 class DblLinkedList
 {
@@ -43,6 +25,24 @@ class DblLinkedList
     void testConnections();
 
   private:
+    class Node
+    { // fully defined here due to its simplicity
+      public:
+        Node()
+        {
+            next = prev = nullptr;
+        }
+        Node(std::string num)
+        {
+            data = num;
+            next = prev = nullptr;
+        }
+
+        std::string data;
+        Node* next;
+        Node* prev;
+    };
+
     Node *head, *tail;
     // mutable says that it can change in a const member function
     mutable Node* it;
