@@ -29,6 +29,15 @@ class DblLinkedList
      */
     explicit DblLinkedList(const TRString& str);
 
+
+    /**
+     * Copy an existing DblLinkedList.
+     *
+     * @param list The list to copy.
+     */
+    DblLinkedList(const DblLinkedList& list);
+
+
     /**
      * Return the number of entries in the list.
      *

@@ -27,6 +27,13 @@ DblLinkedList::DblLinkedList(const TRString& str) : DblLinkedList()
     this->resetIterator();
 }
 
+DblLinkedList::DblLinkedList(const DblLinkedList& list) : DblLinkedList()
+{
+    while (list.hasMore())
+    {
+        this->push_back(list.next().value());
+    }
+}
 
 int DblLinkedList::getCount()
 {
