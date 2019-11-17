@@ -35,6 +35,18 @@ DblLinkedList::DblLinkedList(const DblLinkedList& list) : DblLinkedList()
     }
 }
 
+DblLinkedList::~DblLinkedList()
+{
+    this->resetIterator();
+    while (this->hasMore())
+    {
+        Node* next_it = this->it->next;
+        delete this->it;
+        this->it = next_it;
+        this->count--;
+    }
+}
+
 int DblLinkedList::getCount()
 {
     return this->count;

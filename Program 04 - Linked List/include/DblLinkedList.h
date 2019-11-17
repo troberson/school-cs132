@@ -39,6 +39,12 @@ class DblLinkedList
 
 
     /**
+     * Delete a DblLinkedList.
+     */
+    ~DblLinkedList();
+
+
+    /**
      * Return the number of entries in the list.
      *
      * @returns The number of entries in the list.
