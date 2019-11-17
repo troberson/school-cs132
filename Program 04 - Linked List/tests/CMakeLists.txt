@@ -8,6 +8,7 @@ FetchContent_MakeAvailable(catch2)
 
 add_executable(linkedlist_test
     test_main.cpp
+    DblLinkedList_test.cpp
 )
 
 # Use C++17

@@ -14,9 +14,32 @@
 class DblLinkedList
 {
   public:
+    /**
+     * Create a new linked list.
+     */
     DblLinkedList();
 
-    bool push_back(const std::string& str);
+    /**
+     * Create a new linked list that includes the given element.
+     *
+     * @param str An element for the list.
+     */
+    explicit DblLinkedList(const std::string& str);
+
+    /**
+     * Return the number of entries in the list.
+     *
+     * @returns The number of entries in the list.
+     */
+    int getCount();
+
+
+    /**
+     * Add an entry to the end of the list.
+     *
+     * @param str The string to add.
+     */
+    void push_back(const std::string& str);
 
     void resetIterator() const;
     bool hasMore() const;
@@ -32,9 +55,9 @@ class DblLinkedList
         {
             next = prev = nullptr;
         }
-        explicit Node(const std::string& num)
+        explicit Node(const std::string& str)
         {
-            data = num;
+            data = str;
             next = prev = nullptr;
         }
 
