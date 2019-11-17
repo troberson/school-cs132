@@ -91,6 +91,15 @@ class DblLinkedList
 
 
     /**
+     * Remove an entry with the given value.
+     *
+     * @param str The string to remove.
+     * @returns True if string was removed, False otherwise.
+     */
+    bool remove(const TRString& str);
+
+
+    /**
      * Set the iterator to point to the head node.
      */
     void resetIterator() const;
@@ -184,6 +193,15 @@ class DblLinkedList
      */
     Node* add_node(Node* new_node, Node* prev_node = nullptr,
                    Node* next_node = nullptr);
+
+
+    /**
+     * Delete a node.
+     *
+     * @param node The node to delete.
+     */
+    void del_node(Node* node);
+
 
     /**
      * Link two nodes.

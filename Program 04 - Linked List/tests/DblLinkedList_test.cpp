@@ -197,3 +197,53 @@ SCENARIO("Insert list entries in sorted order")
         }
     }
 }
+
+
+SCENARIO("An entry is removed from a list")
+{
+    GIVEN("A list of 'ant', 'bat', 'cat', 'dog'")
+    {
+        DblLinkedList list;
+        list.insert(TRString("cat"));
+        list.insert(TRString("ant"));
+        list.insert(TRString("dog"));
+        list.insert(TRString("bat"));
+
+        THEN("The count is 4")
+        {
+            REQUIRE(4 == list.getCount());
+        }
+
+        WHEN("'eagle' is removed")
+        {
+            bool result = list.remove(TRString("eagle"));
+
+            THEN("The attempt fails")
+            {
+                REQUIRE(!result);
+            }
+        }
+
+        AND_WHEN("'CAT' is removed")
+        {
+            list.remove(TRString("CAT"));
+
+            THEN("The count is 3")
+            {
+                REQUIRE(3 == list.getCount());
+            }
+
+            AND_THEN("The string representation is 'ant bat dog'")
+            {
+                std::ostringstream stream;
+                stream << list;
+                const char* result = stream.str().c_str();
+
+                const char* expected = "ant bat dog";
+
+                REQUIRE(0 ==
+                        utils::string::string_compare(result, expected));
+            }
+        }
+    }
+}

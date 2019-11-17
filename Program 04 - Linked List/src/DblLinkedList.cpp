@@ -138,6 +138,35 @@ bool DblLinkedList::insert(const TRString& str)
 }
 
 
+bool DblLinkedList::remove(const TRString& str)
+{
+    // we can't remove anything from an empty list
+    if (this->count == 0)
+    {
+        return false;
+    }
+
+    // walk through the list, looking for a match
+    this->resetIterator();
+
+    while (this->hasMore())
+    {
+        auto cur_ptr = this->it;
+        auto cur_val = this->next().value();
+
+        // found a match, delete it and return success
+        if (cur_val == str)
+        {
+            this->del_node(cur_ptr);
+            return true;
+        }
+    }
+
+    // did not find a match, return failure
+    return false;
+}
+
+
 void DblLinkedList::resetIterator() const
 {
     this->it = head;
@@ -242,6 +271,41 @@ DblLinkedList::add_node(Node* new_node, Node* prev_node /* = nullptr */,
 void DblLinkedList::link_nodes(Node* node_left /* = nullptr */,
                                Node* node_right /* = nullptr */)
 {
-    node_left->next = node_right;
-    node_right->prev = node_left;
+    if (node_left != nullptr)
+    {
+        node_left->next = node_right;
+    }
+
+    if (node_right != nullptr)
+    {
+        node_right->prev = node_left;
+    }
+}
+
+void DblLinkedList::del_node(Node* node)
+{
+    // Don't leave head or tail dangling
+    if (this->head == node)
+    {
+        this->head = nullptr;
+    }
+
+    if (this->tail == node)
+    {
+        this->tail = nullptr;
+    }
+
+    // Save the previous and next pointers
+    Node* node_prev = node->prev;
+    Node* node_next = node->next;
+
+    // Delete the node
+    // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
+    delete node;
+
+    // Link the previous and next nodes together
+    link_nodes(node_prev, node_next);
+
+    // Decrease the count
+    this->count--;
 }
