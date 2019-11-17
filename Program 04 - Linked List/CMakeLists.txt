@@ -40,6 +40,8 @@ if(${CMAKE_VERSION} VERSION_LESS 3.14)
     include(cmake/add_FetchContent_MakeAvailable.cmake)
 endif()
 
+# External libraries
+add_subdirectory(extern)
 
 # The compiled library code is here
 add_subdirectory(src)
@@ -66,4 +68,5 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 # 	    message(STATUS "Doxygen not found, not building docs")
 #     endif()
 endif()
+
 
