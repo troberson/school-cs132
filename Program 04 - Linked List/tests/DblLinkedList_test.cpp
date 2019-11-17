@@ -152,3 +152,48 @@ SCENARIO("Copy a list (Assignment Operator)")
         }
     }
 }
+
+
+SCENARIO("Insert list entries in sorted order")
+{
+    GIVEN("An empty list")
+    {
+        DblLinkedList list;
+
+        WHEN("The words 'cat', 'ant', 'dog', and 'bat' are added")
+        {
+            list.insert(TRString("cat"));
+            list.insert(TRString("ant"));
+            list.insert(TRString("dog"));
+            list.insert(TRString("bat"));
+
+            THEN("The string representation is 'ant bat cat dog'")
+            {
+                std::ostringstream stream;
+                stream << list;
+                const char* result = stream.str().c_str();
+
+                const char* expected = "ant bat cat dog";
+
+                REQUIRE(0 ==
+                        utils::string::string_compare(result, expected));
+            }
+
+            AND_THEN("The count is 4")
+            {
+                REQUIRE(4 == list.getCount());
+            }
+
+
+            AND_WHEN("The word 'BaT' is attempted to be added")
+            {
+                bool result = list.insert(TRString("BaT"));
+
+                THEN("The attempt fails")
+                {
+                    REQUIRE(!result);
+                }
+            }
+        }
+    }
+}

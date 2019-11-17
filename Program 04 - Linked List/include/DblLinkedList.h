@@ -78,6 +78,19 @@ class DblLinkedList
 
 
     /**
+     * Insert a new entry into the list.
+     *
+     * The entry is added in case-insensitive sorted order.
+     * Entries matching an existing case-insensitive entry will not be
+     * added.
+     *
+     * @param str The string to add.
+     * @returns True if string was added, False otherwise.
+     */
+    bool insert(const TRString& str);
+
+
+    /**
      * Set the iterator to point to the head node.
      */
     void resetIterator() const;
@@ -137,6 +150,48 @@ class DblLinkedList
     // mutable says that it can change in a const member function
     mutable Node* it;
     int count;
+
+
+    /**
+     * Add a TRString as a new node.
+     *
+     * If @p prev_node is 'nullptr', the new node is set as head.
+     * If @p next_node is 'nullptr', the new node is set as tail.
+     *
+     * @param str The string to add.
+     * @param prev_node The node which should be before the new node
+     *   (default: nullptr).
+     * @param next_node The node which should be after the new node.
+     *   (default: nullptr)
+     * @returns A pointer to the new node.
+     */
+    Node* add_node(const TRString& str, Node* prev_node = nullptr,
+                   Node* next_node = nullptr);
+
+
+    /**
+     * Add a node.
+     *
+     * If @p prev_node is 'nullptr', the new node is set as head.
+     * If @p next_node is 'nullptr', the new node is set as tail.
+     *
+     * @param new_node The node to add.
+     * @param prev_node The node which should be before the new node
+     *   (default: nullptr).
+     * @param next_node The node which should be after the new node.
+     *   (default: nullptr)
+     * @returns A pointer to the new node.
+     */
+    Node* add_node(Node* new_node, Node* prev_node = nullptr,
+                   Node* next_node = nullptr);
+
+    /**
+     * Link two nodes.
+     *
+     * @param node_left The first node (default: nullptr).
+     * @param node_right The second node (default: nullptr).
+     */
+    void link_nodes(Node* node_left = nullptr, Node* node_right = nullptr);
 };
 
 

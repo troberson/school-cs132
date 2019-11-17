@@ -76,28 +76,67 @@ int DblLinkedList::getCount()
 
 void DblLinkedList::push_back(const TRString& str)
 {
-    // Create a new node
-    // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
-    Node* new_node = new Node(str);
+    Node* new_node = this->add_node(str, this->tail, nullptr);
 
-    // If there are no nodes in the list, set this as the head
-    if (this->count == 0)
+    // if there is no head, set this new node to the head
+    if (this->head == nullptr)
     {
         this->head = new_node;
     }
+}
 
-    // If there is already at least one entry in the list,
-    // set the new node as the tail and link it with the old last entry.
-    if (tail != nullptr)
+
+bool DblLinkedList::insert(const TRString& str)
+{
+    // if there are no nodes in the list, add new new entry
+    if (this->count == 0)
     {
-        new_node->prev = this->tail;
-        this->tail->next = new_node;
+        this->push_back(str);
+        return true;
     }
 
-    this->tail = new_node;
+    // if new entry is smaller than current head,
+    // make the new entry the new head
+    if (str < this->head->data)
+    {
+        this->add_node(str, nullptr, this->head);
+        return true;
+    }
 
-    this->count++;
+    // reset iterator
+    this->resetIterator();
+
+
+    // walk through the list, looking for an entry that is larger
+    // we'll put the new entry right before it or fail if we find
+    // an equivalent entry already exists.
+    while (this->hasMore())
+    {
+        auto cur_ptr = this->it;
+        auto cur_val = this->next().value();
+
+        // if we reach an entry whose value is equal to the new entry,
+        // keep the old entry and do not add the new entry, return failure.
+        if (cur_val == str)
+        {
+            return false;
+        }
+
+        // if we reach an entry that has a larger value than the new entry,
+        // then insert it before that entry
+        if (cur_val > str)
+        {
+            add_node(str, cur_ptr->prev, cur_ptr);
+            return true;
+        }
+    }
+
+    // if we reach the end, the new entry must be larger than the current
+    // largest entry, so it becomes the new tail
+    this->push_back(str);
+    return true;
 }
+
 
 void DblLinkedList::resetIterator() const
 {
@@ -155,4 +194,54 @@ std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list)
 
     // return the ostream
     return ostrm;
+}
+
+
+// PRIVATE FUNCTIONS
+DblLinkedList::Node*
+DblLinkedList::add_node(const TRString& str,
+                        Node* prev_node /* = nullptr */,
+                        Node* next_node /* = nullptr */)
+{
+    // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
+    return add_node(new Node(str), prev_node, next_node);
+}
+
+
+DblLinkedList::Node*
+DblLinkedList::add_node(Node* new_node, Node* prev_node /* = nullptr */,
+                        Node* next_node /* = nullptr */)
+{
+    // Set as head or link the previous node
+    if (prev_node == nullptr)
+    {
+        this->head = new_node;
+    }
+    else
+    {
+        this->link_nodes(prev_node, new_node);
+    }
+
+    // Set as tail or link the next node
+    if (next_node == nullptr)
+    {
+        this->tail = new_node;
+    }
+    else
+    {
+        this->link_nodes(new_node, next_node);
+    }
+
+    // Increase the node count
+    this->count++;
+
+    // Return the new node
+    return new_node;
+}
+
+void DblLinkedList::link_nodes(Node* node_left /* = nullptr */,
+                               Node* node_right /* = nullptr */)
+{
+    node_left->next = node_right;
+    node_right->prev = node_left;
 }
