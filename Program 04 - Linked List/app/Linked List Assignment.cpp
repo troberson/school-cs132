@@ -21,7 +21,7 @@ int main()
     list.resetIterator();
     while (list.hasMore())
     {
-        std::cout << list.next() << std::endl;
+        std::cout << list.next().value() << std::endl;
     }
 
     list.testConnections();

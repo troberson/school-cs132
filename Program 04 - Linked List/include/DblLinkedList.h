@@ -8,6 +8,8 @@
 
 #ifndef DBLLINKEDLIST_H
 #define DBLLINKEDLIST_H
+
+#include <optional>
 #include <string>
 
 
@@ -41,11 +43,38 @@ class DblLinkedList
      */
     void push_back(const std::string& str);
 
+
+    /**
+     * Set the iterator to point to the head node.
+     */
     void resetIterator() const;
+
+
+    /**
+     * Returns true if the iterator is pointing to a valid node.
+     *
+     * @returns True if the iterator is pointing to a valid node, False
+     *   otherwise.
+     */
     bool hasMore() const;
-    std::string next() const;
+
+
+    /**
+     * Returns the iterator's current node data and advances to the next
+     * node.
+     *
+     * @note Iterator does not move if this is the tail node.
+     *
+     * @returns An optional class containing the node data.
+     */
+    std::optional<std::string> next() const;
 
     void testConnections();
+
+
+    // Friend Output
+    friend std::ostream& operator<<(std::ostream& ostrm,
+                                    const DblLinkedList& list);
 
   private:
     class Node
@@ -76,5 +105,14 @@ class DblLinkedList
     mutable Node* it;
     int count;
 };
+
+
+/**
+ * Write the list to a stream.
+ *
+ * @param ostrm An output stream.
+ * @returns The output stream.
+ */
+std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list);
 
 #endif

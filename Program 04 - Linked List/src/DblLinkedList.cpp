@@ -9,6 +9,7 @@
 #include <DblLinkedList.h>
 
 #include <iostream>
+#include <optional>
 
 
 DblLinkedList::DblLinkedList()
@@ -22,6 +23,7 @@ DblLinkedList::DblLinkedList()
 DblLinkedList::DblLinkedList(const std::string& str) : DblLinkedList()
 {
     this->push_back(str);
+    this->resetIterator();
 }
 
 
@@ -56,25 +58,59 @@ void DblLinkedList::push_back(const std::string& str)
 }
 
 void DblLinkedList::resetIterator() const
-{ // write second
-  // needs to be written:  set it to head
+{
+    this->it = head;
 }
 
 bool DblLinkedList::hasMore() const
-{ // and so on....
-    // needs to be written: is it pointing to nullptr
-    return false;
+{
+    return (this->it != nullptr);
 }
 
-std::string DblLinkedList::next() const
+std::optional<std::string> DblLinkedList::next() const
 {
-    // needs to be written: gets the string the it pointer is pointing to
-    //   then moves the it pointer to next "node" (could be nullptr)
-    return std::string("stub");
+    if (!hasMore())
+    {
+        return std::nullopt;
+    }
+
+    const Node* old_it = this->it;
+    this->it = old_it->next;
+
+    return old_it->data;
 }
 
 void DblLinkedList::testConnections()
 {
     // write test for connections:  loop through the list testing each node
     std::cout << "TEST CONNECTIONS Passed\n";
+}
+
+
+std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list)
+{
+    // save the old iterator position, so we can resume later
+    DblLinkedList::Node* old_it = list.it;
+
+    // reset iterator
+    list.resetIterator();
+
+    // walk through list, writing elements to the ostream
+    while (list.hasMore())
+    {
+        std::string str = list.next().value();
+        ostrm << str;
+
+        // add a space between words
+        if (list.hasMore())
+        {
+            ostrm << " ";
+        }
+    }
+
+    // restore old iterator position
+    list.it = old_it;
+
+    // return the ostream
+    return ostrm;
 }
