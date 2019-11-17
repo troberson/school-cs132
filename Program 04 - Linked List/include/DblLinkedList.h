@@ -32,14 +32,19 @@ class DblLinkedList
         {
             next = prev = nullptr;
         }
-        Node(std::string num)
+        explicit Node(const std::string& num)
         {
             data = num;
             next = prev = nullptr;
         }
 
+        // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
         std::string data;
+
+        // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
         Node* next;
+
+        // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
         Node* prev;
     };
 
