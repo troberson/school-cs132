@@ -27,8 +27,8 @@ DblLinkedList::DblLinkedList()
 
 DblLinkedList::DblLinkedList(const TRString& str) : DblLinkedList()
 {
-    this->push_back(str);
-    this->resetIterator();
+    push_back(str);
+    resetIterator();
 }
 
 DblLinkedList::DblLinkedList(const DblLinkedList& list) : DblLinkedList()
@@ -36,7 +36,7 @@ DblLinkedList::DblLinkedList(const DblLinkedList& list) : DblLinkedList()
     list.resetIterator();
     while (list.hasMore())
     {
-        this->push_back(list.next().value());
+        push_back(list.next().value());
     }
 }
 
@@ -77,7 +77,7 @@ int DblLinkedList::getCount() const
 
 void DblLinkedList::push_back(const TRString& str)
 {
-    Node* new_node = this->add_node(str, this->tail, nullptr);
+    Node* new_node = add_node(str, this->tail, nullptr);
 
     // if there is no head, set this new node to the head
     if (this->head == nullptr)
@@ -92,7 +92,7 @@ bool DblLinkedList::insert(const TRString& str)
     // if there are no nodes in the list, add new new entry
     if (this->count == 0)
     {
-        this->push_back(str);
+        push_back(str);
         return true;
     }
 
@@ -100,7 +100,7 @@ bool DblLinkedList::insert(const TRString& str)
     // make the new entry the new head
     if (str < this->head->data)
     {
-        this->add_node(str, nullptr, this->head);
+        add_node(str, nullptr, this->head);
         return true;
     }
 
@@ -111,10 +111,10 @@ bool DblLinkedList::insert(const TRString& str)
     // walk through the list, looking for an entry that is larger
     // we'll put the new entry right before it or fail if we find
     // an equivalent entry already exists.
-    while (this->hasMore())
+    while (hasMore())
     {
         auto cur_ptr = this->it;
-        auto cur_val = this->next().value();
+        auto cur_val = next().value();
 
         // if we reach an entry whose value is equal to the new entry,
         // keep the old entry and do not add the new entry, return failure.
@@ -134,7 +134,7 @@ bool DblLinkedList::insert(const TRString& str)
 
     // if we reach the end, the new entry must be larger than the current
     // largest entry, so it becomes the new tail
-    this->push_back(str);
+    push_back(str);
     return true;
 }
 
@@ -153,12 +153,12 @@ bool DblLinkedList::remove(const TRString& str)
     while (this->hasMore())
     {
         auto cur_ptr = this->it;
-        auto cur_val = this->next().value();
+        auto cur_val = next().value();
 
         // found a match, delete it and return success
         if (cur_val == str)
         {
-            this->del_node(cur_ptr);
+            del_node(cur_ptr);
             return true;
         }
     }
