@@ -49,6 +49,14 @@ void write_words(std::ostream& output_stream, const wordlist& words,
 void difference(const wordlist& list_a, wordlist& list_b);
 
 
+/**
+ * Output the list count with 'ZIP' and 'ZAP' added.
+ *
+ * @param list A list of words.
+ */
+void changer(wordlist list);
+
+
 int main()
 {
     wordlist list1;
@@ -93,7 +101,12 @@ int main()
         std::cerr << e.what() << '\n';
         return 1;
     }
+    print_lists();
 
+    // Changer
+    changer(modList1);
+    changer(modList2);
+    std::cout << "\nAfter changer:\n";
     print_lists();
 
     return 0;
@@ -161,4 +174,13 @@ void difference(const wordlist& list_a, wordlist& list_b)
         auto str = list_a.next().value();
         list_b.remove(str);
     }
+}
+
+
+void changer(wordlist list)
+{
+    list.insert(TRString("ZIP"));
+    list.insert(TRString("ZAP"));
+    std::cout << "Inside changer function: size of list is "
+              << list.getCount() << "\n";
 }
