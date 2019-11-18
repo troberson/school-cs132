@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 3.11...3.15)
 set(CMAKE_CXX_CLANG_TIDY
     clang-tidy;
     -header-filter=.;
-    -checks=*,-llvm-header-guard,-fuchsia-*;
+    -checks=*,-llvm-header-guard,-fuchsia-*,-google-*;
 )
 
 
