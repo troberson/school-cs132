@@ -191,12 +191,6 @@ std::optional<TRString> DblLinkedList::next() const
     return old_it->data;
 }
 
-void DblLinkedList::testConnections()
-{
-    // write test for connections:  loop through the list testing each node
-    std::cout << "TEST CONNECTIONS Passed\n";
-}
-
 
 std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list)
 {

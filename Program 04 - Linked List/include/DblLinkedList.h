@@ -131,8 +131,6 @@ class DblLinkedList
      */
     std::optional<TRString> next() const;
 
-    void testConnections();
-
 
     // Friend Output
     friend std::ostream& operator<<(std::ostream& ostrm,
