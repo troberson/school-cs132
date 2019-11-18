@@ -78,6 +78,12 @@ int TRString::capacity() const
     return this->cap;
 }
 
+// Check if empty
+bool TRString::isEmpty() const
+{
+    return this->length() == 0;
+}
+
 // Return character at a given index
 char TRString::at(const int index) const
 {

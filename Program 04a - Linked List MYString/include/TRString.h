@@ -101,6 +101,13 @@ class TRString
     [[nodiscard]] int capacity() const;
 
     /**
+     * Check if the string is empty
+     *
+     * @returns True if the string is empty, false otherwise.
+     */
+    [[nodiscard]] bool isEmpty() const;
+
+    /**
      * Set the string.
      *
      * @param argStr The string to set equal to.
