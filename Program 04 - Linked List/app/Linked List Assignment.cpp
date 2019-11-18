@@ -109,6 +109,11 @@ int main()
     std::cout << "\nAfter changer:\n";
     print_lists();
 
+    // TRSTring Created and Current Counts
+    std::cout << "TRString Created: " << TRString::getCreatedCount()
+              << "\nTRString Current: " << TRString::getCurrentCount()
+              << "\n";
+
     return 0;
 }
 
