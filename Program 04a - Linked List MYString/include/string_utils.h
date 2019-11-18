@@ -124,6 +124,8 @@ char* string_concat(const char* lstr, const char* rstr);
  *
  * @note The sort order depends on the encoding, such as ASCII.
  *
+ * @note String comparison is case-insensitive.
+ *
  * @param lstr A string
  * @param rstr A string
  * @returns
