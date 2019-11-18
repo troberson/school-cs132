@@ -1,7 +1,7 @@
 ////
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 4A - MYString v2
+// Program Name: Program 4A - LinkedList MYString
 //
 // Description: A dynamically-sized string class.
 // This class holds a C-style string with an initial capacity
@@ -93,8 +93,6 @@ class TRString
 
     /**
      * Return the capacity of the string
-     *
-     * @note This is fixed in Program 2 at 20 characters.
      *
      * @returns The capacity of the string.
      */

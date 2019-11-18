@@ -1,7 +1,7 @@
 ////
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 4A - Linked List MYString
+// Program Name: Program 4A - LinkedList MYString
 //
 // Description: A dynamically-sized string class.
 // This class holds a C-style string with an initial capacity

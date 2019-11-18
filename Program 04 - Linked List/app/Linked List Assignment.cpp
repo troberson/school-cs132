@@ -1,3 +1,18 @@
+////
+// Name: Tamara Roberson
+// Section: S
+// Program Name: Program 4 - LinkedList (Main App)
+//
+// Description: Read two textfiles (infile1.txt, infile2.txt) into
+// two DblLinkedLists as TRStrings. Then perform several tasks with lists,
+// writing the list counts to the console each time:
+//   * Copy the lists using an assigment operator.
+//   * Find the set differences of the lists.
+//   * Print counts with two words added (tests copy constructor)
+//   * Print number of TRStrings constructed and the current count.
+//   * Write the set differences to outfile1.txt and outfile2.txt.
+////
+
 #include <DblLinkedList.h>
 #include <TRString.h>
 #include <string_utils.h>
