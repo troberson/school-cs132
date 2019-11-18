@@ -40,6 +40,15 @@ void write_words(std::ostream& output_stream, const wordlist& words,
                  const char* title = nullptr);
 
 
+/**
+ * Remove from list B the elements which are in list A.
+ *
+ * @param[in] list_a A list of words.
+ * @param[out] list_b A list of words.
+ */
+void difference(const wordlist& list_a, wordlist& list_b);
+
+
 int main()
 {
     wordlist list1;
@@ -71,6 +80,20 @@ int main()
     std::cout << "Set modList1 and 2:\n";
     modList1 = list1;
     modList2 = list2;
+    print_lists();
+
+    std::cout << "Set differences:\n";
+    try
+    {
+        difference(list2, modList1);
+        difference(list1, modList2);
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return 1;
+    }
+
     print_lists();
 
     return 0;
@@ -127,4 +150,15 @@ void write_words(std::ostream& output_stream, const wordlist& words,
     }
 
     output_stream << words << std::endl;
+}
+
+
+void difference(const wordlist& list_a, wordlist& list_b)
+{
+    list_a.resetIterator();
+    while (list_a.hasMore())
+    {
+        auto str = list_a.next().value();
+        list_b.remove(str);
+    }
 }
