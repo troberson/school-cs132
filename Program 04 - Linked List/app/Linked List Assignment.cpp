@@ -30,14 +30,12 @@ wordlist read_words(std::istream& input_stream);
 
 
 /**
- * Write word list to an output stream
+ * Write word list to a file.
  *
- * @param output_stream The output stream to write to.
- * @param words A list of words.
- * @param title A title for the words (default: none).
+ * @param filename The name of the file to write to.
+ * @param list A list of words.
  */
-void write_words(std::ostream& output_stream, const wordlist& words,
-                 const char* title = nullptr);
+void write_file(const char* filename, const wordlist& list);
 
 
 /**
@@ -114,12 +112,25 @@ int main()
               << "\nTRString Current: " << TRString::getCurrentCount()
               << "\n";
 
+
+    // Write output
+    try
+    {
+        write_file("outfile1.txt", modList1);
+        write_file("outfile2.txt", modList2);
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return 1;
+    }
+
     return 0;
 }
 
 wordlist read_file(const char* filename)
 {
-    // INPUT - read in a list of words from a text file
+    // open file
     std::ifstream input_file;
     input_file.open(filename);
 
@@ -159,15 +170,26 @@ wordlist read_words(std::istream& input_stream)
 }
 
 
-void write_words(std::ostream& output_stream, const wordlist& words,
-                 const char* title /* = nullptr */)
+void write_file(const char* filename, const wordlist& list)
 {
-    if (title != nullptr)
+    // open file
+    std::ofstream output_file;
+    output_file.open(filename);
+
+    // fatal error if file could not be opened
+    if (!output_file.is_open())
     {
-        output_stream << title << "\n";
+        const char* msg = utils::string::string_concat(
+            "Error opening output file: ", filename);
+
+        throw std::ios::failure(msg);
     }
 
-    output_stream << words << std::endl;
+    // write words into the file
+    output_file << list << std::endl;
+
+    // explicitly close output file
+    output_file.close();
 }
 
 
