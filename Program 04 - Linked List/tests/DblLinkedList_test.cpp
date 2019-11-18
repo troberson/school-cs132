@@ -90,6 +90,7 @@ SCENARIO("Copy a list (Copy Constructor)")
 
         WHEN("A copy is made")
         {
+            // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
             DblLinkedList list2(list1);
 
             THEN("The counts are the same")

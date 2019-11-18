@@ -30,6 +30,7 @@ DblLinkedList::DblLinkedList(const TRString& str) : DblLinkedList()
 
 DblLinkedList::DblLinkedList(const DblLinkedList& list) : DblLinkedList()
 {
+    list.resetIterator();
     while (list.hasMore())
     {
         this->push_back(list.next().value());
@@ -38,22 +39,19 @@ DblLinkedList::DblLinkedList(const DblLinkedList& list) : DblLinkedList()
 
 DblLinkedList::~DblLinkedList()
 {
-    this->resetIterator();
-    while (this->hasMore())
+    clear();
+}
+
+void DblLinkedList::clear()
+{
+    while (this->count > 0)
     {
-        Node* next_it = this->it->next;
-        delete this->it;
-        this->it = next_it;
-        this->count--;
+        del_node(this->head);
     }
 }
 
 DblLinkedList& DblLinkedList::operator=(DblLinkedList list)
 {
-    // copy-and-swap could be slow and memory-intensive for very large
-    // lists, as it requires the creation of a temporary copy, but ensures
-    // that our list remains in a valid state.
-
     // copy-and-swap does not require a self-assignment check.
 
     list.swap(*this);
@@ -69,7 +67,7 @@ void DblLinkedList::swap(DblLinkedList& list) noexcept
     swap(list.count, this->count);
 }
 
-int DblLinkedList::getCount()
+int DblLinkedList::getCount() const
 {
     return this->count;
 }
@@ -284,21 +282,26 @@ void DblLinkedList::link_nodes(Node* node_left /* = nullptr */,
 
 void DblLinkedList::del_node(Node* node)
 {
-    // Don't leave head or tail dangling
-    if (this->head == node)
+    // Can't delete nothing
+    if (node == nullptr)
     {
-        this->head = nullptr;
-    }
-
-    if (this->tail == node)
-    {
-        this->tail = nullptr;
+        return;
     }
 
     // Save the previous and next pointers
     Node* node_prev = node->prev;
     Node* node_next = node->next;
 
+    // Update head and tail
+    if (this->head == node)
+    {
+        this->head = node_next;
+    }
+
+    if (this->tail == node)
+    {
+        this->tail = node_prev;
+    }
     // Delete the node
     // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
     delete node;

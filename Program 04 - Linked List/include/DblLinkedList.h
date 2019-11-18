@@ -52,6 +52,10 @@ class DblLinkedList
      */
     DblLinkedList& operator=(DblLinkedList list);
 
+    /**
+     * Clear a list.
+     */
+    void clear();
 
     /**
      * Swap values with another list.
@@ -66,7 +70,7 @@ class DblLinkedList
      *
      * @returns The number of entries in the list.
      */
-    int getCount();
+    int getCount() const;
 
 
     /**
