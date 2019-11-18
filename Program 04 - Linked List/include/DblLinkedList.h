@@ -136,14 +136,17 @@ class DblLinkedList
     friend std::ostream& operator<<(std::ostream& ostrm,
                                     const DblLinkedList& list);
 
+
+    // PRIVATE
   private:
     class Node
-    { // fully defined here due to its simplicity
+    {
       public:
         Node()
         {
             next = prev = nullptr;
         }
+
         explicit Node(const TRString& str)
         {
             data = str;
@@ -161,6 +164,7 @@ class DblLinkedList
     };
 
     Node *head, *tail;
+
     // mutable says that it can change in a const member function
     mutable Node* it;
     int count;

@@ -22,8 +22,7 @@
 #include <iostream>
 #include <stdexcept>
 
-// alias the DblLinkedList of TRStrings as 'wordlist' for clarity and
-// ergonomics
+// alias the DblLinkedList of TRStrings as 'wordlist' for clarity
 using wordlist = DblLinkedList;
 
 /**
@@ -70,6 +69,7 @@ void difference(const wordlist& list_a, wordlist& list_b);
 void changer(wordlist list);
 
 
+// MAIN
 int main()
 {
     wordlist list1;
@@ -77,6 +77,7 @@ int main()
     wordlist modList1;
     wordlist modList2;
 
+    // Read the input files
     try
     {
         list1 = read_file("infile1.txt");
@@ -88,6 +89,7 @@ int main()
         return 1;
     }
 
+    // Lambda function to print all the list counts
     auto print_lists = [&]() {
         std::cout << "List1: " << list1.getCount() << " words\n"
                   << "List2: " << list2.getCount() << " words\n"
@@ -95,14 +97,17 @@ int main()
                   << "modList2: " << modList2.getCount() << " words\n\n";
     };
 
+    // Initial
     std::cout << "Initial Creation:\n";
     print_lists();
 
+    // Copy to modList
     std::cout << "Set modList1 and 2:\n";
     modList1 = list1;
     modList2 = list2;
     print_lists();
 
+    // Set differences
     std::cout << "Set differences:\n";
     try
     {
@@ -122,7 +127,7 @@ int main()
     std::cout << "\nAfter changer:\n";
     print_lists();
 
-    // TRSTring Created and Current Counts
+    // TRString Created and Current Counts
     std::cout << "TRString Created: " << TRString::getCreatedCount()
               << "\nTRString Current: " << TRString::getCurrentCount()
               << "\n";
@@ -140,8 +145,10 @@ int main()
         return 1;
     }
 
+    // Success
     return 0;
 }
+
 
 wordlist read_file(const char* filename)
 {
@@ -171,10 +178,17 @@ wordlist read_words(std::istream& input_stream)
 {
     wordlist list;
 
+    // keep inserting words from the input stream to the list until we've
+    // exhausted it
     while (input_stream)
     {
         TRString str;
         input_stream >> str;
+
+        // don't add empty strings
+        // the extraction operator doesn't normally extract empty strings
+        // but the TRString overload strips punctuation, so we might have a
+        // punctuation-only string that is now empty.
         if (!str.isEmpty())
         {
             list.insert(str);
@@ -210,6 +224,7 @@ void write_file(const char* filename, const wordlist& list)
 
 void difference(const wordlist& list_a, wordlist& list_b)
 {
+    // walk through list_a and remove all the strings from list_b
     list_a.resetIterator();
     while (list_a.hasMore())
     {
