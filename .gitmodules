@@ -1,6 +1,3 @@
-[submodule "Program 03 - MYString v2/cmake/clangformat-cmake"]
-	path = Program 03 - MYString v2/cmake/clangformat-cmake
-	url = https://github.com/zemasoft/clangformat-cmake
-[submodule "Program 04 - Linked List/cmake/cmake-scripts"]
-	path = Program 04 - Linked List/cmake/cmake-scripts
-	url = https://github.com/StableCoder/cmake-scripts
+[submodule "_CMake/cmake-scripts"]
+	path = _CMake/cmake-scripts
+	url = https://github.com/StableCoder/cmake-scripts.git
