@@ -16,7 +16,8 @@
 
 #include <optional>
 
-class Node
+
+template <typename T> class Node
 {
   public:
     Node()
@@ -24,14 +25,13 @@ class Node
         next = prev = nullptr;
     }
 
-    explicit Node(const TRString& str)
+    explicit Node(T data) : data(data)
     {
-        data = str;
         next = prev = nullptr;
     }
 
     // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
-    TRString data;
+    T data;
 
     // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
     Node* next;
@@ -189,10 +189,10 @@ class DblLinkedList
 
     // PRIVATE
   private:
-    Node *head, *tail;
+    Node<TRString>*head, *tail;
 
     // mutable says that it can change in a const member function
-    mutable Node* it;
+    mutable Node<TRString>* it;
     int count;
 
 
@@ -209,8 +209,9 @@ class DblLinkedList
      *   (default: nullptr)
      * @returns A pointer to the new node.
      */
-    Node* add_node(const TRString& str, Node* prev_node = nullptr,
-                   Node* next_node = nullptr);
+    Node<TRString>* add_node(const TRString& str,
+                             Node<TRString>* prev_node = nullptr,
+                             Node<TRString>* next_node = nullptr);
 
 
     /**
@@ -226,8 +227,9 @@ class DblLinkedList
      *   (default: nullptr)
      * @returns A pointer to the new node.
      */
-    Node* add_node(Node* new_node, Node* prev_node = nullptr,
-                   Node* next_node = nullptr);
+    Node<TRString>* add_node(Node<TRString>* new_node,
+                             Node<TRString>* prev_node = nullptr,
+                             Node<TRString>* next_node = nullptr);
 
 
     /**
@@ -235,7 +237,7 @@ class DblLinkedList
      *
      * @param node The node to delete.
      */
-    void del_node(Node* node);
+    void del_node(Node<TRString>* node);
 
 
     /**
@@ -244,7 +246,8 @@ class DblLinkedList
      * @param node_left The first node (default: nullptr).
      * @param node_right The second node (default: nullptr).
      */
-    void link_nodes(Node* node_left = nullptr, Node* node_right = nullptr);
+    void link_nodes(Node<TRString>* node_left = nullptr,
+                    Node<TRString>* node_right = nullptr);
 };
 
 
@@ -318,7 +321,7 @@ int DblLinkedList::getCount() const
 
 void DblLinkedList::push_back(const TRString& str)
 {
-    Node* new_node = add_node(str, this->tail, nullptr);
+    Node<TRString>* new_node = add_node(str, this->tail, nullptr);
 
     // if there is no head, set this new node to the head
     if (this->head == nullptr)
@@ -428,7 +431,7 @@ std::optional<TRString> DblLinkedList::next() const
         return {};
     }
 
-    const Node* old_it = this->it;
+    const Node<TRString>* old_it = this->it;
     this->it = old_it->next;
 
     return old_it->data;
@@ -438,7 +441,7 @@ std::optional<TRString> DblLinkedList::next() const
 std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list)
 {
     // save the old iterator position, so we can resume later
-    Node* old_it = list.it;
+    Node<TRString>* old_it = list.it;
 
 
     // walk through list, writing elements to the ostream
@@ -464,18 +467,20 @@ std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list)
 
 
 // PRIVATE FUNCTIONS
-Node* DblLinkedList::add_node(const TRString& str,
-                              Node* prev_node /* = nullptr */,
-                              Node* next_node /* = nullptr */)
+Node<TRString>*
+DblLinkedList::add_node(const TRString& str,
+                        Node<TRString>* prev_node /* = nullptr */,
+                        Node<TRString>* next_node /* = nullptr */)
 {
     // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
     return add_node(new Node(str), prev_node, next_node);
 }
 
 
-Node* DblLinkedList::add_node(Node* new_node,
-                              Node* prev_node /* = nullptr */,
-                              Node* next_node /* = nullptr */)
+Node<TRString>*
+DblLinkedList::add_node(Node<TRString>* new_node,
+                        Node<TRString>* prev_node /* = nullptr */,
+                        Node<TRString>* next_node /* = nullptr */)
 {
     // Set as head or link the previous node
     if (prev_node == nullptr)
@@ -504,8 +509,8 @@ Node* DblLinkedList::add_node(Node* new_node,
     return new_node;
 }
 
-void DblLinkedList::link_nodes(Node* node_left /* = nullptr */,
-                               Node* node_right /* = nullptr */)
+void DblLinkedList::link_nodes(Node<TRString>* node_left /* = nullptr */,
+                               Node<TRString>* node_right /* = nullptr */)
 {
     if (node_left != nullptr)
     {
@@ -518,7 +523,7 @@ void DblLinkedList::link_nodes(Node* node_left /* = nullptr */,
     }
 }
 
-void DblLinkedList::del_node(Node* node)
+void DblLinkedList::del_node(Node<TRString>* node)
 {
     // Can't delete nothing
     if (node == nullptr)
@@ -527,8 +532,8 @@ void DblLinkedList::del_node(Node* node)
     }
 
     // Save the previous and next pointers
-    Node* node_prev = node->prev;
-    Node* node_next = node->next;
+    Node<TRString>* node_prev = node->prev;
+    Node<TRString>* node_next = node->next;
 
     // Update head and tail
     if (this->head == node)
