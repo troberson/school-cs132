@@ -16,6 +16,31 @@
 
 #include <optional>
 
+class Node
+{
+  public:
+    Node()
+    {
+        next = prev = nullptr;
+    }
+
+    explicit Node(const TRString& str)
+    {
+        data = str;
+        next = prev = nullptr;
+    }
+
+    // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
+    TRString data;
+
+    // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
+    Node* next;
+
+    // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
+    Node* prev;
+};
+
+
 // NOLINTNEXTLINE(hicpp-special-member-functions,cppcoreguidelines-special-member-functions)
 class DblLinkedList
 {
@@ -164,30 +189,6 @@ class DblLinkedList
 
     // PRIVATE
   private:
-    class Node
-    {
-      public:
-        Node()
-        {
-            next = prev = nullptr;
-        }
-
-        explicit Node(const TRString& str)
-        {
-            data = str;
-            next = prev = nullptr;
-        }
-
-        // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
-        TRString data;
-
-        // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
-        Node* next;
-
-        // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
-        Node* prev;
-    };
-
     Node *head, *tail;
 
     // mutable says that it can change in a const member function
@@ -437,7 +438,7 @@ std::optional<TRString> DblLinkedList::next() const
 std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list)
 {
     // save the old iterator position, so we can resume later
-    DblLinkedList::Node* old_it = list.it;
+    Node* old_it = list.it;
 
 
     // walk through list, writing elements to the ostream
@@ -463,19 +464,18 @@ std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list)
 
 
 // PRIVATE FUNCTIONS
-DblLinkedList::Node*
-DblLinkedList::add_node(const TRString& str,
-                        Node* prev_node /* = nullptr */,
-                        Node* next_node /* = nullptr */)
+Node* DblLinkedList::add_node(const TRString& str,
+                              Node* prev_node /* = nullptr */,
+                              Node* next_node /* = nullptr */)
 {
     // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
     return add_node(new Node(str), prev_node, next_node);
 }
 
 
-DblLinkedList::Node*
-DblLinkedList::add_node(Node* new_node, Node* prev_node /* = nullptr */,
-                        Node* next_node /* = nullptr */)
+Node* DblLinkedList::add_node(Node* new_node,
+                              Node* prev_node /* = nullptr */,
+                              Node* next_node /* = nullptr */)
 {
     // Set as head or link the previous node
     if (prev_node == nullptr)
