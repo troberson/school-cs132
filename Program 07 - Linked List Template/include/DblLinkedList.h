@@ -1,7 +1,7 @@
 ///
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 4 - LinkedList
+// Program Name: Program 7 - LinkedList Template
 //
 // Description: A doubly-linked ordered list which holds TRStrings.
 // Elements can be added to the list with insert(), which will add them
@@ -12,10 +12,8 @@
 #ifndef DBLLINKEDLIST_H
 #define DBLLINKEDLIST_H
 
-#include <TRString.h>
-
 #include <optional>
-
+#include <string> // see FIXME in operator<< overload
 
 template <typename T> class Node
 {
@@ -42,20 +40,20 @@ template <typename T> class Node
 
 
 // NOLINTNEXTLINE(hicpp-special-member-functions,cppcoreguidelines-special-member-functions)
-class DblLinkedList
+template <typename T> class DblLinkedList
 {
   public:
     /**
      * Create a new linked list.
      */
-    DblLinkedList();
+    DblLinkedList<T>();
 
     /**
      * Create a new linked list that includes the given element.
      *
      * @param str An element for the list.
      */
-    explicit DblLinkedList(const TRString& str);
+    explicit DblLinkedList<T>(const T& data);
 
 
     /**
@@ -63,13 +61,13 @@ class DblLinkedList
      *
      * @param list The list to copy.
      */
-    DblLinkedList(const DblLinkedList& list);
+    DblLinkedList<T>(const DblLinkedList<T>& list);
 
 
     /**
      * Delete a DblLinkedList.
      */
-    ~DblLinkedList();
+    ~DblLinkedList<T>();
 
 
     /**
@@ -78,7 +76,7 @@ class DblLinkedList
      * @param list The list to copy.
      * @returns The current list.
      */
-    DblLinkedList& operator=(DblLinkedList list);
+    DblLinkedList<T>& operator=(DblLinkedList<T> list);
 
     /**
      * Clear a list.
@@ -90,7 +88,7 @@ class DblLinkedList
      *
      * @param list The list to swap with.
      */
-    void swap(DblLinkedList& list) noexcept;
+    void swap(DblLinkedList<T>& list) noexcept;
 
 
     /**
@@ -104,9 +102,9 @@ class DblLinkedList
     /**
      * Add an entry to the end of the list.
      *
-     * @param str The string to add.
+     * @param data The data to add.
      */
-    void push_back(const TRString& str);
+    void push_back(const T& data);
 
 
     /**
@@ -116,19 +114,19 @@ class DblLinkedList
      * Entries matching an existing case-insensitive entry will not be
      * added.
      *
-     * @param str The string to add.
-     * @returns True if string was added, False otherwise.
+     * @param data The data to add.
+     * @returns True if data was added, False otherwise.
      */
-    bool insert(const TRString& str);
+    bool insert(const T& data);
 
 
     /**
      * Remove an entry with the given value.
      *
-     * @param str The string to remove.
-     * @returns True if string was removed, False otherwise.
+     * @param data The data to remove.
+     * @returns True if data was removed, False otherwise.
      */
-    bool remove(const TRString& str);
+    bool remove(const T& data);
 
 
     /**
@@ -154,7 +152,7 @@ class DblLinkedList
      *
      * @returns An optional class containing the node data.
      */
-    std::optional<TRString> next() const;
+    std::optional<T> next() const;
 
 
     /**
@@ -182,36 +180,43 @@ class DblLinkedList
     }
 
 
-    // Friend Output
-    friend std::ostream& operator<<(std::ostream& ostrm,
-                                    const DblLinkedList& list);
+    // // Friend Output
+    /**
+     * Write the list to a stream.
+     *
+     * @param ostrm An output stream.
+     * @returns The output stream.
+     */
+    // template <typename U>
+    // friend std::ostream& operator<<(std::ostream&,
+    //                                 const DblLinkedList<U>&);
 
 
     // PRIVATE
   private:
-    Node<TRString>*head, *tail;
+    Node<T>* head{};
+    Node<T>* tail{};
 
     // mutable says that it can change in a const member function
-    mutable Node<TRString>* it;
-    int count;
+    mutable Node<T>* it{};
+    int count{0};
 
 
     /**
-     * Add a TRString as a new node.
+     * Add data as a new node.
      *
      * If @p prev_node is 'nullptr', the new node is set as head.
      * If @p next_node is 'nullptr', the new node is set as tail.
      *
-     * @param str The string to add.
+     * @param data The data to add.
      * @param prev_node The node which should be before the new node
      *   (default: nullptr).
      * @param next_node The node which should be after the new node.
      *   (default: nullptr)
      * @returns A pointer to the new node.
      */
-    Node<TRString>* add_node(const TRString& str,
-                             Node<TRString>* prev_node = nullptr,
-                             Node<TRString>* next_node = nullptr);
+    Node<T>* add_node(const T& data, Node<T>* prev_node = nullptr,
+                      Node<T>* next_node = nullptr);
 
 
     /**
@@ -227,9 +232,8 @@ class DblLinkedList
      *   (default: nullptr)
      * @returns A pointer to the new node.
      */
-    Node<TRString>* add_node(Node<TRString>* new_node,
-                             Node<TRString>* prev_node = nullptr,
-                             Node<TRString>* next_node = nullptr);
+    Node<T>* add_node(Node<T>* new_node, Node<T>* prev_node = nullptr,
+                      Node<T>* next_node = nullptr);
 
 
     /**
@@ -237,7 +241,7 @@ class DblLinkedList
      *
      * @param node The node to delete.
      */
-    void del_node(Node<TRString>* node);
+    void del_node(Node<T>* node);
 
 
     /**
@@ -246,37 +250,50 @@ class DblLinkedList
      * @param node_left The first node (default: nullptr).
      * @param node_right The second node (default: nullptr).
      */
-    void link_nodes(Node<TRString>* node_left = nullptr,
-                    Node<TRString>* node_right = nullptr);
+    void link_nodes(Node<T>* node_left = nullptr,
+                    Node<T>* node_right = nullptr);
 };
 
 
-/**
- * Write the list to a stream.
- *
- * @param ostrm An output stream.
- * @returns The output stream.
- */
-std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list);
-
-
 /// DEFINITIONS
-
-DblLinkedList::DblLinkedList()
+template <typename T>
+std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList<T>& list)
 {
-    head = nullptr;
-    tail = nullptr;
-    it = nullptr;
-    count = 0;
+    // walk through list, writing elements to the ostream
+    list.process([&]() -> std::optional<bool> {
+        const T data = list.next().value();
+        ostrm << data;
+
+        // add a space between words
+        if (list.hasMore())
+        {
+            // FIXME: can't seem to use simple char, compilation fails
+            // with: "error: invalid operands to binary expression
+            // ('std::ostream' (aka 'basic_ostream<char>') and 'char')"
+            // ostrm << ' ';
+            ostrm << std::string(" ");
+        }
+
+        return {};
+    });
+
+    // return the ostream
+    return ostrm;
 }
 
-DblLinkedList::DblLinkedList(const TRString& str) : DblLinkedList()
+
+template <typename T> DblLinkedList<T>::DblLinkedList() = default;
+
+template <typename T>
+DblLinkedList<T>::DblLinkedList(const T& data) : DblLinkedList<T>()
 {
-    push_back(str);
+    push_back(data);
     resetIterator();
 }
 
-DblLinkedList::DblLinkedList(const DblLinkedList& list) : DblLinkedList()
+template <typename T>
+DblLinkedList<T>::DblLinkedList(const DblLinkedList<T>& list)
+    : DblLinkedList<T>()
 {
     list.process([&list, this]() -> std::optional<bool> {
         this->push_back(list.next().value());
@@ -284,12 +301,12 @@ DblLinkedList::DblLinkedList(const DblLinkedList& list) : DblLinkedList()
     });
 }
 
-DblLinkedList::~DblLinkedList()
+template <typename T> DblLinkedList<T>::~DblLinkedList()
 {
     clear();
 }
 
-void DblLinkedList::clear()
+template <typename T> void DblLinkedList<T>::clear()
 {
     while (this->count > 0)
     {
@@ -297,7 +314,9 @@ void DblLinkedList::clear()
     }
 }
 
-DblLinkedList& DblLinkedList::operator=(DblLinkedList list)
+
+template <typename T>
+DblLinkedList<T>& DblLinkedList<T>::operator=(DblLinkedList<T> list)
 {
     // copy-and-swap does not require a self-assignment check.
 
@@ -305,7 +324,8 @@ DblLinkedList& DblLinkedList::operator=(DblLinkedList list)
     return *this;
 }
 
-void DblLinkedList::swap(DblLinkedList& list) noexcept
+template <typename T>
+void DblLinkedList<T>::swap(DblLinkedList<T>& list) noexcept
 {
     // unqualified "swap" allows for overloads to step in with ADL
     using std::swap;
@@ -314,14 +334,14 @@ void DblLinkedList::swap(DblLinkedList& list) noexcept
     swap(list.count, this->count);
 }
 
-int DblLinkedList::getCount() const
+template <typename T> int DblLinkedList<T>::getCount() const
 {
     return this->count;
 }
 
-void DblLinkedList::push_back(const TRString& str)
+template <typename T> void DblLinkedList<T>::push_back(const T& data)
 {
-    Node<TRString>* new_node = add_node(str, this->tail, nullptr);
+    Node<T>* new_node = add_node(data, this->tail, nullptr);
 
     // if there is no head, set this new node to the head
     if (this->head == nullptr)
@@ -330,43 +350,42 @@ void DblLinkedList::push_back(const TRString& str)
     }
 }
 
-
-bool DblLinkedList::insert(const TRString& str)
+template <typename T> bool DblLinkedList<T>::insert(const T& data)
 {
     // if there are no nodes in the list, add new new entry
     if (this->count == 0)
     {
-        push_back(str);
+        push_back(data);
         return true;
     }
 
     // if new entry is smaller than current head,
     // make the new entry the new head
-    if (str < this->head->data)
+    if (data < this->head->data)
     {
-        add_node(str, nullptr, this->head);
+        add_node(data, nullptr, this->head);
         return true;
     }
 
     // walk through the list, looking for an entry that is larger
     // we'll put the new entry right before it or fail if we find
     // an equivalent entry already exists.
-    auto result = this->process([&str, this]() -> std::optional<bool> {
+    auto result = this->process([&data, this]() -> std::optional<bool> {
         auto cur_ptr = this->it;
         auto cur_val = next().value();
 
         // if we reach an entry whose value is equal to the new entry,
         // keep the old entry and do not add the new entry, return failure.
-        if (cur_val == str)
+        if (cur_val == data)
         {
             return false;
         }
 
         // if we reach an entry that has a larger value than the new entry,
         // then insert it before that entry
-        if (cur_val > str)
+        if (cur_val > data)
         {
-            add_node(str, cur_ptr->prev, cur_ptr);
+            add_node(data, cur_ptr->prev, cur_ptr);
             return true;
         }
 
@@ -381,12 +400,12 @@ bool DblLinkedList::insert(const TRString& str)
 
     // if we reach the end, the new entry must be larger than the
     // current largest entry, so it becomes the new tail
-    push_back(str);
+    push_back(data);
     return true;
 }
 
 
-bool DblLinkedList::remove(const TRString& str)
+template <typename T> bool DblLinkedList<T>::remove(const T& data)
 {
     // we can't remove anything from an empty list
     if (this->count == 0)
@@ -395,12 +414,12 @@ bool DblLinkedList::remove(const TRString& str)
     }
 
     // walk through the list, looking for a match
-    auto result = this->process([&str, this]() -> std::optional<bool> {
+    auto result = this->process([&data, this]() -> std::optional<bool> {
         auto cur_ptr = this->it;
         auto cur_val = next().value();
 
         // found a match, delete it and return success
-        if (cur_val == str)
+        if (cur_val == data)
         {
             del_node(cur_ptr);
             return true;
@@ -413,74 +432,44 @@ bool DblLinkedList::remove(const TRString& str)
     return result.has_value() && result.value();
 }
 
-
-void DblLinkedList::resetIterator() const
+template <typename T> void DblLinkedList<T>::resetIterator() const
 {
     this->it = head;
 }
 
-bool DblLinkedList::hasMore() const
+template <typename T> bool DblLinkedList<T>::hasMore() const
 {
     return (this->it != nullptr);
 }
 
-std::optional<TRString> DblLinkedList::next() const
+template <typename T> std::optional<T> DblLinkedList<T>::next() const
 {
     if (!hasMore())
     {
         return {};
     }
 
-    const Node<TRString>* old_it = this->it;
+    const Node<T>* old_it = this->it;
     this->it = old_it->next;
 
     return old_it->data;
 }
 
 
-std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList& list)
-{
-    // save the old iterator position, so we can resume later
-    Node<TRString>* old_it = list.it;
-
-
-    // walk through list, writing elements to the ostream
-    list.process([&]() -> std::optional<bool> {
-        const TRString str = list.next().value();
-        ostrm << str;
-
-        // add a space between words
-        if (list.hasMore())
-        {
-            ostrm << " ";
-        }
-
-        return {};
-    });
-
-    // restore old iterator position
-    list.it = old_it;
-
-    // return the ostream
-    return ostrm;
-}
-
-
 // PRIVATE FUNCTIONS
-Node<TRString>*
-DblLinkedList::add_node(const TRString& str,
-                        Node<TRString>* prev_node /* = nullptr */,
-                        Node<TRString>* next_node /* = nullptr */)
+template <typename T>
+Node<T>* DblLinkedList<T>::add_node(const T& data,
+                                    Node<T>* prev_node /* = nullptr */,
+                                    Node<T>* next_node /* = nullptr */)
 {
     // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
-    return add_node(new Node(str), prev_node, next_node);
+    return add_node(new Node(data), prev_node, next_node);
 }
 
-
-Node<TRString>*
-DblLinkedList::add_node(Node<TRString>* new_node,
-                        Node<TRString>* prev_node /* = nullptr */,
-                        Node<TRString>* next_node /* = nullptr */)
+template <typename T>
+Node<T>* DblLinkedList<T>::add_node(Node<T>* new_node,
+                                    Node<T>* prev_node /* = nullptr */,
+                                    Node<T>* next_node /* = nullptr */)
 {
     // Set as head or link the previous node
     if (prev_node == nullptr)
@@ -509,8 +498,9 @@ DblLinkedList::add_node(Node<TRString>* new_node,
     return new_node;
 }
 
-void DblLinkedList::link_nodes(Node<TRString>* node_left /* = nullptr */,
-                               Node<TRString>* node_right /* = nullptr */)
+template <typename T>
+void DblLinkedList<T>::link_nodes(Node<T>* node_left /* = nullptr */,
+                                  Node<T>* node_right /* = nullptr */)
 {
     if (node_left != nullptr)
     {
@@ -523,7 +513,7 @@ void DblLinkedList::link_nodes(Node<TRString>* node_left /* = nullptr */,
     }
 }
 
-void DblLinkedList::del_node(Node<TRString>* node)
+template <typename T> void DblLinkedList<T>::del_node(Node<T>* node)
 {
     // Can't delete nothing
     if (node == nullptr)
@@ -532,8 +522,8 @@ void DblLinkedList::del_node(Node<TRString>* node)
     }
 
     // Save the previous and next pointers
-    Node<TRString>* node_prev = node->prev;
-    Node<TRString>* node_next = node->next;
+    Node<T>* node_prev = node->prev;
+    Node<T>* node_next = node->next;
 
     // Update head and tail
     if (this->head == node)

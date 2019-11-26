@@ -24,7 +24,7 @@
 #include <stdexcept>
 
 // alias the DblLinkedList of TRStrings as 'wordlist' for clarity
-using wordlist = DblLinkedList;
+using wordlist = DblLinkedList<TRString>;
 
 /**
  * Read a file into a word list.

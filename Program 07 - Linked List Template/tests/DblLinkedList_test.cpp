@@ -1,7 +1,7 @@
 ////
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 4 - LinkedList
+// Program Name: Program 7 - LinkedList Template
 //
 // Description: A doubly-linked ordered list which holds TRStrings.
 // Elements can be added to the list with insert(), which will add them
@@ -21,7 +21,7 @@ SCENARIO("DblLinkedList: Create an empty list")
 {
     GIVEN("A new empty list")
     {
-        DblLinkedList list;
+        DblLinkedList<int> list;
 
         THEN("The count is 0")
         {
@@ -46,7 +46,7 @@ SCENARIO("Add strings to a list")
 {
     GIVEN("An empty list")
     {
-        DblLinkedList list;
+        DblLinkedList<TRString> list;
 
         WHEN("A string 'hello' is added")
         {
@@ -162,7 +162,7 @@ SCENARIO("Insert list entries in sorted order")
 {
     GIVEN("An empty list")
     {
-        DblLinkedList list;
+        DblLinkedList<TRString> list;
 
         WHEN("The words 'cat', 'ant', 'dog', and 'bat' are added")
         {
@@ -207,7 +207,7 @@ SCENARIO("An entry is removed from a list")
 {
     GIVEN("A list of 'ant', 'bat', 'cat', 'dog'")
     {
-        DblLinkedList list;
+        DblLinkedList<TRString> list;
         list.insert(TRString("cat"));
         list.insert(TRString("ant"));
         list.insert(TRString("dog"));
