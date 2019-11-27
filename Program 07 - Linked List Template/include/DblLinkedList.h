@@ -100,6 +100,14 @@ template <typename T> class DblLinkedList
 
 
     /**
+     * Return the number of entries in the list.
+     *
+     * @returns The number of entries in the list.
+     */
+    int size() const;
+
+
+    /**
      * Add an entry to the end of the list.
      *
      * @param data The data to add.
@@ -180,18 +188,6 @@ template <typename T> class DblLinkedList
     }
 
 
-    // // Friend Output
-    /**
-     * Write the list to a stream.
-     *
-     * @param ostrm An output stream.
-     * @returns The output stream.
-     */
-    // template <typename U>
-    // friend std::ostream& operator<<(std::ostream&,
-    //                                 const DblLinkedList<U>&);
-
-
     // PRIVATE
   private:
     Node<T>* head{};
@@ -256,6 +252,14 @@ template <typename T> class DblLinkedList
 
 
 /// DEFINITIONS
+
+/**
+ * Write the list to a stream.
+ *
+ * @param ostrm An output stream.
+ * @returns The output stream.
+ */
+
 template <typename T>
 std::ostream& operator<<(std::ostream& ostrm, const DblLinkedList<T>& list)
 {
@@ -337,6 +341,11 @@ void DblLinkedList<T>::swap(DblLinkedList<T>& list) noexcept
 template <typename T> int DblLinkedList<T>::getCount() const
 {
     return this->count;
+}
+
+template <typename T> int DblLinkedList<T>::size() const
+{
+    return getCount();
 }
 
 template <typename T> void DblLinkedList<T>::push_back(const T& data)

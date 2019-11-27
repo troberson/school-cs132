@@ -1,7 +1,7 @@
 ////
 // Name: Tamara Roberson
 // Section: S
-// Program Name: Program 4 - LinkedList (Main App)
+// Program Name: Program 7 - LinkedList Template (Main App)
 //
 // Description: Read two textfiles (infile1.txt, infile2.txt) into
 // two DblLinkedLists as TRStrings. Then perform several tasks with lists,
@@ -10,7 +10,8 @@
 //   * Find the set differences of the lists.
 //   * Print counts with two words added (tests copy constructor)
 //   * Print number of TRStrings constructed and the current count.
-//   * Write the set differences to outfile1.txt and outfile2.txt.
+//   * Print the first five words of the set differences.
+//   * Test DblLinkedLists with integers and doubles.
 ////
 
 #include <DblLinkedList.h>
@@ -68,6 +69,15 @@ void difference(const wordlist& list_a, wordlist& list_b);
  * @param list A list of words.
  */
 void changer(wordlist list);
+
+
+/**
+ * Output the first words from a list.
+ *
+ * @param list A list of words.
+ * @param num The number of words to output.
+ */
+void printWords(wordlist list, int num);
 
 
 // MAIN
@@ -131,20 +141,34 @@ int main()
     // TRString Created and Current Counts
     std::cout << "TRString Created: " << TRString::getCreatedCount()
               << "\nTRString Current: " << TRString::getCurrentCount()
-              << "\n";
+              << "\n\n";
+
+    std::cout << "First five words from modList1:\n";
+    printWords(modList1, 5);
+
+    std::cout << "\nFirst five words from modList2:\n";
+    printWords(modList2, 5);
 
 
-    // Write output
-    try
-    {
-        write_file("outfile1.txt", modList1);
-        write_file("outfile2.txt", modList2);
-    }
-    catch (const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-        return 1;
-    }
+    std::cout << "\nNumeric Lists:\n";
+    DblLinkedList<int> intList;
+    for (int i = 20; i > 0; i -= 2)
+        intList.insert(i);
+
+    for (int i = 25; i > 0; i -= 5)
+        intList.insert(i);
+
+    std::cout << "intlist: " << intList << "  size:" << intList.size()
+              << std::endl
+              << std::endl;
+
+    DblLinkedList<double> dblList;
+    for (double i = 10.9; i > 0; i -= .57)
+        dblList.insert(i);
+
+    std::cout << "dblList: " << dblList << "  size:" << dblList.size()
+              << std::endl
+              << std::endl;
 
     // Success
     return 0;
@@ -240,4 +264,20 @@ void changer(wordlist list)
     list.insert(TRString("ZAP"));
     std::cout << "Inside changer function: size of list is "
               << list.getCount() << "\n";
+}
+
+void printWords(wordlist list, int num)
+{
+    int count{0};
+    list.process([&]() -> std::optional<bool> {
+        std::cout << list.next().value() << " ";
+        count++;
+
+        if (count > num - 1)
+        {
+            std::cout << std::endl;
+            return true;
+        }
+        return {};
+    });
 }
