@@ -10,7 +10,6 @@
 
 
 #include "LkList.h"
-#include <iostream>
 #include <sstream>
 
 using namespace std;
@@ -36,19 +35,6 @@ void LkList::merge(LkList& src)
 
     resetIterator();
     src.resetIterator();
-
-    auto printLists = [&]() {
-        auto old_it1 = this->it;
-        auto old_it2 = src.it;
-        std::cout << "List 1: " << toString() << " (Size: " << count
-                  << ")\n"
-                  << "List 2: " << src.toString()
-                  << " (Size: " << src.count << ")\n"
-                  << "New List: " << new_list.toString()
-                  << " (Size: " << new_list.count << ")" << std::endl;
-        this->it = old_it1;
-        src.it = old_it2;
-    };
 
     // Function to move everything remaining in a list to the new list.
     auto moveRemainder = [&](LkList& lst) {
@@ -77,9 +63,6 @@ void LkList::merge(LkList& src)
             end_node = lst.it;
             lst.next();
         }
-
-        std::cout << "\nMove Block From " << start_node->data << " to "
-                  << end_node->data << "\n";
 
         lst.head = end_node->next;
         end_node->next = nullptr;
@@ -113,8 +96,6 @@ void LkList::merge(LkList& src)
         // Process elements as long as some remain
         while (count > 0)
         {
-            printLists();
-
             // If src list is exhausted, move the rest of the elements from
             // this list into the new list
             if (src.head == nullptr)
@@ -135,14 +116,8 @@ void LkList::merge(LkList& src)
             }
         }
 
-        std::cout << "After Finishing List 1:\n";
-        printLists();
-
         // Move any remaining items from src list
         moveRemainder(src);
-
-        std::cout << "After Moving Remaining Items:\n";
-        printLists();
     }
 
     // Swap the new list with the current list
