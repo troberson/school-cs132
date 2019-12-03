@@ -118,18 +118,18 @@ int main()
     list2.clear();
     //------------------------
 
-    // list.insert( { -6, 2, 10, 18, 26, 34 } );
-    //
-    // list2.insert( { 10, 13, 16, 19, 22, 25 } );
-    //
-    // list.merge( list2 );
-    //
-    // cout << "Merge #8(source within destination):\n" << list << endl;
-    // cout << "List size after merge: " << list.size() << endl;
-    // cout << endl << endl;
-    //
-    // list.clear();
-    // list2.clear();
+    list.insert({-6, 2, 10, 18, 26, 34});
+
+    list2.insert({10, 13, 16, 19, 22, 25});
+
+    list.merge(list2);
+
+    cout << "Merge #8(source within destination):\n" << list << endl;
+    cout << "List size after merge: " << list.size() << endl;
+    cout << endl << endl;
+
+    list.clear();
+    list2.clear();
 
 
     //------------------------
