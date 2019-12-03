@@ -83,8 +83,7 @@ SCENARIO("A list is cleared")
 {
     GIVEN("A list of three elements")
     {
-        LkList l;
-        l.insert({1, 2, 3});
+        LkList l{1, 2, 3};
 
         THEN("Size is 3")
         {
@@ -108,8 +107,7 @@ SCENARIO("Copy a list (Copy Constructor)")
 {
     GIVEN("A list")
     {
-        LkList list1;
-        list1.insert({1, 2, 3});
+        LkList list1{1, 2, 3};
 
         WHEN("A copy is made")
         {
@@ -136,11 +134,10 @@ SCENARIO("Copy a list (Assignment Operator)")
 {
     GIVEN("Two lists")
     {
-        LkList list1;
-        list1.insert({1, 2, 3});
+        LkList list1{1, 2, 3};
 
-        LkList list2{};
-        list2.insert({3, 4, 5, 6});
+        // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+        LkList list2{3, 4, 5, 6};
 
         WHEN("The second list is assigned to the first")
         {

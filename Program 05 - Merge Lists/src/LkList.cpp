@@ -45,6 +45,11 @@ LkList::LkList(const LkList& other) : LkList()
     }
 }
 
+LkList::LkList(std::initializer_list<int> il) : LkList()
+{
+    insert(il);
+}
+
 LkList& LkList::operator=(LkList other)
 {
     // copy-and-swap does not require a self-assignment check.

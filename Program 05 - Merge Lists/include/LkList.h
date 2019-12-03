@@ -38,6 +38,7 @@ class LkList
   public:
     LkList();
     virtual ~LkList();
+    LkList(std::initializer_list<int> il);
     LkList(const LkList& other);
     LkList& operator=(LkList other);
     void swap(LkList& list) noexcept;
