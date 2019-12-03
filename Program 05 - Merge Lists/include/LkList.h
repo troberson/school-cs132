@@ -14,25 +14,26 @@
 
 using namespace std;
 
+// NOLINTNEXTLINE(hicpp-special-member-functions,cppcoreguidelines-special-member-functions)
 class LkList
 {
 
     class Node
     {
       public:
-        Node()
+        Node() = default;
+        explicit Node(int num) : data(num)
         {
-            next = prev = nullptr;
-        }
-        Node(int num)
-        {
-            data = num;
-            next = prev = nullptr;
         }
 
-        int data;
-        Node* next;
-        Node* prev;
+        // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
+        int data{};
+
+        // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
+        Node* next{};
+
+        // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
+        Node* prev{};
     };
 
   public:
