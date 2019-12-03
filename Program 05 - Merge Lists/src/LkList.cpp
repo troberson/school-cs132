@@ -30,7 +30,11 @@ LkList::LkList()
     count = 0;
 }
 
-// LkList::~LkList(){}
+LkList::~LkList()
+{
+    clear();
+}
+
 // LkList::LkList(const LkList& other){}
 // LkList& LkList::operator=(const LkList& rhs){}
 

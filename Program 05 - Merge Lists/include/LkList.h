@@ -27,7 +27,7 @@ class LkList
 
   public:
     LkList();
-    //        virtual ~LkList();
+    virtual ~LkList();
     //        LkList(const LkList& other);
     //        LkList& operator=(const LkList& other);
 
