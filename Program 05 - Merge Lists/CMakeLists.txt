@@ -7,10 +7,11 @@ cmake_minimum_required(VERSION 3.11...3.15)
 # Run clang-tidy on all code
 # Exclude llvm-header-guard because it doesn't support #pragma once
 # Exclude Google Fuchsia-specific rules
+# Don't complain about magic numbers, we need those for tests
 set(CMAKE_CXX_CLANG_TIDY
     clang-tidy;
     -header-filter=.;
-    -checks=*,-llvm-header-guard,-fuchsia-*,-google-*;
+    -checks=*,-llvm-header-guard,-fuchsia-*,-google-*,-cppcoreguidelines-avoid-magic-numbers,-readability-magic-numbers
 )
 
 
