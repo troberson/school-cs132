@@ -1,3 +1,13 @@
+////
+// Name: Tamara Roberson
+// Section: S
+// Program Name: Program 5 - LinkedList Merge
+//
+// Description: A linked list with a merge function.
+// The merge function moves all the elements from one sorted list
+// into another another sorted list in a stable fashion.
+////
+
 #ifndef LKLIST_H
 #define LKLIST_H
 #include <string>
@@ -44,6 +54,8 @@ class LkList
     int size() const;
     void clear();
 
+    std::string toString() const;
+
   private:
     Node* head;
     Node* tail;
@@ -51,6 +63,6 @@ class LkList
     int count;
 };
 
-ostream& operator<<(ostream& outStr, LkList& lst);
+ostream& operator<<(ostream& outStr, const LkList& lst);
 
 #endif // LKLIST_H

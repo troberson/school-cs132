@@ -28,10 +28,7 @@ SCENARIO("Create an empty list")
 
         THEN("String representation is empty")
         {
-            std::ostringstream stream;
-            stream << l;
-            std::string result = stream.str();
-
+            const auto result = l.toString();
             REQUIRE(result.empty());
         }
     }
@@ -59,10 +56,7 @@ SCENARIO("Items are added to a list")
                 num_str +=
                     "  "; // FIXME: two spaces are always added at the end
 
-                std::ostringstream stream;
-                stream << l;
-                std::string result = stream.str();
-
+                const auto result = l.toString();
                 REQUIRE(num_str == result);
             }
         }
@@ -78,11 +72,7 @@ SCENARIO("Items are added to a list")
 
             THEN("String representation is '1  2  3  '")
             {
-                std::ostringstream stream;
-                stream << l;
-                std::string result = stream.str();
-
-
+                const auto result = l.toString();
                 REQUIRE("1  2  3  " == result);
             }
         }
@@ -133,13 +123,8 @@ SCENARIO("Copy a list (Copy Constructor)")
 
             THEN("The string representations are the same")
             {
-                std::ostringstream stream1;
-                stream1 << list1;
-                const auto result1 = stream1.str();
-
-                std::ostringstream stream2;
-                stream2 << list2;
-                const auto result2 = stream2.str();
+                const auto result1 = list1.toString();
+                const auto result2 = list2.toString();
 
                 REQUIRE(result1 == result2);
             }
@@ -168,13 +153,8 @@ SCENARIO("Copy a list (Assignment Operator)")
 
             THEN("The string representations are the same")
             {
-                std::ostringstream stream1;
-                stream1 << list1;
-                const auto result1 = stream1.str();
-
-                std::ostringstream stream2;
-                stream2 << list2;
-                const auto result2 = stream2.str();
+                const auto result1 = list1.toString();
+                const auto result2 = list2.toString();
 
                 REQUIRE(result1 == result2);
             }

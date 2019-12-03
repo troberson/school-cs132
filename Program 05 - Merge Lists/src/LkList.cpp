@@ -11,6 +11,7 @@
 
 #include "LkList.h"
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -124,7 +125,14 @@ int LkList::next() const
     return num;
 }
 
-ostream& operator<<(ostream& outStr, LkList& lst)
+std::string LkList::toString() const
+{
+    std::ostringstream stream;
+    stream << static_cast<const LkList&>(*this);
+    return stream.str();
+}
+
+ostream& operator<<(ostream& outStr, const LkList& lst)
 {
     lst.resetIterator();
     while (lst.hasMore())
