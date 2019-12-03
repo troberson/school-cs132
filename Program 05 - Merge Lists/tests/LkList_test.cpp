@@ -10,6 +10,7 @@
 
 #include "LkList.h"
 
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -154,6 +155,44 @@ SCENARIO("Copy a list (Assignment Operator)")
                 const auto result2 = list2.toString();
 
                 REQUIRE(result1 == result2);
+            }
+        }
+    }
+}
+
+SCENARIO("Merge two sorted lists")
+{
+    GIVEN("The lists {1,2,5,6,9} and {0,3,4,7,8}")
+    {
+        // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+        LkList list1{1, 2, 5, 6, 9};
+
+        // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+        LkList list2{0, 3, 4, 7, 8};
+
+        WHEN("The second list is merged into the first")
+        {
+            list1.merge(list2);
+
+
+            THEN("The first list has size 10")
+            {
+                REQUIRE(10 == list1.size());
+            }
+
+            THEN("The second list has size 0")
+            {
+                REQUIRE(0 == list2.size());
+            }
+
+            THEN("The string representation of the first list is the "
+                 "numbers 0-9")
+            {
+                const std::string desired{
+                    "0  1  2  3  4  5  6  7  8  9  "};
+                const auto result = list1.toString();
+
+                REQUIRE(desired == result);
             }
         }
     }

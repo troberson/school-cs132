@@ -10,6 +10,7 @@
 
 #ifndef LKLIST_H
 #define LKLIST_H
+
 #include <string>
 
 using namespace std;
@@ -96,6 +97,8 @@ class LkList
      */
     Node* add_node(Node* new_node, Node* prev_node = nullptr,
                    Node* next_node = nullptr);
+
+
     /**
      * Delete a node.
      *
@@ -103,14 +106,35 @@ class LkList
      */
     void del_node(Node* node);
 
+    /**
+     * Unlink node.
+     *
+     * Detach the node from the list but do not delete it.
+     *
+     * @param node The node to unlink.
+     * @param unlink_prev Unlink the previous node? (default: true)
+     * @param unlink_next Unlink the next node? (default: true)
+     */
+    void unlink_node(Node* node, bool unlink_prev = true,
+                     bool unlink_next = true);
+
 
     /**
      * Link two nodes.
+     *
+     * If @p prev_node is 'nullptr', the new node is set as head.
+     * If @p next_node is 'nullptr', the new node is set as tail.
      *
      * @param node_left The first node (default: nullptr).
      * @param node_right The second node (default: nullptr).
      */
     void link_nodes(Node* node_left = nullptr, Node* node_right = nullptr);
+
+
+    /**
+     * Update the list size.
+     */
+    void updateSize();
 };
 
 ostream& operator<<(ostream& outStr, const LkList& lst);
