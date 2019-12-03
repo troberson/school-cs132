@@ -20,6 +20,19 @@ void LkList::merge(LkList& src)
 {
     LkList new_list;
 
+    // Do nothing if src is empty
+    if (src.count == 0)
+    {
+        return;
+    }
+
+    // If current list is empty, just swap src and current
+    if (this->count == 0)
+    {
+        using std::swap;
+        swap(*this, src);
+    }
+
     resetIterator();
     src.resetIterator();
 
@@ -36,15 +49,27 @@ void LkList::merge(LkList& src)
         src.it = old_it2;
     };
 
+    // Function to move everything remaining in a list to the new list.
+    auto moveRemainder = [&](LkList& lst) {
+        new_list.add_node(lst.it, new_list.tail);
+        lst.head = nullptr;
+        lst.tail = nullptr;
+        lst.count = 0;
+        new_list.updateSize();
+    };
+
+
     // Process elements as long as some remain
     while (count > 0)
     {
+        printLists();
+
+
         // If src list is exhausted, move the rest of the elements from
         // this list into the new list
         if (src.head == nullptr)
         {
-            unlink_node(it, true, false);
-            new_list.add_node(it, new_list.tail);
+            moveRemainder(*this);
             break;
         }
 
@@ -54,13 +79,17 @@ void LkList::merge(LkList& src)
         auto moveBlock = [&](LkList& lst, const LkList& cmplst) {
             auto start_node = lst.head;
             auto end_node = lst.it;
-            while (lst.hasMore() && lst.it->data <= cmplst.head->data)
+            while (lst.hasMore() && lst.it->data < cmplst.head->data)
             {
                 end_node = lst.it;
                 lst.next();
             }
-            lst.unlink_node(start_node, true, false);
-            lst.unlink_node(end_node, false, true);
+
+            std::cout << "\nMove Block From " << start_node->data << " to "
+                      << end_node->data << "\n";
+
+            lst.head = end_node->next;
+            end_node->next = nullptr;
             lst.updateSize();
 
             new_list.add_node(start_node, new_list.tail);
@@ -71,7 +100,7 @@ void LkList::merge(LkList& src)
 
         // Move from one list or the other, depending on which has the
         // lower starting element
-        if (head->data <= src.head->data)
+        if (head->data < src.head->data)
         {
             moveBlock(*this, src);
         }
@@ -80,6 +109,19 @@ void LkList::merge(LkList& src)
             moveBlock(src, *this);
         }
     }
+
+    std::cout << "After Finishing List 1:\n";
+    printLists();
+
+    // If this list is exhausted, move the rest of the elements from
+    // src list into the new list
+    if (this->head == nullptr && src.head != nullptr)
+    {
+        moveRemainder(src);
+    }
+
+    std::cout << "After Moving Remaining Items:\n";
+    printLists();
 
     // Swap the new list with the current list
     using std::swap;
@@ -269,8 +311,7 @@ void LkList::link_nodes(Node* node_left /* = nullptr */,
     }
 }
 
-void LkList::unlink_node(Node* node, const bool unlink_prev /* = true */,
-                         const bool unlink_next /* = true */)
+void LkList::unlink_node(Node* node)
 {
     // Can't delete nothing
     if (node == nullptr)
@@ -283,15 +324,8 @@ void LkList::unlink_node(Node* node, const bool unlink_prev /* = true */,
     Node* node_next = node->next;
 
     // Unlink previous and next nodes
-    if (unlink_prev)
-    {
-        node->prev = nullptr;
-    }
-
-    if (unlink_next)
-    {
-        node->next = nullptr;
-    }
+    node->prev = nullptr;
+    node->next = nullptr;
 
     // Update head and tail
     if (this->head == node)

@@ -112,12 +112,8 @@ class LkList
      * Detach the node from the list but do not delete it.
      *
      * @param node The node to unlink.
-     * @param unlink_prev Unlink the previous node? (default: true)
-     * @param unlink_next Unlink the next node? (default: true)
      */
-    void unlink_node(Node* node, bool unlink_prev = true,
-                     bool unlink_next = true);
-
+    void unlink_node(Node* node);
 
     /**
      * Link two nodes.
