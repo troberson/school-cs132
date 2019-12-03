@@ -35,10 +35,33 @@ LkList::~LkList()
     clear();
 }
 
-// LkList::LkList(const LkList& other){}
-// LkList& LkList::operator=(const LkList& rhs){}
+LkList::LkList(const LkList& other) : LkList()
+{
+    other.resetIterator();
+    while (other.hasMore())
+    {
+        insert(other.next());
+    }
+}
 
-int LkList::size()
+LkList& LkList::operator=(LkList other)
+{
+    // copy-and-swap does not require a self-assignment check.
+    other.swap(*this);
+    return *this;
+}
+
+void LkList::swap(LkList& list) noexcept
+{
+    // unqualified "swap" allows for overloads to step in with ADL
+    using std::swap;
+    swap(list.head, this->head);
+    swap(list.tail, this->tail);
+    swap(list.count, this->count);
+}
+
+
+int LkList::size() const
 {
     return count;
 }
@@ -84,17 +107,17 @@ void LkList::clear()
     count = 0;
 }
 
-void LkList::resetIterator()
+void LkList::resetIterator() const
 {
     it = head;
 }
 
-bool LkList::hasMore()
+bool LkList::hasMore() const
 {
     return (it != nullptr);
 }
 
-int LkList::next()
+int LkList::next() const
 {
     int num = it->data;
     it = it->next;

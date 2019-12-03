@@ -28,23 +28,26 @@ class LkList
   public:
     LkList();
     virtual ~LkList();
-    //        LkList(const LkList& other);
-    //        LkList& operator=(const LkList& other);
+    LkList(const LkList& other);
+    LkList& operator=(LkList other);
+    void swap(LkList& list) noexcept;
 
     bool insert(int num);
     void insert(const initializer_list<int>& il);
 
     void merge(LkList& src);
 
-    void resetIterator();
-    bool hasMore();
-    int next();
+    void resetIterator() const;
+    bool hasMore() const;
+    int next() const;
 
-    int size();
+    int size() const;
     void clear();
 
   private:
-    Node *head, *tail, *it;
+    Node* head;
+    Node* tail;
+    mutable Node* it;
     int count;
 };
 

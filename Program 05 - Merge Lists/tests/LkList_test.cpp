@@ -112,3 +112,72 @@ SCENARIO("A list is cleared")
         }
     }
 }
+
+
+SCENARIO("Copy a list (Copy Constructor)")
+{
+    GIVEN("A list")
+    {
+        LkList list1;
+        list1.insert({1, 2, 3});
+
+        WHEN("A copy is made")
+        {
+            // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
+            LkList list2(list1);
+
+            THEN("The counts are the same")
+            {
+                REQUIRE(list1.size() == list2.size());
+            }
+
+            THEN("The string representations are the same")
+            {
+                std::ostringstream stream1;
+                stream1 << list1;
+                const auto result1 = stream1.str();
+
+                std::ostringstream stream2;
+                stream2 << list2;
+                const auto result2 = stream2.str();
+
+                REQUIRE(result1 == result2);
+            }
+        }
+    }
+}
+
+SCENARIO("Copy a list (Assignment Operator)")
+{
+    GIVEN("Two lists")
+    {
+        LkList list1;
+        list1.insert({1, 2, 3});
+
+        LkList list2{};
+        list2.insert({3, 4, 5, 6});
+
+        WHEN("The second list is assigned to the first")
+        {
+            list2 = list1;
+
+            THEN("The counts are the same")
+            {
+                REQUIRE(list1.size() == list2.size());
+            }
+
+            THEN("The string representations are the same")
+            {
+                std::ostringstream stream1;
+                stream1 << list1;
+                const auto result1 = stream1.str();
+
+                std::ostringstream stream2;
+                stream2 << list2;
+                const auto result2 = stream2.str();
+
+                REQUIRE(result1 == result2);
+            }
+        }
+    }
+}
