@@ -219,3 +219,22 @@ SCENARIO("Merge #1: Source Overlaps Destination")
         }
     }
 }
+
+SCENARIO("Merge #2: Empty Merge")
+{
+    GIVEN("Two empty lists")
+    {
+        LkList list1;
+        LkList list2;
+
+        WHEN("The two lists are merged")
+        {
+            list1.merge(list2);
+
+            THEN("The size 0")
+            {
+                REQUIRE(0 == list1.size());
+            }
+        }
+    }
+}
