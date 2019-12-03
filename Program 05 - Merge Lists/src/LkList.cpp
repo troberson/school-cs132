@@ -74,20 +74,7 @@ int LkList::size() const
 
 bool LkList::insert(int num)
 {
-    if (count == 0)
-    { // empty list
-        // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
-        head = tail = new Node(num);
-    }
-    else
-    { // >1 count, then add back
-        // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
-        Node* temp = new Node(num);
-        tail->next = temp;
-        temp->prev = tail;
-        tail = temp;
-    }
-    count++;
+    add_node(num, tail);
     return true;
 }
 
@@ -99,23 +86,14 @@ void LkList::insert(const initializer_list<int>& il)
     }
 }
 
-
 void LkList::clear()
 {
-    if (count == 0)
+    while (this->count > 0)
     {
-        return;
+        del_node(this->head);
     }
-
-    while (tail != head)
-    {
-        tail = tail->prev;
-        delete tail->next;
-    }
-    delete head;
-    head = tail = nullptr;
-    count = 0;
 }
+
 
 void LkList::resetIterator() const
 {
@@ -149,4 +127,91 @@ ostream& operator<<(ostream& outStr, const LkList& lst)
         outStr << lst.next() << "  ";
     }
     return outStr;
+}
+
+// PRIVATE FUNCTIONS
+LkList::Node* LkList::add_node(const int num,
+                               Node* prev_node /* = nullptr */,
+                               Node* next_node /* = nullptr */)
+{
+    // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
+    return add_node(new Node(num), prev_node, next_node);
+}
+
+LkList::Node* LkList::add_node(Node* new_node,
+                               Node* prev_node /* = nullptr */,
+                               Node* next_node /* = nullptr */)
+{
+    // Set as head or link the previous node
+    if (prev_node == nullptr)
+    {
+        this->head = new_node;
+    }
+    else
+    {
+        this->link_nodes(prev_node, new_node);
+    }
+
+    // Set as tail or link the next node
+    if (next_node == nullptr)
+    {
+        this->tail = new_node;
+    }
+    else
+    {
+        this->link_nodes(new_node, next_node);
+    }
+
+    // Increase the node count
+    this->count++;
+
+    // Return the new node
+    return new_node;
+}
+
+void LkList::link_nodes(Node* node_left /* = nullptr */,
+                        Node* node_right /* = nullptr */)
+{
+    if (node_left != nullptr)
+    {
+        node_left->next = node_right;
+    }
+
+    if (node_right != nullptr)
+    {
+        node_right->prev = node_left;
+    }
+}
+
+void LkList::del_node(Node* node)
+{
+    // Can't delete nothing
+    if (node == nullptr)
+    {
+        return;
+    }
+
+    // Save the previous and next pointers
+    Node* node_prev = node->prev;
+    Node* node_next = node->next;
+
+    // Update head and tail
+    if (this->head == node)
+    {
+        this->head = node_next;
+    }
+
+    if (this->tail == node)
+    {
+        this->tail = node_prev;
+    }
+    // Delete the node
+    // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
+    delete node;
+
+    // Link the previous and next nodes together
+    link_nodes(node_prev, node_next);
+
+    // Decrease the count
+    this->count--;
 }

@@ -63,6 +63,54 @@ class LkList
     Node* tail;
     mutable Node* it;
     int count;
+
+
+    /**
+     * Add a number as a new node.
+     *
+     * If @p prev_node is 'nullptr', the new node is set as head.
+     * If @p next_node is 'nullptr', the new node is set as tail.
+     *
+     * @param str The number to add.
+     * @param prev_node The node which should be before the new node
+     *   (default: nullptr).
+     * @param next_node The node which should be after the new node.
+     *   (default: nullptr)
+     * @returns A pointer to the new node.
+     */
+    Node* add_node(int num, Node* prev_node = nullptr,
+                   Node* next_node = nullptr);
+
+    /**
+     * Add a node.
+     *
+     * If @p prev_node is 'nullptr', the new node is set as head.
+     * If @p next_node is 'nullptr', the new node is set as tail.
+     *
+     * @param new_node The node to add.
+     * @param prev_node The node which should be before the new node
+     *   (default: nullptr).
+     * @param next_node The node which should be after the new node.
+     *   (default: nullptr)
+     * @returns A pointer to the new node.
+     */
+    Node* add_node(Node* new_node, Node* prev_node = nullptr,
+                   Node* next_node = nullptr);
+    /**
+     * Delete a node.
+     *
+     * @param node The node to delete.
+     */
+    void del_node(Node* node);
+
+
+    /**
+     * Link two nodes.
+     *
+     * @param node_left The first node (default: nullptr).
+     * @param node_right The second node (default: nullptr).
+     */
+    void link_nodes(Node* node_left = nullptr, Node* node_right = nullptr);
 };
 
 ostream& operator<<(ostream& outStr, const LkList& lst);
