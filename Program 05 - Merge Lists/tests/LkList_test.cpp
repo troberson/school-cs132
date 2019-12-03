@@ -231,9 +231,29 @@ SCENARIO("Merge #2: Empty Merge")
         {
             list1.merge(list2);
 
-            THEN("The size 0")
+            THEN("The size is 0")
             {
                 REQUIRE(0 == list1.size());
+            }
+        }
+    }
+}
+
+
+SCENARIO("Merge #3: Merge Into an Empty List")
+{
+    GIVEN("An empty list and a list with five items")
+    {
+        LkList list1;
+        LkList list2{0, 10, 20, 30, 40};
+
+        WHEN("The two lists are merged")
+        {
+            list1.merge(list2);
+
+            THEN("The size is 5")
+            {
+                REQUIRE(5 == list1.size());
             }
         }
     }

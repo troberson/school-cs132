@@ -46,16 +46,16 @@ int main()
     list2.clear();
     //------------------------
 
-    // list2.insert( { 0, 10, 20, 30, 40 } );
+    list2.insert({0, 10, 20, 30, 40});
 
-    // list.merge(list2);
+    list.merge(list2);
 
-    // cout << "Merge #3 (into an empty list): \n" << list << endl;
-    // cout << "List size after merge: " << list.size() << endl;
-    // cout << endl << endl;
+    cout << "Merge #3 (into an empty list): \n" << list << endl;
+    cout << "List size after merge: " << list.size() << endl;
+    cout << endl << endl;
 
-    // list.clear();
-    // list2.clear();
+    list.clear();
+    list2.clear();
     //------------------------
 
     //
