@@ -76,10 +76,12 @@ bool LkList::insert(int num)
 {
     if (count == 0)
     { // empty list
+        // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
         head = tail = new Node(num);
     }
     else
     { // >1 count, then add back
+        // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
         Node* temp = new Node(num);
         tail->next = temp;
         temp->prev = tail;
@@ -101,7 +103,9 @@ void LkList::insert(const initializer_list<int>& il)
 void LkList::clear()
 {
     if (count == 0)
+    {
         return;
+    }
 
     while (tail != head)
     {
@@ -141,6 +145,8 @@ ostream& operator<<(ostream& outStr, const LkList& lst)
 {
     lst.resetIterator();
     while (lst.hasMore())
+    {
         outStr << lst.next() << "  ";
+    }
     return outStr;
 }
