@@ -258,3 +258,25 @@ SCENARIO("Merge #3: Merge Into an Empty List")
         }
     }
 }
+
+
+SCENARIO("Merge #4: Merge From an Empty List")
+{
+    GIVEN("An empty list and a list with several items")
+    {
+        LkList list1;
+        LkList list2{0, 5, 10, 15, 20, 25, 30, 35, 40};
+
+        const int size = list2.size();
+
+        WHEN("The two lists are merged")
+        {
+            list1.merge(list2);
+
+            THEN("The size is the number of items")
+            {
+                REQUIRE(size == list1.size());
+            }
+        }
+    }
+}
