@@ -72,7 +72,7 @@ void LkList::merge(LkList& src)
     auto moveBlock = [&](LkList& lst, const LkList& cmplst) {
         auto start_node = lst.head;
         auto end_node = lst.it;
-        while (lst.hasMore() && lst.it->data < cmplst.head->data)
+        while (lst.hasMore() && lst.it->data <= cmplst.head->data)
         {
             end_node = lst.it;
             lst.next();
@@ -125,7 +125,7 @@ void LkList::merge(LkList& src)
 
             // Move from one list or the other, depending on which has the
             // lower starting element
-            if (head->data < src.head->data)
+            if (head->data <= src.head->data)
             {
                 moveBlock(*this, src);
             }

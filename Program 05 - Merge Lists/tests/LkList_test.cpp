@@ -324,3 +324,26 @@ SCENARIO("Merge #6: Source After Destination")
         }
     }
 }
+
+
+SCENARIO("Merge #7: Source Overlaps Destination")
+{
+    GIVEN("Two lists")
+    {
+        LkList list1{0, 9, 18, 27};
+        LkList list2{-6, -4, -2, 0,  2,  4,  6,  8,  10, 12,
+                     16, 18, 20, 22, 24, 26, 28, 30, 32, 34};
+
+        const int size = list1.size() + list2.size();
+
+        WHEN("The two lists are merged")
+        {
+            list1.merge(list2);
+
+            THEN("The size is the combined size of the two lists")
+            {
+                REQUIRE(size == list1.size());
+            }
+        }
+    }
+}
