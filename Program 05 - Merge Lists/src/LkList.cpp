@@ -20,17 +20,18 @@ void LkList::merge(LkList& src)
 {
     LkList new_list;
 
-    // Do nothing if src is empty
+    // SHORTCUT: Do nothing if src is empty
     if (src.count == 0)
     {
         return;
     }
 
-    // If current list is empty, just swap src and current
+    // SHORTCUT: If current list is empty, just swap src and current
     if (this->count == 0)
     {
         using std::swap;
         swap(*this, src);
+        return;
     }
 
     resetIterator();
@@ -51,77 +52,98 @@ void LkList::merge(LkList& src)
 
     // Function to move everything remaining in a list to the new list.
     auto moveRemainder = [&](LkList& lst) {
+        if (lst.count <= 0)
+        {
+            return;
+        }
+
         new_list.add_node(lst.it, new_list.tail);
+        new_list.tail = lst.tail;
+        new_list.updateSize();
+
         lst.head = nullptr;
         lst.tail = nullptr;
         lst.count = 0;
+    };
+
+    // Function to move a block of numbers starting from the head of
+    // one list to the new list, as long as they are less than the
+    // first element in cmplist.
+    auto moveBlock = [&](LkList& lst, const LkList& cmplst) {
+        auto start_node = lst.head;
+        auto end_node = lst.it;
+        while (lst.hasMore() && lst.it->data < cmplst.head->data)
+        {
+            end_node = lst.it;
+            lst.next();
+        }
+
+        std::cout << "\nMove Block From " << start_node->data << " to "
+                  << end_node->data << "\n";
+
+        lst.head = end_node->next;
+        end_node->next = nullptr;
+        lst.updateSize();
+
+        new_list.add_node(start_node, new_list.tail);
         new_list.updateSize();
+        new_list.tail = end_node;
+        lst.resetIterator();
     };
 
 
-    // Process elements as long as some remain
-    while (count > 0)
+    // SHORTCUT: If the tail of this list is less than the head of the
+    // source list, then just concatenate them.
+    if (this->tail->data < src.head->data)
     {
-        printLists();
-
-
-        // If src list is exhausted, move the rest of the elements from
-        // this list into the new list
-        if (src.head == nullptr)
-        {
-            moveRemainder(*this);
-            break;
-        }
-
-        // Function to move a block of numbers starting from the head of
-        // one list to the new list, as long as they are less than the
-        // first element in cmplist.
-        auto moveBlock = [&](LkList& lst, const LkList& cmplst) {
-            auto start_node = lst.head;
-            auto end_node = lst.it;
-            while (lst.hasMore() && lst.it->data < cmplst.head->data)
-            {
-                end_node = lst.it;
-                lst.next();
-            }
-
-            std::cout << "\nMove Block From " << start_node->data << " to "
-                      << end_node->data << "\n";
-
-            lst.head = end_node->next;
-            end_node->next = nullptr;
-            lst.updateSize();
-
-            new_list.add_node(start_node, new_list.tail);
-            new_list.updateSize();
-            new_list.tail = end_node;
-            lst.resetIterator();
-        };
-
-        // Move from one list or the other, depending on which has the
-        // lower starting element
-        if (head->data < src.head->data)
-        {
-            moveBlock(*this, src);
-        }
-        else
-        {
-            moveBlock(src, *this);
-        }
-    }
-
-    std::cout << "After Finishing List 1:\n";
-    printLists();
-
-    // If this list is exhausted, move the rest of the elements from
-    // src list into the new list
-    if (this->head == nullptr && src.head != nullptr)
-    {
+        moveRemainder(*this);
         moveRemainder(src);
     }
 
-    std::cout << "After Moving Remaining Items:\n";
-    printLists();
+    // SHORTCUT: or vice-versa
+    else if (src.tail->data < this->head->data)
+    {
+        moveRemainder(src);
+        moveRemainder(*this);
+    }
+
+    // Otherwise, check element-by-element
+    else
+    {
+        // Process elements as long as some remain
+        while (count > 0)
+        {
+            printLists();
+
+            // If src list is exhausted, move the rest of the elements from
+            // this list into the new list
+            if (src.head == nullptr)
+            {
+                moveRemainder(*this);
+                break;
+            }
+
+            // Move from one list or the other, depending on which has the
+            // lower starting element
+            if (head->data < src.head->data)
+            {
+                moveBlock(*this, src);
+            }
+            else
+            {
+                moveBlock(src, *this);
+            }
+        }
+
+        std::cout << "After Finishing List 1:\n";
+        printLists();
+
+        // Move any remaining items from src list
+        moveRemainder(src);
+
+        std::cout << "After Moving Remaining Items:\n";
+        printLists();
+    }
 
     // Swap the new list with the current list
     using std::swap;
