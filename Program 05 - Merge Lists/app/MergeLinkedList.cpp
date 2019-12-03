@@ -73,20 +73,20 @@ int main()
     //------------------------
 
 
-    // list.insert( { 40, 47, 54, 61, 68 } );
-    //
-    // list2.insert( { 0, 3, 6, 9, 12, 15, 18 } );
+    list.insert({40, 47, 54, 61, 68});
+
+    list2.insert({0, 3, 6, 9, 12, 15, 18});
 
 
-    // list.merge(list2);
+    list.merge(list2);
 
-    // cout << "Merge #5(source before destination): \n" << list << endl;
-    // cout << "List size after merge: " << list.size() << endl;
-    // cout << endl << endl;
-    //
-    // list.clear();
-    // list2.clear();
-    //
+    cout << "Merge #5(source before destination): \n" << list << endl;
+    cout << "List size after merge: " << list.size() << endl;
+    cout << endl << endl;
+
+    list.clear();
+    list2.clear();
+
     //------------------------
 
     // list.insert( { 10, 17, 21, 28 } );

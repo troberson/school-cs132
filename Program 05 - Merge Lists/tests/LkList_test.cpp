@@ -280,3 +280,25 @@ SCENARIO("Merge #4: Merge From an Empty List")
         }
     }
 }
+
+
+SCENARIO("Merge #5: Source Before Destination")
+{
+    GIVEN("Two lists")
+    {
+        LkList list1{40, 47, 54, 61, 68};
+        LkList list2{0, 3, 6, 9, 12, 15, 18};
+
+        const int size = list1.size() + list2.size();
+
+        WHEN("The two lists are merged")
+        {
+            list1.merge(list2);
+
+            THEN("The size is the combined size of the two lists")
+            {
+                REQUIRE(size == list1.size());
+            }
+        }
+    }
+}
