@@ -12,13 +12,9 @@
 #include "LkList.h"
 #include <sstream>
 
-using namespace std;
-
 
 void LkList::merge(LkList& src)
 {
-    LkList new_list;
-
     // SHORTCUT: Do nothing if src is empty
     if (src.count == 0)
     {
@@ -33,17 +29,21 @@ void LkList::merge(LkList& src)
         return;
     }
 
+    // reset iterators to head
     resetIterator();
     src.resetIterator();
 
+    // The new list which will replace the current one
+    LkList new_list;
+
     // Function to move everything remaining in a list to the new list.
     auto moveRemainder = [&](LkList& lst) {
-        if (lst.count <= 0)
+        if (lst.head == nullptr)
         {
             return;
         }
 
-        new_list.add_node(lst.it, new_list.tail);
+        new_list.add_node(lst.head, new_list.tail);
         new_list.tail = lst.tail;
         new_list.updateSize();
 
@@ -197,7 +197,6 @@ void LkList::clear()
     }
 }
 
-
 void LkList::resetIterator() const
 {
     it = head;
@@ -237,11 +236,7 @@ void LkList::updateSize()
 {
     resetIterator();
     int new_count{};
-    while (hasMore())
-    {
-        next();
-        new_count++;
-    }
+    for (; hasMore(); next(), new_count++) {}
     resetIterator();
 
     this->count = new_count;
@@ -308,7 +303,7 @@ void LkList::link_nodes(Node* node_left /* = nullptr */,
     }
 }
 
-void LkList::unlink_node(Node* node)
+void LkList::del_node(Node* node)
 {
     // Can't delete nothing
     if (node == nullptr)
@@ -338,14 +333,9 @@ void LkList::unlink_node(Node* node)
     // Link the previous and next nodes together
     link_nodes(node_prev, node_next);
 
+    // Delete the node
+    delete node;
+
     // Decrease the count
     this->count--;
-}
-
-void LkList::del_node(Node* node)
-{
-    unlink_node(node);
-
-    // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
-    delete node;
 }

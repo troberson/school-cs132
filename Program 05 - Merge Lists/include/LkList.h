@@ -107,15 +107,6 @@ class LkList
     void del_node(Node* node);
 
     /**
-     * Unlink node.
-     *
-     * Detach the node from the list but do not delete it.
-     *
-     * @param node The node to unlink.
-     */
-    void unlink_node(Node* node);
-
-    /**
      * Link two nodes.
      *
      * If @p prev_node is 'nullptr', the new node is set as head.
